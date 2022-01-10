@@ -1,13 +1,13 @@
 <template>
-	<div class='window-container'>
-		<div class='window' :class="[{ 'window--minimised': isMinimised }]">
-			<div class='window__toolbar'>
-				<h1 class='window__title'>
+	<div class='app-container'>
+		<div class='app' :class="[{ 'app--minimised': isMinimised }]">
+			<div class='app__toolbar'>
+				<h1 class='app__title'>
 					{{ title }}
 				</h1>
-				<div class='window__cta-group'>
+				<div class='app__cta-group'>
 					<button
-						class='btn btn--small window__cta-minimise'
+						class='btn btn--small app__cta-minimise'
 						@click='isMinimised = !isMinimised'
 						@mousedown.stop
 					>
@@ -62,8 +62,8 @@
 						</svg>
 					</button>
 					<button
-						class='btn btn--small window__cta-close'
-						@click="$emit('window:close')"
+						class='btn btn--small app__cta-close'
+						@click="$emit('app:close')"
 						@mousedown.stop
 					>
 						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' class='icon icon--close'>
@@ -85,7 +85,7 @@
 					</button>
 				</div>
 			</div>
-			<div class='window__content'>
+			<div class='app__content'>
 				<slot />
 			</div>
 		</div>
@@ -96,7 +96,7 @@
 	import { ref } from 'vue'
 
 	export default {
-		name: 'AppWindow',
+		name: 'AppContainer',
 		props: {
 			title: {
 				type: String,
@@ -114,7 +114,7 @@
 </script>
 
 <style scoped lang='scss'>
-	.window-container {
+	.app-container {
 		bottom: 0;
 		left: 0;
 		pointer-events: none;
@@ -127,7 +127,7 @@
 			box-sizing: border-box;
 		}
 
-		.window {
+		.app {
 			align-items: flex-start;
 			border: 1px solid #4E4E4E6B;
 			display: inline-flex;
@@ -150,8 +150,8 @@
 				resize: none;
 				width: auto !important;
 
-				.window__content,
-				.window__cta-group .icon--minimise {
+				.app__content,
+				.app__cta-group .icon--minimise {
 					display: none;
 				}
 			}

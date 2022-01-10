@@ -1,23 +1,23 @@
 <template>
-	<app-window title='Bitburner Theme Browser' @window:close='destroyApp'>
+	<app-container title='Bitburner Theme Browser' @app:close='destroyApp'>
 		<div class='app'>
 			<h1 class='title'>
 				Theme Browser
 			</h1>
 			<theme-list :themes='themes' class='themes' />
 		</div>
-	</app-window>
+	</app-container>
 </template>
 
 <script lang='ts'>
-	import AppWindow from './src/components/AppWindow/AppWindow.vue'
+	import AppContainer from './src/components/AppContainer/AppContainer.vue'
 	import ThemeList from './src/components/ThemeList/ThemeList.vue'
 
 	import { destroyApp } from './src/helpers/lifecycle'
 	import { getThemes } from './src/services/themes'
 
 	export default {
-		components: { AppWindow, ThemeList },
+		components: { AppContainer, ThemeList },
 		setup () {
 			const themes = getThemes()
 			return { themes, destroyApp }
