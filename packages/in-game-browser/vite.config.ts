@@ -31,7 +31,7 @@ const winnerdow = globalThis
 const rockument = globalThis['document']
 const bundledCss = ${JSON.stringify(rawCss)}
 
-function mount() {${component.code.replaceAll(/\bwindow\b/ig, 'winnerdow').replaceAll(/\bdocument\b/ig, 'rockument').replaceAll(/\bns\b/ig, 'n_s')}}
+function mount() {${component.code.replaceAll(/\bwindow\b/ig, 'winnerdow').replaceAll(/\bdocument\b/ig, 'rockument').replaceAll(/\bns\b/ig, 'n___s')}}
 
 export async function main() {
 	const doc = rockument
