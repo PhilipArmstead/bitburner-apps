@@ -5,7 +5,8 @@
     "start": "vite",
     "build": "vue-tsc --noEmit && vite build --emptyOutDir",
     "serve": "vite preview",
-    "lint": "eslint  --fix --ext .js,.ts,.vue ."
+    "lint": "eslint  --fix --ext .js,.ts,.vue .",
+    "make-release": "npm run build && npm version patch"
   },
   "dependencies": {
     "vue": "^3.2.26"
