@@ -7,7 +7,7 @@ export const generateEntry = (id, version) => `
 export async function main(ns) {
 	const doc = globalThis['document']
 	const id = '${id}'
-	const appVersion = '${version}'
+	globalThis[\`${id}-version\`] = '${version}'
 
 	doc.getElementById(id)?.remove()
 	doc.body.insertAdjacentHTML('beforeend', \`<section id='\${id}'></section>\`)
@@ -30,7 +30,7 @@ export async function main(ns) {
 	mount()
 
 	ns.atExit(() => {
-		doc.getElementById(id)?.remove()}
+		doc.getElementById(id)?.remove()
 		doc.body.removeEventListener('theme:preview', previewTheme)
 	)
 
