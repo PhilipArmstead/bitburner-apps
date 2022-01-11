@@ -1,66 +1,11 @@
 <template>
 	<div class='app-container'>
-		<div class='app' :class="[{ 'app--minimised': isMinimised }]">
+		<div class='app'>
 			<div class='app__toolbar'>
 				<h1 class='app__title'>
 					{{ title }}
 				</h1>
 				<div class='app__cta-group'>
-					<button
-						class='btn btn--small app__cta-minimise'
-						@click='isMinimised = !isMinimised'
-						@mousedown.stop
-					>
-						<svg
-							v-show='!isMinimised'
-							xmlns='http://www.w3.org/2000/svg'
-							viewBox='0 0 18 18'
-							class='icon icon--minimise'
-						>
-							<path d='m3 13h12v2h-12z' fill='currentColor' />
-						</svg>
-						<svg
-							v-show='isMinimised'
-							xmlns='http://www.w3.org/2000/svg'
-							viewBox='0 0 18 18'
-							class='icon icon--restore'
-						>
-							<rect
-								x='5'
-								y='1.5'
-								width='11'
-								height='3'
-								stroke='none'
-								fill='#000'
-							/>
-							<g fill='currentColor'>
-								<rect
-									x='5.8'
-									y='4.3'
-									width='9.4'
-									height='6.5'
-									stroke='#000'
-									stroke-width='1.6'
-								/>
-								<rect
-									x='1.8'
-									y='9'
-									width='9.4'
-									height='6.5'
-									stroke='#000'
-									stroke-width='1.6'
-								/>
-							</g>
-							<rect
-								x='1'
-								y='6.2'
-								width='11'
-								height='3'
-								stroke='none'
-								fill='#000'
-							/>
-						</svg>
-					</button>
 					<button
 						class='btn btn--small app__cta-close'
 						@click="$emit('app:close')"
@@ -93,8 +38,6 @@
 </template>
 
 <script>
-	import { ref } from 'vue'
-
 	export default {
 		name: 'AppContainer',
 		props: {
@@ -102,13 +45,6 @@
 				type: String,
 				required: true,
 			},
-		},
-		setup () {
-			const isMinimised = ref(false)
-
-			return {
-				isMinimised,
-			}
 		},
 	}
 </script>
@@ -141,20 +77,6 @@
 			top: 50%;
 			transform: translate(-50%, -52%);
 			width: 90vw;
-
-			&--minimised {
-				height: auto !important;
-				max-width: 200px;
-				min-height: 0;
-				min-width: 0;
-				resize: none;
-				width: auto !important;
-
-				.app__content,
-				.app__cta-group .icon--minimise {
-					display: none;
-				}
-			}
 
 			&__toolbar {
 				background: #111;
