@@ -25,7 +25,7 @@ export async function main(ns) {
 	mount()
 
 	while (doc.getElementById(id)) {
-		ns.asleep(2000)
+		await	ns.asleep(2000)
 	}
 
 	doc.getElementById(id)?.remove()
