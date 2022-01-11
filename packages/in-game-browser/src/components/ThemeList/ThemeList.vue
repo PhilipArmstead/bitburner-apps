@@ -67,7 +67,13 @@
 
 			&__info {
 				display: flex;
+				display: none;
 				margin-bottom: 8px;
+			}
+
+			&__preview {
+				max-height: 110px;
+				max-width: 100%;
 			}
 
 			&__submission-date {
@@ -80,6 +86,7 @@
 				border-radius: 4px;
 				cursor: pointer;
 				font-size: 14px;
+				margin-top: auto;
 				padding: 8px 14px;
 				pointer-events: auto;
 
