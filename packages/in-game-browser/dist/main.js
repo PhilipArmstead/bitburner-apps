@@ -3,28 +3,36 @@
 export async function main(ns) {
 	const doc = globalThis['document']
 	const id = 'theme-browser-app'
-	const appVersion = '0.0.4'
+	const appVersion = '0.0.5'
 
 	doc.getElementById(id)?.remove()
-	doc.body.insertAdjacentHTML('beforeend', `<section id="${id}"></section>`)
+	doc.body.insertAdjacentHTML('beforeend', `<section id='${id}'></section>`)
 
 	doc.getElementById(`${id}-css`)?.remove()
-	doc.head.insertAdjacentHTML('beforeend', `<style id="${id}-css">${bundledCss}</style>`)
+	doc.head.insertAdjacentHTML('beforeend', `<style id='${id}-css'>${bundledCss}</style>`)
 
 	const currentTheme = ns.ui.getTheme()
-	const previewTheme = ({ detail }) => ns.ui.setTheme(detail)
+	const previewTheme = ({ detail }) => {
+		try {
+			ns.ui.setTheme(JSON.parse(detail))
+		} catch (e) {
+			console.log(e)
+		}
+	}
 	const resetTheme = () => ns.ui.setTheme(currentTheme)
 
 	doc.body.addEventListener('theme:preview', previewTheme)
-	doc.body.removeEventListener('theme:preview', previewTheme)
-	
+
 	mount()
+
+	ns.atExit(() => {
+		doc.getElementById(id)?.remove()}
+		doc.body.removeEventListener('theme:preview', previewTheme)
+	)
 
 	while (doc.getElementById(id)) {
 		await	ns.asleep(2000)
 	}
-
-	doc.getElementById(id)?.remove()
 } 
 
 
