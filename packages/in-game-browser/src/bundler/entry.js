@@ -16,15 +16,23 @@ export async function main(ns) {
 	doc.head.insertAdjacentHTML('beforeend', \`<style id='\${id}-css'>\${bundledCss}</style>\`)
 
 	const currentTheme = ns.ui.getTheme()
-	const previewTheme = ({ detail }) => ns.ui.setTheme(detail)
+	const previewTheme = ({ detail }) => {
+		try {
+			ns.ui.setTheme(JSON.parse(detail))
+		} catch (e) {
+			console.log(e)
+		}
+	}
 	const resetTheme = () => ns.ui.setTheme(currentTheme)
 
 	doc.body.addEventListener('theme:preview', previewTheme)
-	doc.body.removeEventListener('theme:preview', previewTheme)
 
 	mount()
 
-	ns.atExit(() => doc.getElementById(id)?.remove())
+	ns.atExit(() => {
+		doc.getElementById(id)?.remove()}
+		doc.body.removeEventListener('theme:preview', previewTheme)
+	)
 
 	while (doc.getElementById(id)) {
 		await	ns.asleep(2000)
