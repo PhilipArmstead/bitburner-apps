@@ -32,7 +32,7 @@ export async function main(ns) {
 	ns.atExit(() => {
 		doc.getElementById(id)?.remove()
 		doc.body.removeEventListener('theme:preview', previewTheme)
-	)
+	})
 
 	while (doc.getElementById(id)) {
 		await	ns.asleep(2000)
