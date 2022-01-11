@@ -13,7 +13,7 @@
 					{{ formatDate(theme.submittedOn) }}
 				</h3>
 			</div>
-			<button class='theme__cta theme__cta--preview'>
+			<button class='theme__cta theme__cta--preview' @click='$emit("theme:preview", theme.content)'>
 				Preview
 			</button>
 		</li>
@@ -84,7 +84,7 @@
 				pointer-events: auto;
 
 				&--preview {
-					background: #4170fb;
+					background: #4170FB;
 					color: #FFF;
 					margin-left: auto;
 				}
