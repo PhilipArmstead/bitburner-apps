@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
+currentVersion=$(node -p -e "require('./package.json').version")
 npm run build
-newVersion=$(npm version patch)
+npm version patch
 git add dist
 git add package.json
-git commit -m "Release: $newVersion"
+git commit -m "Release: $currentVersion"
