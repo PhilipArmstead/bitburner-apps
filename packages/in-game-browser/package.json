@@ -6,7 +6,10 @@
     "build": "vite build --emptyOutDir",
     "serve": "vite preview",
     "lint": "eslint  --fix --ext .js,.vue .",
-    "make-release": "npm run build && npm version patch"
+    "make-release": "release"
+  },
+  "bin": {
+    "release": "release.sh"
   },
   "dependencies": {
     "vue": "^3.2.26"
