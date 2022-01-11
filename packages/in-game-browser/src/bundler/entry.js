@@ -10,10 +10,10 @@ export async function main(ns) {
 	const appVersion = '${version}'
 
 	doc.getElementById(id)?.remove()
-	doc.body.insertAdjacentHTML('beforeend', \`<section id="\${id}"></section>\`)
+	doc.body.insertAdjacentHTML('beforeend', \`<section id='\${id}'></section>\`)
 
 	doc.getElementById(\`\${id}-css\`)?.remove()
-	doc.head.insertAdjacentHTML('beforeend', \`<style id="\${id}-css">\${bundledCss}</style>\`)
+	doc.head.insertAdjacentHTML('beforeend', \`<style id='\${id}-css'>\${bundledCss}</style>\`)
 
 	const currentTheme = ns.ui.getTheme()
 	const previewTheme = ({ detail }) => ns.ui.setTheme(detail)
@@ -21,13 +21,13 @@ export async function main(ns) {
 
 	doc.body.addEventListener('theme:preview', previewTheme)
 	doc.body.removeEventListener('theme:preview', previewTheme)
-	
+
 	mount()
+
+	ns.atExit(() => doc.getElementById(id)?.remove())
 
 	while (doc.getElementById(id)) {
 		await	ns.asleep(2000)
 	}
-
-	doc.getElementById(id)?.remove()
 } 
 `
