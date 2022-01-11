@@ -5,13 +5,18 @@
 				Theme Browser
 			</h1>
 			<theme-list :themes='themes' class='themes' @theme:preview='showPreview' />
-			<p class='version'>{{ version }}</p>
+			<p class='version'>
+				{{ version }}
+			</p>
 		</div>
 	</app-container>
 	<div v-show='isPreviewing' class='preview__ctas'>
-		<button class='preview__cta preview__cta--cancel' @click='cancelPreview'><span class='sr-only'>Cancel</span>
+		<button class='preview__cta preview__cta--cancel' @click='cancelPreview'>
+			<span class='sr-only'>Cancel</span>
 		</button>
-		<button class='preview__cta preview__cta--confirm' @click='destroy'><span class='sr-only'>Confirm</span></button>
+		<button class='preview__cta preview__cta--confirm' @click='destroy'>
+			<span class='sr-only'>Confirm</span>
+		</button>
 	</div>
 </template>
 
