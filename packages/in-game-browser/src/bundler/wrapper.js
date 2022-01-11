@@ -13,6 +13,6 @@ const bundledCss = ${JSON.stringify(css)}
 function mount() {
 	const ${windowReplacement} = globalThis
 	const ${documentReplacement} = globalThis['document']
-	${code.replaceAll(/\bwindow\b/ig, '${windowReplacement}').replaceAll(/\bdocument\b/ig, '${documentReplacement}')}
+	${code.replaceAll(/\bwindow\b/ig, windowReplacement).replaceAll(/\bdocument\b/ig, documentReplacement)}
 }
 `

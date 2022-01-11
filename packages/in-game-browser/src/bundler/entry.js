@@ -17,7 +17,7 @@ export async function main(ns) {
 
 	const currentTheme = ns.ui.getTheme()
 	const previewTheme = ({ detail }) => ns.ui.setTheme(detail)
-	const resetTheme = (themeData) => ns.ui.setTheme(currentTheme)
+	const resetTheme = () => ns.ui.setTheme(currentTheme)
 
 	doc.body.addEventListener('theme:preview', previewTheme)
 	doc.body.removeEventListener('theme:preview', previewTheme)
