@@ -1,21 +1,19 @@
-import { generateEntry } from './entry'
-import { appWrapper } from './wrapper'
-
-const version = require('../../package.json').version
+import { generateEntry } from '../entry'
+import { appWrapper } from '../wrapper'
 
 /**
  * @param {String} bundleFilename
  * @param {String} stylesheetName
  * @param {String} id
+ * @param {String} version
  * @returns {{apply: String, generateBundle({}, {}): void, name: String, enforce: String}}
  */
-export default (bundleFilename, stylesheetName, id) => {
+export default (bundleFilename, stylesheetName, id, version) => {
 	return {
 		apply: 'build',
 		enforce: 'post',
-		name: 'pack-css',
+		name: 'combine-outputs',
 		generateBundle (opts, bundle) {
-
 			const {
 				[stylesheetName]: { source: rawCss },
 				[bundleFilename]: component,
@@ -25,7 +23,7 @@ export default (bundleFilename, stylesheetName, id) => {
 ${generateEntry(id, version)}
 ${'\n'.repeat(50)}
 ${appWrapper(component.code, rawCss)}
-`
+`.trim()
 
 			// remove from final bundle
 			delete bundle[stylesheetName]

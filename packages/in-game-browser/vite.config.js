@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-import buildPlugin from './src/bundler/buildPlugin'
+import buildPlugin from './src/bundler/plugins/builder'
+import versionOutput from './src/bundler/plugins/versionOutput'
 import { id } from './config/app'
 
+const version = require('../../package.json').version
 const bundleFilename = 'main.js'
 const stylesheetName = 'style.css'
 
@@ -18,7 +20,10 @@ export default defineConfig({
 		},
 		cssCodeSplit: false,
 		rollupOptions: {
-			plugins: [buildPlugin(bundleFilename, stylesheetName, id)],
+			plugins: [
+				buildPlugin(bundleFilename, stylesheetName, id, version),
+				versionOutput('version.txt', version),
+			],
 		},
 	},
 })

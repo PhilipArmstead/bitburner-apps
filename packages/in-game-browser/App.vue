@@ -10,7 +10,7 @@
 			</p>
 		</div>
 	</app-container>
-	<div v-show='isPreviewing' class='preview__ctas'>
+	<div class='preview__ctas' :class='{ "preview__ctas--visible" : isPreviewing }'>
 		<button class='preview__cta preview__cta--cancel' @click='cancelPreview'>
 			<span class='sr-only'>Cancel</span>
 		</button>
@@ -72,7 +72,16 @@
 		justify-content: space-between;
 		position: fixed;
 		right: 30px;
+		transition: transform .25s cubic-bezier(0.4, 0.0, 0.2, 1);
 		width: 16vmax;
+
+		&:not(.preview__ctas--visible) {
+			transform: translate(150px, 150px);
+
+			.preview__cta {
+				pointer-events: none;
+			}
+		}
 
 		.preview__cta {
 			align-items: center;
@@ -84,7 +93,6 @@
 			height: 7.68vmax;
 			justify-content: center;
 			padding: 0;
-			pointer-events: auto;
 			position: relative;
 
 			&::after {
@@ -130,5 +138,15 @@
 		padding: 0;
 		position: absolute;
 		width: 1px;
+	}
+
+	@keyframes slide-up-left {
+		0% {
+			transform: translate(150px, 150px);
+		}
+
+		100% {
+			transform: translate(0, 0);
+		}
 	}
 </style>
