@@ -133,14 +133,14 @@
 			display: inline-flex;
 			flex-direction: column;
 			left: 50%;
-			height: 80vh;
+			height: 90vh;
 			overflow: hidden;
 			pointer-events: auto;
 			position: absolute;
 			resize: none;
 			top: 50%;
-			transform: translate(-50%, -50%);
-			width: 80vw;
+			transform: translate(-50%, -52%);
+			width: 90vw;
 
 			&--minimised {
 				height: auto !important;
