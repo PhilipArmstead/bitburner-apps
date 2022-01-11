@@ -1,6 +1,7 @@
 module.exports = {
 	env: {
 		es6: true,
+		node: true,
 	},
 	extends: [
 		'eslint:recommended',
@@ -8,7 +9,7 @@ module.exports = {
 	],
 	overrides: [
 		{
-			files: ['**/*.js', '**/*.ts'],
+			files: ['**/*.js'],
 			rules: {
 				'indent': ['error', 'tab', { SwitchCase: 1 }],
 			},

@@ -1,8 +1,13 @@
 const windowReplacement = 'winnerdow'
 const documentReplacement = 'rockument'
 
-export const appWrapper = (code: String, css: Object) => {
-	return `
+
+/**
+ * @param {String} code
+ * @param {String} css
+ * @returns {String}
+ */
+export const appWrapper = (code, css) => `
 const bundledCss = ${JSON.stringify(css)}
 
 function mount() {
@@ -11,4 +16,3 @@ function mount() {
 	${code.replaceAll(/\bwindow\b/ig, '${windowReplacement}').replaceAll(/\bdocument\b/ig, '${documentReplacement}')}
 }
 `
-}

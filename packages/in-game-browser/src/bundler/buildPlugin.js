@@ -3,12 +3,18 @@ import { appWrapper } from './wrapper'
 
 const version = require('../../package.json').version
 
-export default (bundleFilename, stylesheetName) => {
+/**
+ * @param {String} bundleFilename
+ * @param {String} stylesheetName
+ * @param {String} id
+ * @returns {{apply: String, generateBundle({}, {}): void, name: String, enforce: String}}
+ */
+export default (bundleFilename, stylesheetName, id) => {
 	return {
 		apply: 'build',
 		enforce: 'post',
 		name: 'pack-css',
-		generateBundle(opts, bundle) {
+		generateBundle (opts, bundle) {
 
 			const {
 				[stylesheetName]: { source: rawCss },
@@ -16,13 +22,13 @@ export default (bundleFilename, stylesheetName) => {
 			} = bundle
 
 			component.code = `
-${generateEntry('theme-browser-app', version)}
+${generateEntry(id, version)}
 ${'\n'.repeat(50)}
 ${appWrapper(component.code, rawCss)}
 `
 
 			// remove from final bundle
 			delete bundle[stylesheetName]
-		}
+		},
 	}
 }

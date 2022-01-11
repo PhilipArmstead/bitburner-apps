@@ -1,5 +1,5 @@
 <template>
-	<app-container title='Bitburner Theme Browser' @app:close='destroyApp'>
+	<app-container title='Bitburner Theme Browser' @app:close='destroy'>
 		<div class='app'>
 			<h1 class='title'>
 				Theme Browser
@@ -9,23 +9,26 @@
 	</app-container>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 	import AppContainer from './src/components/AppContainer/AppContainer.vue'
 	import ThemeList from './src/components/ThemeList/ThemeList.vue'
 
 	import { destroyApp } from './src/helpers/lifecycle'
 	import { getThemes } from './src/services/themes'
+	import { id } from './config/app'
 
 	export default {
 		components: { AppContainer, ThemeList },
 		setup () {
 			const themes = getThemes()
-			return { themes, destroyApp }
+			const destroy = () => destroyApp(id)
+
+			return { themes, destroy }
 		},
 	}
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 	.app {
 		background: #FFF;
 		color: #333;
