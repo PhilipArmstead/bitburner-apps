@@ -5,7 +5,7 @@ import buildPlugin from './src/bundler/plugins/builder'
 import versionOutput from './src/bundler/plugins/versionOutput'
 import { id } from './config/app'
 
-const version = require('../../package.json').version
+const version = require('./package.json').version
 const bundleFilename = 'main.js'
 const stylesheetName = 'style.css'
 
