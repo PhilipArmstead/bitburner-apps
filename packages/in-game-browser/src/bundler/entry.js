@@ -5,7 +5,7 @@ import generateThemeExtractor from './theme-extractor.js'
  * @param {String} version
  * @returns {String}
  */
-export const generateEntry = (id, version, appEntry = () => '') => `
+export const generateEntry = (id, version, appEntry = () => '', onExitCode = '') => `
 export async function main(ns) {
 	const doc = globalThis['document']
 	const id = '${id}'
@@ -23,6 +23,7 @@ ${generateThemeExtractor()}
 	ns.atExit(() => {
 		doc.getElementById(id)?.remove()
 		doc.getElementById(\`\${id}-css\`)?.remove()
+${onExitCode}
 	})
 
 ${appEntry()}

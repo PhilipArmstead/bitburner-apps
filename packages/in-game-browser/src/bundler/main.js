@@ -16,12 +16,12 @@ export default () => `
 
 	mount()
 
-	ns.atExit(() => {
-		doc.body.removeEventListener('theme:preview', previewTheme)
-		doc.body.removeEventListener('theme:cancel-preview', resetTheme)
-	})
-
 	while (doc.getElementById(id)) {
 		await ns.asleep(2000)
 	}
+`
+
+export const onExitCode = `
+		doc.body.removeEventListener('theme:preview', previewTheme)
+		doc.body.removeEventListener('theme:cancel-preview', resetTheme)
 `
