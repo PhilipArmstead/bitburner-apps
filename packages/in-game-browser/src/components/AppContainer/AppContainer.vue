@@ -90,7 +90,7 @@
 			&__title {
 				align-self: center;
 				flex: 0 1 100%;
-				font-size: 13px;
+				font-size: 16px;
 				font-weight: bold;
 				line-height: 20px;
 				margin: 0 20px 0 0;
@@ -158,6 +158,8 @@
 			&__content {
 				flex: 0 1 100%;
 				overflow: auto;
+				scrollbar-color: #272727 #b7b7b7;
+				scrollbar-width: thin;
 				width: 100%;
 
 				&::-webkit-scrollbar {
