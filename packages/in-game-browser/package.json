@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@bitburner-theme-browser/app-builder": "^0.0.1",
+    "@bitburner-theme-browser/app-common": "^0.0.1",
     "@vitejs/plugin-vue": "^2.0.1",
     "eslint": "^8.6.0",
     "eslint-plugin-vue": "^8.2.0",

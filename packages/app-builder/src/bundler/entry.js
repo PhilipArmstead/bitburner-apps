@@ -34,9 +34,18 @@ ${generateThemeExtractor()}
 	doc.getElementById(\`\${id}-css\`)?.remove()
 	doc.head.insertAdjacentHTML('beforeend', \`<style id='\${id}-css'>\${bundledCss}</style>\`)
 
+	const updateApp = async ({ element, path }) => {
+		console.log('fetching')
+		await ns.wget(path, ns.getScriptName())
+		element.dispatchEvent(new CustomEvent('app:updated'))
+	}
+
+	doc.body.addEventListener('app:update:${id}', updateApp)
+
 	ns.atExit(() => {
 		doc.getElementById(id)?.remove()
 		doc.getElementById(\`\${id}-css\`)?.remove()
+		doc.body.removeEventListener('app:update:${id}', updateApp)
 
 		try {
 ${onExitCode}

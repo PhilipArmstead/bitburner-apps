@@ -1,3 +1,3 @@
-import { isUpdateAvailable } from './src/versionChecker/versionChecker'
+import { getAvailableUpdate } from './src/updates/updates'
 
-export { isUpdateAvailable }
+export { getAvailableUpdate }

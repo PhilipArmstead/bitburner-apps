@@ -7,7 +7,20 @@
 				</h1>
 				<div class='app__cta-group'>
 					<button
+						v-if='availableUpdate'
+						class='btn btn--small app__cta-update-available'
+						:title='`Version ${availableUpdate} is available`'
+						@click="$emit('app:click:update')"
+						@mousedown.stop
+					>
+						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 417 417' class='icon icon--update'>
+							<path fill='#FFF' d='M120 90h180v235H120z' />
+							<path fill='currentColor' d='M208.5 417a208.5 208.5 0 1 0 0-417 208.5 208.5 0 0 0 0 417zm-81.3-197.5 68.3-118.3a15 15 0 0 1 26 0l68.2 118.3a15 15 0 0 1-13 22.5h-33.2v66.2a15 15 0 0 1-15 15h-40a15 15 0 0 1-15-15V242h-33.3a15 15 0 0 1-13-22.5z' />
+						</svg>
+					</button>
+					<button
 						class='btn btn--small app__cta-close'
+						title='Close'
 						@click="$emit('app:close')"
 						@mousedown.stop
 					>
@@ -44,6 +57,10 @@
 			title: {
 				type: String,
 				required: true,
+			},
+			availableUpdate: {
+				type: [String, Promise],
+				default: null,
 			},
 		},
 	}
@@ -82,7 +99,7 @@
 				background: #111;
 				color: #FFF;
 				display: flex;
-				padding: 3px 3px 3px 8px;
+				padding: 4px 3px 4px 8px;
 				user-select: none;
 				width: 100%;
 			}
@@ -90,9 +107,9 @@
 			&__title {
 				align-self: center;
 				flex: 0 1 100%;
-				font-size: 16px;
+				font-size: 14px;
 				font-weight: bold;
-				line-height: 20px;
+				line-height: 1;
 				margin: 0 20px 0 0;
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -113,10 +130,14 @@
 				}
 
 				.icon {
-					width: 14px;
+					width: 16px;
 
 					&--restore {
 						color: #D6CEC8;
+					}
+
+					&--update {
+						color: #6bd700;
 					}
 				}
 
@@ -124,6 +145,8 @@
 					background: none;
 					border: none;
 					color: #A9A9A9;
+					cursor: pointer;
+					display: flex;
 				}
 			}
 
@@ -158,7 +181,7 @@
 			&__content {
 				flex: 0 1 100%;
 				overflow: auto;
-				scrollbar-color: #272727 #b7b7b7;
+				scrollbar-color: #272727 #B7B7B7;
 				scrollbar-width: thin;
 				width: 100%;
 
@@ -172,7 +195,7 @@
 				}
 
 				&::-webkit-scrollbar-thumb {
-					background-color: #79797a;
+					background-color: #79797A;
 				}
 			}
 

@@ -22,7 +22,7 @@ export default defineConfig({
 		rollupOptions: {
 			external: ['vue'],
 			output: {
-			globals: { vue: 'Vue'},
+				globals: { vue: 'Vue' },
 			},
 			plugins: [
 				appBuilder(bundleFilename, stylesheetName, id, version, appEntry, onExitCode),
