@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 import buildPlugin from './src/bundler/plugins/builder'
 import versionOutput from './src/bundler/plugins/versionOutput'
+import appEntry from './src/bundler/main'
 import { id } from './config/app'
 
 const version = require('./package.json').version
@@ -21,7 +22,7 @@ export default defineConfig({
 		cssCodeSplit: false,
 		rollupOptions: {
 			plugins: [
-				buildPlugin(bundleFilename, stylesheetName, id, version),
+				buildPlugin(bundleFilename, stylesheetName, id, version, appEntry),
 				versionOutput('version.txt', version),
 			],
 		},

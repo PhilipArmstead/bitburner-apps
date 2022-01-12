@@ -1,0 +1,14 @@
+const stylesheetId = 'theme-variables'
+
+/** @return {String} */
+export default generateThemeExtractor = () => `
+	// Extract current theme as CSS varibles for apps
+	let stylesheet = doc.getElementById('${stylesheetId}')
+	if (!stylesheet) {
+		stylesheet = doc.createElement('style')
+		stylesheet.id = '${stylesheetId}'
+		doc.head.insertAdjacentElement('beforeend', stylesheet)
+	}
+
+	stylesheet.innerHTML = Object.entries(ns.ui.getTheme()).map(([key, value]) => \`--\${key}: \${value};\`).join('\\n')
+`

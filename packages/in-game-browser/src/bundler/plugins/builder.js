@@ -8,7 +8,7 @@ import { appWrapper } from '../wrapper'
  * @param {String} version
  * @returns {{apply: String, generateBundle({}, {}): void, name: String, enforce: String}}
  */
-export default (bundleFilename, stylesheetName, id, version) => {
+export default (bundleFilename, stylesheetName, id, version, appEntry = () => '') => {
 	return {
 		apply: 'build',
 		enforce: 'post',
@@ -20,7 +20,7 @@ export default (bundleFilename, stylesheetName, id, version) => {
 			} = bundle
 
 			component.code = `
-${generateEntry(id, version)}
+${generateEntry(id, version, appEntry)}
 ${'\n'.repeat(50)}
 ${appWrapper(component.code, rawCss)}
 `.trim()
