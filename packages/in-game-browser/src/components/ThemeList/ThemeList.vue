@@ -62,6 +62,7 @@
 			}
 
 			&__author {
+				color: var(--secondarylight, #DDD);
 				font-size: 14px;
 			}
 
@@ -91,8 +92,8 @@
 				pointer-events: auto;
 
 				&--preview {
-					background: #4170FB;
-					color: #FFF;
+					background: var(--button, #4170FB);
+					color: var(--secondarylight, #FFF);
 					margin-left: auto;
 				}
 			}

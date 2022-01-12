@@ -71,8 +71,8 @@
 
 <style scoped lang='scss'>
 	.app {
-		background: var(--backgroundprimary, #FFF);
-		color: #333;
+		background: var(--backgroundprimary, #333);
+		color: var(--primary, #FFF);
 		display: flex;
 		flex-direction: column;
 		padding: 24px 32px;

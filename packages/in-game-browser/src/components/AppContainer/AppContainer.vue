@@ -181,7 +181,7 @@
 			&__content {
 				flex: 0 1 100%;
 				overflow: auto;
-				scrollbar-color: #272727 #B7B7B7;
+				scrollbar-color: var(--primary, #272727) var(--primarydark, #B7B7B7);
 				scrollbar-width: thin;
 				width: 100%;
 
