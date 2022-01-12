@@ -17,7 +17,6 @@ export default () => `
 	mount()
 
 	ns.atExit(() => {
-		doc.getElementById(id)?.remove()
 		doc.body.removeEventListener('theme:preview', previewTheme)
 		doc.body.removeEventListener('theme:cancel-preview', resetTheme)
 	})

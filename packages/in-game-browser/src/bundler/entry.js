@@ -20,6 +20,11 @@ ${generateThemeExtractor()}
 	doc.getElementById(\`\${id}-css\`)?.remove()
 	doc.head.insertAdjacentHTML('beforeend', \`<style id='\${id}-css'>\${bundledCss}</style>\`)
 
+	ns.atExit(() => {
+		doc.getElementById(id)?.remove()
+		doc.getElementById(\`\${id}-css\`)?.remove()
+	})
+
 ${appEntry()}
 } 
 `
