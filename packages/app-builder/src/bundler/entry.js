@@ -12,6 +12,19 @@ export async function main(ns) {
 	const id = '${id}'
 	globalThis[\`\${id}-version\`] = '${version}'
 
+	let vueLoaded
+	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
+
+	if (!doc.getElementById('vue-js-lib')) {
+		const script = doc.createElement('script')
+		script.id = 'vue-js-lib'
+		script.src = 'https://cdn.jsdelivr.net/npm/vue@3.2.26/dist/vue.runtime.global.prod.js'
+		script.onload = vueLoaded
+		doc.head.insertAdjacentElement('beforeend', script)
+	} else {
+		vueLoaded()
+	}
+
 ${generateThemeExtractor()}
 
 	// Add app's CSS and mount point
@@ -26,6 +39,8 @@ ${generateThemeExtractor()}
 		doc.getElementById(\`\${id}-css\`)?.remove()
 ${onExitCode}
 	})
+
+	await vueLoad()
 
 ${appEntry()}
 } 
