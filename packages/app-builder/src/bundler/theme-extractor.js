@@ -10,5 +10,8 @@ module.exports = () => `
 		doc.head.insertAdjacentElement('beforeend', stylesheet)
 	}
 
-	stylesheet.innerHTML = \`:root {\${Object.entries(ns.ui.getTheme()).map(([key, value]) => \`--\${key}: \${value};\`).join(' ')}}\`
+	stylesheet.innerHTML = \`:root {
+		--font-family: '\${getComputedStyle(doc.querySelector('p')['font-family']}';
+\${Object.entries(ns.ui.getTheme()).map(([key, value]) => \`--\${key}: \${value};\`).join('\\n')}
+	}\`
 `
