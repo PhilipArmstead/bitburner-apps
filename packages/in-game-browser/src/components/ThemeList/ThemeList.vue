@@ -94,6 +94,7 @@
 				&--preview {
 					background: var(--button, #4170FB);
 					color: var(--secondarylight, #FFF);
+					box-shadow: 0 0 1px 0 var(--welllight);
 					margin-left: auto;
 				}
 			}
