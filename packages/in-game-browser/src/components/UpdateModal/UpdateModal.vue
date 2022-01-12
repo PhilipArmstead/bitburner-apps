@@ -1,11 +1,32 @@
 <template>
 	<div ref='element' @click.stop='$emit("modal:close")' @app:updated='updateComplete'>
 		<div class='modal' @click.stop>
-			<h1 class='modal__message'>Do you want to update to v{{ version }}?</h1>
-			<div class='modal__ctas'>
-				<button class='cta cta--cancel' @click='$emit("modal:close")'>Nope</button>
-				<button class='cta cta--confirm' @click='doUpdate'>Sure!</button>
-			</div>
+			<template v-if='!hasUpdated'>
+				<h1 class='modal__title'>
+					Do you want to update to v{{ version }}?
+				</h1>
+				<div class='modal__ctas'>
+					<button class='cta cta--cancel' @click='$emit("modal:close")'>
+						Nope
+					</button>
+					<button class='cta cta--confirm' @click='doUpdate'>
+						Sure!
+					</button>
+				</div>
+			</template>
+			<template v-else>
+				<h1 class='modal__title'>
+					App successfully updated
+				</h1>
+				<p class='modal__message'>
+					Restart the app in your own time to get the latest version.
+				</p>
+				<div class='modal__ctas'>
+					<button class='cta cta--confirm' @click='$emit("modal:close")'>
+						Okay!
+					</button>
+				</div>
+			</template>
 		</div>
 	</div>
 </template>
@@ -24,19 +45,15 @@
 				default: null,
 			},
 		},
-		setup() {
+		setup () {
 			const element = ref(null)
-			const doUpdate = () => {
-				console.log(`dispatching app:update:${id}`)
-				dispatchEvent(`app:update:${id}`, { element: element.value, path: appFilePath })
-			}
+			const hasUpdated = ref(false)
 
-			const updateComplete = () => {
-				console.log('update complete')
-			}
+			const doUpdate = () => dispatchEvent(`app:update:${id}`, { element: element.value, path: appFilePath })
+			const updateComplete = () => (hasUpdated.value = true)
 
-			return { element, doUpdate, updateComplete }
-		}
+			return { element, hasUpdated, doUpdate, updateComplete }
+		},
 	}
 </script>
 
@@ -54,7 +71,7 @@
 		transform: translate(-50%, -50%);
 		width: 40vw;
 
-		&__message {
+		&__title {
 			color: #212529;
 			font-size: 20px;
 			font-weight: 500;
@@ -62,11 +79,18 @@
 			margin: 0;
 		}
 
+		&__message {
+			line-height: 1.4;
+		}
+
+		&__ctas, &__message {
+			flex: 1 0 100%;
+			margin: 16px 0 0;
+		}
+
 		&__ctas {
 			display: flex;
-			flex: 1 0 100%;
 			justify-content: flex-end;
-			margin-top: 16px;
 		}
 
 		.cta {

@@ -34,8 +34,7 @@ ${generateThemeExtractor()}
 	doc.getElementById(\`\${id}-css\`)?.remove()
 	doc.head.insertAdjacentHTML('beforeend', \`<style id='\${id}-css'>\${bundledCss}</style>\`)
 
-	const updateApp = async ({ element, path }) => {
-		console.log('fetching')
+	const updateApp = async ({ detail: { element, path }}) => {
 		await ns.wget(path, ns.getScriptName())
 		element.dispatchEvent(new CustomEvent('app:updated'))
 	}

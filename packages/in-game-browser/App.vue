@@ -21,7 +21,13 @@
 			<span class='sr-only'>Confirm</span>
 		</button>
 	</div>
-	<update-modal v-if='showUpdateModal' :version='availableUpdate' class='update-modal' @modal:close='showUpdateModal = false' />
+	<update-modal
+		v-if='showUpdateModal'
+		:version='availableUpdate'
+		class='update-modal'
+		@modal:close='showUpdateModal = false'
+		@app:updated='availableUpdate = null'
+	/>
 </template>
 
 <script>
@@ -55,7 +61,7 @@
 			}
 
 			onMounted(async () => {
-				availableUpdate.value = await getAvailableUpdate('0.0.0' || window[`${id}-version`] || version, versionFilePath)
+				availableUpdate.value = await getAvailableUpdate(window[`${id}-version`] || version, versionFilePath)
 			})
 
 			return { availableUpdate, isPreviewing, showUpdateModal, themes, cancelPreview, destroy, showPreview }
@@ -65,23 +71,11 @@
 
 <style scoped lang='scss'>
 	.app {
+		background: var(--backgroundprimary, #FFF);
 		color: #333;
 		display: flex;
 		flex-direction: column;
 		padding: 24px 32px;
-		position: relative;
-
-		&::before {
-			background: var(--backgroundprimary);
-			content: '';
-			height: 100%;
-			left: 0;
-			opacity: 0.75;
-			position: absolute;
-			top: 0;
-			width: 100%;
-			z-index: -1;
-		}
 	}
 
 	.title {
