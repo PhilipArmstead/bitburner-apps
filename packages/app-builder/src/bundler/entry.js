@@ -37,7 +37,12 @@ ${generateThemeExtractor()}
 	ns.atExit(() => {
 		doc.getElementById(id)?.remove()
 		doc.getElementById(\`\${id}-css\`)?.remove()
+
+		try {
 ${onExitCode}
+		} catch (e) {
+			console.log(e)
+		}
 	})
 
 	await vueLoad
