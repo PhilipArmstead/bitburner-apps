@@ -10,5 +10,5 @@ export default generateThemeExtractor = () => `
 		doc.head.insertAdjacentElement('beforeend', stylesheet)
 	}
 
-	stylesheet.innerHTML = Object.entries(ns.ui.getTheme()).map(([key, value]) => \`--\${key}: \${value};\`).join('\\n')
+	stylesheet.innerHTML = \`:root {\${Object.entries(ns.ui.getTheme()).map(([key, value]) => \`--\${key}: \${value};\`).join(' ')}}\`
 `

@@ -53,12 +53,23 @@
 
 <style scoped lang="scss">
 	.app {
-		background: #FFF;
 		color: #333;
 		display: flex;
 		flex-direction: column;
 		padding: 24px 32px;
 		position: relative;
+
+		&::before {
+			background: var(--backgroundprimary);
+			content: '';
+			height: 100%;
+			left: 0;
+			opacity: 0.75;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: -1;
+		}
 	}
 
 	.title {
