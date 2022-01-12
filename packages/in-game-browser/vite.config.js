@@ -20,6 +20,10 @@ export default defineConfig({
 		},
 		cssCodeSplit: false,
 		rollupOptions: {
+			external: ['vue'],
+			output: {
+			globals: { vue: 'vue'},
+			},
 			plugins: [
 				appBuilder(bundleFilename, stylesheetName, id, version, appEntry, onExitCode),
 				versionOutput('version.txt', version),
