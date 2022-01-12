@@ -40,7 +40,7 @@ ${generateThemeExtractor()}
 ${onExitCode}
 	})
 
-	await vueLoad()
+	await vueLoad
 
 ${appEntry()}
 } 
