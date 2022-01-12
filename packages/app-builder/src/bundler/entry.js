@@ -1,11 +1,12 @@
-import generateThemeExtractor from './theme-extractor.js'
+const generateThemeExtractor = require('./theme-extractor.js')
 
 /**
  * @param {String} id
  * @param {String} version
  * @returns {String}
  */
-export const generateEntry = (id, version, appEntry = () => '', onExitCode = '') => `
+module.exports = {
+	generateEntry: (id, version, appEntry = () => '', onExitCode = '') => `
 export async function main(ns) {
 	const doc = globalThis['document']
 	const id = '${id}'
@@ -29,3 +30,4 @@ ${onExitCode}
 ${appEntry()}
 } 
 `
+}

@@ -1,5 +1,5 @@
-import { generateEntry } from '../entry'
-import { appWrapper } from '../wrapper'
+const { generateEntry } = require('./bundler/entry')
+const { appWrapper } = require('./bundler/wrapper')
 
 /**
  * @param {String} bundleFilename
@@ -8,7 +8,7 @@ import { appWrapper } from '../wrapper'
  * @param {String} version
  * @returns {{apply: String, generateBundle({}, {}): void, name: String, enforce: String}}
  */
-export default (bundleFilename, stylesheetName, id, version, appEntry = () => '', onExitCode = '') => {
+module.exports = (bundleFilename, stylesheetName, id, version, appEntry = () => '', onExitCode = '') => {
 	return {
 		apply: 'build',
 		enforce: 'post',

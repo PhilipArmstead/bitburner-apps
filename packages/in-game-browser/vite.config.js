@@ -1,9 +1,8 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { appBuilder, versionOutput } from '@bitburner-theme-browser/app-builder'
 
-import buildPlugin from './src/bundler/plugins/builder'
-import versionOutput from './src/bundler/plugins/versionOutput'
-import appEntry, { onExitCode } from './src/bundler/main'
+import appEntry, { onExitCode } from './bundle'
 import { id } from './config/app'
 
 const version = require('./package.json').version
@@ -22,7 +21,7 @@ export default defineConfig({
 		cssCodeSplit: false,
 		rollupOptions: {
 			plugins: [
-				buildPlugin(bundleFilename, stylesheetName, id, version, appEntry, onExitCode),
+				appBuilder(bundleFilename, stylesheetName, id, version, appEntry, onExitCode),
 				versionOutput('version.txt', version),
 			],
 		},

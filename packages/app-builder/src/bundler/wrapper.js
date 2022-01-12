@@ -7,7 +7,8 @@ const documentReplacement = 'rockument'
  * @param {String} css
  * @returns {String}
  */
-export const appWrapper = (code, css) => `
+module.exports = {
+	appWrapper: (code, css) => `
 const bundledCss = ${JSON.stringify(css)}
 
 function mount() {
@@ -16,3 +17,4 @@ function mount() {
 	${code.replaceAll(/\bwindow\b/ig, windowReplacement).replaceAll(/\bdocument\b/ig, documentReplacement)}
 }
 `
+}

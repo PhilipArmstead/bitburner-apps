@@ -3,7 +3,7 @@
  * @param {String} version
  * @returns {{apply: String, generateBundle(): void, name: String, enforce: String}}
  */
-export default (versionFilename, version) => {
+module.exports = (versionFilename, version) => {
 	return {
 		apply: 'build',
 		enforce: 'post',
