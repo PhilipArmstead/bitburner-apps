@@ -3,10 +3,12 @@ const generateThemeExtractor = require('./theme-extractor.js')
 /**
  * @param {String} id
  * @param {String} version
+ * @param {Function} appEntry
+ * @param {Function} onExit
  * @returns {String}
  */
 module.exports = {
-	generateEntry: (id, version, appEntry = () => '', onExitCode = '') => `
+	generateEntry: (id, version, appEntry = () => '', onExit = () => {}) => `
 export async function main(ns) {
 	const doc = globalThis['document']
 	const id = '${id}'
@@ -47,7 +49,7 @@ ${generateThemeExtractor()}
 		doc.body.removeEventListener('app:update:${id}', updateApp)
 
 		try {
-${onExitCode}
+${onExit()}
 		} catch (e) {
 			console.log(e)
 		}

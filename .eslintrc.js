@@ -52,8 +52,8 @@ module.exports = {
 		},
 	],
 	rules: {
-		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-		'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+		'no-console': 'off',
+		'no-debugger': 'error',
 		'max-len': ['warn', { code: 130, tabWidth: 2 }],
 		'array-bracket-spacing': 'off',
 		'object-curly-spacing': ['error', 'always'],
@@ -66,17 +66,10 @@ module.exports = {
 				arrays: 'always-multiline',
 				exports: 'always-multiline',
 				functions: 'never',
-				// imports: "always-multiline",
 				objects: 'always-multiline',
 			},
 		],
 		'quote-props': ['error', 'consistent'],
 		'no-var': 'error',
-		// "import/no-unresolved": [
-		// 	"error",
-		// 	{
-		// 		ignore: ["\\.svg\\?inline"],
-		// 	},
-		// ],
 	},
 }

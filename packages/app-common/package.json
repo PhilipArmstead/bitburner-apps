@@ -1,7 +1,0 @@
-{
-	"name": "@bitburner-theme-browser/app-common",
-	"version": "0.0.1",
-	"scripts": {
-		"lint": "eslint  --fix --ext .js,.vue ."
-	}
-}

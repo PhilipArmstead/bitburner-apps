@@ -1,0 +1,10 @@
+{
+	"name": "@bitburner-theme-browser/common-helpers",
+	"version": "0.0.1",
+	"scripts": {
+		"lint": "eslint  --fix --ext .js,.vue "
+	},
+	"devDependencies": {
+		"@bitburner-theme-browser/common-config": "^0.0.1"
+	}
+}

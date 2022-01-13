@@ -1,5 +1,7 @@
+// TODO: change these to be hooks
+
 /** @return {String} */
-export default () => `
+export const appEntry = () => `
 	// App-specific setup
 	const currentTheme = ns.ui.getTheme()
 	const previewTheme = ({ detail }) => {
@@ -21,7 +23,7 @@ export default () => `
 	}
 `
 
-export const onExitCode = `
+export const onExit = () => `
 		doc.body.removeEventListener('theme:preview', previewTheme)
 		doc.body.removeEventListener('theme:cancel-preview', resetTheme)
 `

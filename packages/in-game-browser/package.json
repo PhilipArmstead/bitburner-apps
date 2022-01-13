@@ -4,7 +4,6 @@
   "scripts": {
     "start": "vite",
     "build": "vite build --emptyOutDir",
-    "serve": "vite preview",
     "lint": "eslint  --fix --ext .js,.vue .",
     "make-release": "bash release.sh"
   },
@@ -13,11 +12,7 @@
   },
   "devDependencies": {
     "@bitburner-theme-browser/app-builder": "^0.0.1",
-    "@bitburner-theme-browser/app-common": "^0.0.1",
-    "@vitejs/plugin-vue": "^2.0.1",
-    "eslint": "^8.6.0",
-    "eslint-plugin-vue": "^8.2.0",
-    "sass": "^1.47.0",
-    "vite": "^2.7.10"
+    "@bitburner-theme-browser/common-config": "^0.0.1",
+    "@bitburner-theme-browser/common-helpers": "^0.0.1"
   }
 }

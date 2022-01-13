@@ -32,7 +32,7 @@
 
 <script>
 	import { onMounted, ref } from 'vue'
-	import { getAvailableUpdate } from '@bitburner-theme-browser/app-common'
+	import { getAvailableUpdate } from '@bitburner-theme-browser/common-helpers'
 
 	import AppContainer from './src/components/AppContainer/AppContainer.vue'
 	import UpdateModal from './src/components/UpdateModal/UpdateModal.vue'
