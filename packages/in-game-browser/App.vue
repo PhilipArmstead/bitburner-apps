@@ -9,9 +9,10 @@
 	>
 		<div class='theme-browser'>
 			<h1 class='title'>
-				Browse themes
+				{{ title }}
 			</h1>
-			<theme-list :themes='themes' class='themes' @theme:preview='showPreview' />
+			<theme-list v-if='!isLoading' :themes='themes' class='themes' @theme:preview='showPreview' />
+			<div v-else class='loader'/>
 		</div>
 	</app-container>
 	<div class='preview__ctas' :class='{ "preview__ctas--visible" : isPreviewing }'>
@@ -32,7 +33,7 @@
 </template>
 
 <script>
-	import { onMounted, ref } from 'vue'
+	import { computed, onMounted, ref } from 'vue'
 	import { getAvailableUpdate } from '@bitburner-theme-browser/common-helpers'
 
 	import AppContainer from './src/components/AppContainer/AppContainer.vue'
@@ -46,11 +47,14 @@
 	export default {
 		components: { AppContainer, ThemeList, UpdateModal },
 		setup () {
+			const isLoading = ref(true)
 			const isPreviewing = ref(false)
 			const availableUpdate = ref(null)
 			const showUpdateModal = ref(false)
-			const themes = getThemes()
+			const themes = ref([])
 			const destroy = () => destroyApp(id)
+
+			const title = computed(() => isLoading.value ? 'Loading...' : 'Browse themes')
 
 			const cancelPreview = (themeData) => {
 				dispatchEvent('theme:cancel-preview', themeData)
@@ -60,12 +64,22 @@
 				dispatchEvent('theme:preview', themeData)
 				isPreviewing.value = true
 			}
+			const updateThemes = async () => {
+				isLoading.value = true
+
+				const response = await getThemes()
+				const { data } = await response.json()
+				themes.value = data.map(({ name, json, images, author }) => ({ name, json, src: images[0]?.src, author: author[0].name }))
+
+				isLoading.value = false
+			}
 
 			onMounted(async () => {
+				updateThemes()
 				availableUpdate.value = await getAvailableUpdate(window[`${id}-version`] || version, versionFilePath)
 			})
 
-			return { availableUpdate, isPreviewing, showUpdateModal, themes, cancelPreview, destroy, showPreview }
+			return { availableUpdate, isLoading, isPreviewing, showUpdateModal, themes, title, cancelPreview, destroy, showPreview }
 		},
 	}
 </script>
@@ -88,6 +102,14 @@
 
 	.title {
 		margin: 0 0 16px;
+	}
+
+	.loader {
+		align-self: center;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23900'%3E%3Ccircle cx='60' cy='50' r='4'%3E%3Canimate attributeName='cx' repeatCount='indefinite' dur='1s' values='95;35' keyTimes='0;1' begin='-0.67s'/%3E%3Canimate attributeName='fill-opacity' repeatCount='indefinite' dur='1s' values='0;1;1' keyTimes='0;0.2;1' begin='-0.67s'/%3E%3C/circle%3E%3Ccircle cx='60' cy='50' r='4'%3E%3Canimate attributeName='cx' repeatCount='indefinite' dur='1s' values='95;35' keyTimes='0;1' begin='-0.33s'/%3E%3Canimate attributeName='fill-opacity' repeatCount='indefinite' dur='1s' values='0;1;1' keyTimes='0;0.2;1' begin='-0.33s'/%3E%3C/circle%3E%3Ccircle cx='60' cy='50' r='4'%3E%3Canimate attributeName='cx' repeatCount='indefinite' dur='1s' values='95;35' keyTimes='0;1' begin='0s'/%3E%3Canimate attributeName='fill-opacity' repeatCount='indefinite' dur='1s' values='0;1;1' keyTimes='0;0.2;1' begin='0s'/%3E%3C/circle%3E%3C/g%3E%3Cg fill='%230C0' transform='translate(-15 0)'%3E%3Cpath d='M50 50L20 50A30 30 0 0 0 80 50Z'%3E%3CanimateTransform attributeName='transform' type='rotate' repeatCount='indefinite' dur='1s' values='0 50 50;45 50 50;0 50 50' keyTimes='0;0.5;1'/%3E%3C/path%3E%3Cpath d='M50 50L20 50A30 30 0 0 1 80 50Z'%3E%3CanimateTransform attributeName='transform' type='rotate' repeatCount='indefinite' dur='1s' values='0 50 50;-45 50 50;0 50 50' keyTimes='0;0.5;1'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+		height: 200px;
+		margin: auto 0 40%;
+		width: 200px;
 	}
 
 	.preview__ctas {

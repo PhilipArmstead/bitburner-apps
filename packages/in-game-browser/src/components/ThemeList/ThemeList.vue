@@ -1,7 +1,7 @@
 <template>
-	<ul class='theme-list'>
+	<ul v-if='themes.length' class='theme-list'>
 		<li v-for='(theme, index) in themes' :key='index' class='theme'>
-			<img :src='theme.preview' alt='' class='theme__preview' @click='$emit("theme:preview", theme.content)'>
+			<img :src='theme.src' alt='' class='theme__preview' @click='$emit("theme:preview", theme.json)'>
 			<h1 class='theme__name'>
 				{{ theme.name }}
 			</h1>
@@ -10,6 +10,7 @@
 			</h2>
 		</li>
 	</ul>
+	<p v-else>Sorry, we couldn't fetch any themes at the moment :(</p>
 </template>
 
 <script>
