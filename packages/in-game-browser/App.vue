@@ -69,7 +69,7 @@
 
 				const response = await getThemes()
 				const { data } = await response.json()
-				themes.value = data.map(({ name, json, images, author }) => ({ name, json, src: images[0]?.src, author: author[0].name }))
+				themes.value = data.map(({ name, json, images, author }) => ({ name, json, src: images[1]?.src, author: author.name }))
 
 				isLoading.value = false
 			}
