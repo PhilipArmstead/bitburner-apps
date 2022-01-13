@@ -1,4 +1,4 @@
-const generateThemeExtractor = require('./theme-extractor.js')
+const themeExtractor = require('./theme-extractor.js')
 
 /**
  * @param {String} id
@@ -7,8 +7,8 @@ const generateThemeExtractor = require('./theme-extractor.js')
  * @param {Function} onExit
  * @returns {String}
  */
-module.exports = {
-	generateEntry: (id, version, appEntry = () => '', onExit = () => {}) => `
+module.exports = (id, version, appEntry = () => '', onExit = () => {
+}) => `
 export async function main(ns) {
 	const doc = globalThis['document']
 	const id = '${id}'
@@ -27,14 +27,14 @@ export async function main(ns) {
 		vueLoaded()
 	}
 
-${generateThemeExtractor()}
+${themeExtractor}
 
 	// Add app's CSS and mount point
 	doc.getElementById(id)?.remove()
-	doc.body.insertAdjacentHTML('beforeend', \`<section id='\${id}'></section>\`)
+	doc.body.insertAdjacentHTML('beforeend', \`<section id="\${id}"></section>\`)
 
 	doc.getElementById(\`\${id}-css\`)?.remove()
-	doc.head.insertAdjacentHTML('beforeend', \`<style id='\${id}-css'>\${bundledCss}</style>\`)
+	doc.head.insertAdjacentHTML('beforeend', \`<style id="\${id}-css">\${bundledCss}</style>\`)
 
 	const updateApp = async ({ detail: { element, path }}) => {
 		await ns.wget(path, ns.getScriptName())
@@ -60,4 +60,3 @@ ${onExit()}
 ${appEntry()}
 } 
 `
-}

@@ -1,5 +1,0 @@
-node_modules/**
-coverage/**
-dist/**
-eslint.js
-package-lock.json

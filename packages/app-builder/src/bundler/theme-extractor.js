@@ -1,7 +1,6 @@
 const stylesheetId = 'theme-variables'
 
-/** @return {String} */
-module.exports = () => `
+module.exports = `
 	// Extract current theme as CSS varibles for apps
 	let stylesheet = doc.getElementById('${stylesheetId}')
 	if (!stylesheet) {

@@ -1,8 +1,8 @@
 const { defineConfig } = require('vite')
 const vue = require('@vitejs/plugin-vue')
-const appBuilder = require('./builder')
-const versionOutput = require('./version-output')
-const { onExit } = require("@bitburner-theme-browser/in-game-browser/bundle")
+
+const appBuilder = require('./bundler/builder')
+const versionOutput = require('./version-output/version-output')
 
 
 /**

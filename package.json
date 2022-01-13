@@ -2,9 +2,9 @@
   "name": "@bitburner-theme-browser/app",
   "version": "0.0.1",
   "scripts": {
-    "start": "workspaces-run --parallel -- npm run start",
-    "build": "workspaces-run --parallel -- npm run build",
-    "lint": "workspaces-run --parallel -- npm run lint"
+    "start": "npm run start --workspaces -if-present",
+    "build": "npm run build --workspaces -if-present",
+    "lint": "npm run lint --workspaces --if-present"
   },
   "workspaces": [
     "packages/**"
@@ -14,7 +14,6 @@
     "eslint": "^8.6.0",
     "eslint-plugin-vue": "^8.2.0",
     "sass": "^1.47.0",
-    "vite": "^2.7.10",
-    "workspaces-run": "^1.0.1"
+    "vite": "^2.7.10"
   }
 }
