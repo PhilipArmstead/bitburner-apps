@@ -181,7 +181,6 @@
 
 			&__content {
 				flex: 0 1 100%;
-				font-family: 'Fira Sans', 'Trebuchet MS', Ubuntu, Helvetica, Arial, sans-serif;
 				overflow: auto;
 				scrollbar-color: var(--primary, #272727) var(--primarydark, #B7B7B7);
 				scrollbar-width: thin;
