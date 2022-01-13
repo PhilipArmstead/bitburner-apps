@@ -107,7 +107,8 @@
 			&__title {
 				align-self: center;
 				flex: 0 1 100%;
-				font-size: 14px;
+				font-family: var(--font-family, monospace);
+				font-size: 13px;
 				font-weight: bold;
 				line-height: 1;
 				margin: 0 20px 0 0;
@@ -180,6 +181,7 @@
 
 			&__content {
 				flex: 0 1 100%;
+				font-family: 'Fira Sans', 'Trebuchet MS', Ubuntu, Helvetica, Arial, sans-serif;
 				overflow: auto;
 				scrollbar-color: var(--primary, #272727) var(--primarydark, #B7B7B7);
 				scrollbar-width: thin;

@@ -11,7 +11,7 @@ module.exports = () => `
 	}
 
 	stylesheet.innerHTML = \`:root {
-		--font-family: '\${getComputedStyle(doc.querySelector('p')['font-family']}';
+		--font-family: '\${getComputedStyle(doc.querySelector('p'))['font-family']}';
 \${Object.entries(ns.ui.getTheme()).map(([key, value]) => \`--\${key}: \${value};\`).join('\\n')}
 	}\`
 `

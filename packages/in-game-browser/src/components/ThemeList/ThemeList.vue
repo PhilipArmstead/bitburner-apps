@@ -48,10 +48,18 @@
 		.theme {
 			box-sizing: border-box;
 			display: flex;
-			flex: 1 0 25%;
+			flex: 0 0 25%;
 			flex-direction: column;
 			margin-bottom: 16px;
 			padding: 8px;
+
+			@media (min-width: 1360px) {
+				flex-basis: 20%;
+			}
+
+			@media (min-width: 1600px) {
+				flex-basis: 16.6%;
+			}
 
 			&__name, &__author, &__submission-date {
 				margin: 8px 0 0;
@@ -73,6 +81,7 @@
 			}
 
 			&__preview {
+				margin: 0 auto;
 				max-height: 110px;
 				max-width: 100%;
 			}

@@ -72,9 +72,12 @@
 <style scoped lang='scss'>
 	.app {
 		background: var(--backgroundprimary, #333);
+		box-sizing: border-box;
 		color: var(--primary, #FFF);
 		display: flex;
 		flex-direction: column;
+		height: inherit;
+		min-height: 100%;
 		padding: 24px 32px;
 	}
 
