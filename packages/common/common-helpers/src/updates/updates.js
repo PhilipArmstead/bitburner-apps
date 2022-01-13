@@ -1,7 +1,7 @@
 /**
  * @param {String} currentVersion
  * @param {String} latestVersionPath
- * @return {String|null}
+ * @return {Promise<String|null>}
  */
 export const getAvailableUpdate = async (currentVersion, latestVersionPath) => {
 	const latestVersion = await fetch(latestVersionPath).then((result) => result.text())

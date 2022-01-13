@@ -11,8 +11,16 @@
 			<h1 class='title'>
 				{{ title }}
 			</h1>
-			<theme-list v-if='!isLoading' :themes='themes' class='themes' @theme:preview='showPreview' />
-			<div v-else class='loader'/>
+			<p v-if='themes.length' class='pagination-details'>
+				Showing {{ showingFrom }} to {{ showingTo }} of {{ totalItems }}
+			</p>
+			<theme-list
+				v-if='!isLoading'
+				:themes='themes'
+				class='themes'
+				@theme:preview='showPreview'
+			/>
+			<div v-else class='loader' />
 		</div>
 	</app-container>
 	<div class='preview__ctas' :class='{ "preview__ctas--visible" : isPreviewing }'>
@@ -52,9 +60,14 @@
 			const availableUpdate = ref(null)
 			const showUpdateModal = ref(false)
 			const themes = ref([])
+			const meta = ref({})
 			const destroy = () => destroyApp(id)
 
-			const title = computed(() => isLoading.value ? 'Loading...' : 'Browse themes')
+			const title = computed(() => isLoading.value ? 'Loading...' : !themes.value.length ? 'Uh oh...' : 'Browse themes')
+			const showingFrom = computed(() => Math.max(1, showingTo.value - meta.value.items_per_page))
+			const showingTo = computed(() => Math.min(meta.value.total_items, meta.value.page * meta.value.items_per_page))
+			const totalItems = computed(() => meta.value.total_items)
+
 
 			const cancelPreview = (themeData) => {
 				dispatchEvent('theme:cancel-preview', themeData)
@@ -67,9 +80,12 @@
 			const updateThemes = async () => {
 				isLoading.value = true
 
-				const response = await getThemes()
-				const { data } = await response.json()
-				themes.value = data.map(({ name, json, images, author }) => ({ name, json, src: images[1]?.src, author: author.name }))
+				const { data, meta: resultsMeta } = await getThemes()
+					.then((response) => response.json())
+					.catch(() => ({ data: [], meta: {} }))
+				meta.value = resultsMeta
+				themes.value = data
+					.map(({ name, json, images, author }) => ({ name, json, src: images[1]?.src, author: author.name }))
 
 				isLoading.value = false
 			}
@@ -79,7 +95,20 @@
 				availableUpdate.value = await getAvailableUpdate(window[`${id}-version`] || version, versionFilePath)
 			})
 
-			return { availableUpdate, isLoading, isPreviewing, showUpdateModal, themes, title, cancelPreview, destroy, showPreview }
+			return {
+				availableUpdate,
+				isLoading,
+				isPreviewing,
+				showingFrom,
+				showingTo,
+				showUpdateModal,
+				themes,
+				title,
+				totalItems,
+				cancelPreview,
+				destroy,
+				showPreview,
+			}
 		},
 	}
 </script>
@@ -90,23 +119,41 @@
 	}
 
 	.theme-browser {
+		align-items: baseline;
 		background: #202124;
 		box-sizing: border-box;
 		color: #FFF;
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
 		height: inherit;
+		justify-content: space-between;
 		min-height: 100%;
 		padding: 24px 32px;
 	}
 
+	.title, .pagination-details {
+		flex: 0 1 auto;
+		margin: 0;
+	}
+
 	.title {
-		margin: 0 0 16px;
+		margin-right: 20px;
+	}
+
+	.pagination-details {
+		color: #CECECE;
+		margin-left: 20px;
+	}
+
+	.themes {
+		margin-top: 16px;
 	}
 
 	.loader {
 		align-self: center;
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23900'%3E%3Ccircle cx='60' cy='50' r='4'%3E%3Canimate attributeName='cx' repeatCount='indefinite' dur='1s' values='95;35' keyTimes='0;1' begin='-0.67s'/%3E%3Canimate attributeName='fill-opacity' repeatCount='indefinite' dur='1s' values='0;1;1' keyTimes='0;0.2;1' begin='-0.67s'/%3E%3C/circle%3E%3Ccircle cx='60' cy='50' r='4'%3E%3Canimate attributeName='cx' repeatCount='indefinite' dur='1s' values='95;35' keyTimes='0;1' begin='-0.33s'/%3E%3Canimate attributeName='fill-opacity' repeatCount='indefinite' dur='1s' values='0;1;1' keyTimes='0;0.2;1' begin='-0.33s'/%3E%3C/circle%3E%3Ccircle cx='60' cy='50' r='4'%3E%3Canimate attributeName='cx' repeatCount='indefinite' dur='1s' values='95;35' keyTimes='0;1' begin='0s'/%3E%3Canimate attributeName='fill-opacity' repeatCount='indefinite' dur='1s' values='0;1;1' keyTimes='0;0.2;1' begin='0s'/%3E%3C/circle%3E%3C/g%3E%3Cg fill='%230C0' transform='translate(-15 0)'%3E%3Cpath d='M50 50L20 50A30 30 0 0 0 80 50Z'%3E%3CanimateTransform attributeName='transform' type='rotate' repeatCount='indefinite' dur='1s' values='0 50 50;45 50 50;0 50 50' keyTimes='0;0.5;1'/%3E%3C/path%3E%3Cpath d='M50 50L20 50A30 30 0 0 1 80 50Z'%3E%3CanimateTransform attributeName='transform' type='rotate' repeatCount='indefinite' dur='1s' values='0 50 50;-45 50 50;0 50 50' keyTimes='0;0.5;1'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+		background: no-repeat 58% 50%/100px auto
+			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23900'%3E%3Ccircle cx='60' cy='50' r='4'%3E%3Canimate attributeName='cx' repeatCount='indefinite' dur='1s' values='95;35' keyTimes='0;1' begin='-0.67s'/%3E%3Canimate attributeName='fill-opacity' repeatCount='indefinite' dur='1s' values='0;1;1' keyTimes='0;0.2;1' begin='-0.67s'/%3E%3C/circle%3E%3Ccircle cx='60' cy='50' r='4'%3E%3Canimate attributeName='cx' repeatCount='indefinite' dur='1s' values='95;35' keyTimes='0;1' begin='-0.33s'/%3E%3Canimate attributeName='fill-opacity' repeatCount='indefinite' dur='1s' values='0;1;1' keyTimes='0;0.2;1' begin='-0.33s'/%3E%3C/circle%3E%3Ccircle cx='60' cy='50' r='4'%3E%3Canimate attributeName='cx' repeatCount='indefinite' dur='1s' values='95;35' keyTimes='0;1' begin='0s'/%3E%3Canimate attributeName='fill-opacity' repeatCount='indefinite' dur='1s' values='0;1;1' keyTimes='0;0.2;1' begin='0s'/%3E%3C/circle%3E%3C/g%3E%3Cg fill='%230C0' transform='translate(-15 0)'%3E%3Cpath d='M50 50L20 50A30 30 0 0 0 80 50Z'%3E%3CanimateTransform attributeName='transform' type='rotate' repeatCount='indefinite' dur='1s' values='0 50 50;45 50 50;0 50 50' keyTimes='0;0.5;1'/%3E%3C/path%3E%3Cpath d='M50 50L20 50A30 30 0 0 1 80 50Z'%3E%3CanimateTransform attributeName='transform' type='rotate' repeatCount='indefinite' dur='1s' values='0 50 50;-45 50 50;0 50 50' keyTimes='0;0.5;1'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+		flex: 1 0 100%;
 		height: 200px;
 		margin: auto 0 40%;
 		width: 200px;
