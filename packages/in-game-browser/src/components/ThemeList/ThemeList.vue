@@ -58,14 +58,14 @@
 			}
 
 			&__name {
-				color: #f1f73d;
+				color: #80f20d;
 				font-size: 18px;
 				font-weight: 500;
 				margin: 14px 0 0;
 			}
 
 			&__author {
-				color: #bdc1c6;
+				color: #ccced0;
 				font-size: 14px;
 				margin: 8px 0 0;
 			}
