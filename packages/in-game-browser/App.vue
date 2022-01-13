@@ -3,12 +3,13 @@
 		v-show='!isPreviewing'
 		title='Bitburner Theme Browser'
 		:available-update='availableUpdate'
+		class='app-container'
 		@app:close='destroy'
 		@app:click:update='showUpdateModal = true'
 	>
-		<div class='app'>
+		<div class='theme-browser'>
 			<h1 class='title'>
-				Theme Browser
+				Browse themes
 			</h1>
 			<theme-list :themes='themes' class='themes' @theme:preview='showPreview' />
 		</div>
@@ -70,10 +71,14 @@
 </script>
 
 <style scoped lang='scss'>
-	.app {
-		background: var(--backgroundsecondary, #333);
+	:deep(.app) {
+		max-width: 1166px;
+	}
+
+	.theme-browser {
+		background: #202124;
 		box-sizing: border-box;
-		color: var(--primary, #FFF);
+		color: #FFF;
 		display: flex;
 		flex-direction: column;
 		height: inherit;
