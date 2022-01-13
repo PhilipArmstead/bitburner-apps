@@ -193,11 +193,11 @@
 				}
 
 				&::-webkit-scrollbar-track {
-					background-color: transparent;
+					background-color: var(--primarydark, #B7B7B7);
 				}
 
 				&::-webkit-scrollbar-thumb {
-					background-color: #79797A;
+					background-color: var(--primary, #272727);
 				}
 			}
 
