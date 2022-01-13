@@ -55,10 +55,14 @@
 
 			@media (min-width: 1360px) {
 				flex-basis: 20%;
+				padding-left: 16px;
+				padding-right: 16px;
 			}
 
 			@media (min-width: 1600px) {
 				flex-basis: 16.6%;
+				padding-left: 24px;
+				padding-right: 24px;
 			}
 
 			&__name, &__author, &__submission-date {

@@ -71,7 +71,7 @@
 
 <style scoped lang='scss'>
 	.app {
-		background: var(--backgroundprimary, #333);
+		background: var(--backgroundsecondary, #333);
 		box-sizing: border-box;
 		color: var(--primary, #FFF);
 		display: flex;
