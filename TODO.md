@@ -12,3 +12,7 @@ Release.sh is generic and should exist only in one place (app-builder, perhaps, 
 
 
 **Make theme extractor optional on apps**
+
+
+**Release tool should write app in commit message**
+In addition to the version, it would be nice to know _what_ was being updated (now I have multiple apps)
