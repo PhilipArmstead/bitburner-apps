@@ -5,9 +5,9 @@
 export const inputTerminalCommand = (command) => {
 	const terminalInput = document.getElementById('terminal-input')
 	if (!terminalInput) {
-		window.appNotifier?.toast('The terminal must be visible', 'warn')
+		window.appNotifier?.toast('The terminal must be visible', 'warning')
 	} else if (terminalInput.hasAttribute('disabled')) {
-		window.appNotifier?.toast('The terminal must not be in use', 'warn')
+		window.appNotifier?.toast('The terminal must not be in use', 'warning')
 	} else {
 		terminalInput.value = command
 		const handler = Object.keys(terminalInput)[1]
