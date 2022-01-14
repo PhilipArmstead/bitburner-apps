@@ -9,3 +9,6 @@ Release.sh is generic and should exist only in one place (app-builder, perhaps, 
 
 **Duplicated dev-server tools**  
 `main.js`, `index.html` and `vite.config.js` are the same amongst all apps.
+
+
+**Make theme extractor optional on apps**
