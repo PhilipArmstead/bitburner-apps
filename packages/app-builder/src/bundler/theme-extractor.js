@@ -10,7 +10,10 @@ module.exports = `
 	}
 
 	stylesheet.innerHTML = \`:root {
-		--font-family: "\${ns.ui.getStyles().fontFamily.replaceAll(/, /g, '", "')}";
+		--font-family: \${getComputedStyle(doc.querySelector('p'))['font-family']};
 \${Object.entries(ns.ui.getTheme()).map(([key, value]) => \`--\${key}: \${value};\`).join('\\n')}
 	}\`
 `
+
+// TODO: reinstate this when the browser version is updated
+// 		--font-family: "${ns.ui.getStyles().fontFamily.replaceAll(/, /g, '", "')}";
