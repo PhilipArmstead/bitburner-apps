@@ -4,7 +4,7 @@
 	"scripts": {
 		"start": "vite",
 		"build": "vite build --emptyOutDir",
-		"lint": "eslint  --fix --ext .js,.vue ",
+		"lint": "eslint  --fix --ext .js,.vue .",
 		"make-release": "bash release.sh"
 	},
 	"devDependencies": {
