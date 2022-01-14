@@ -6,7 +6,7 @@ const appInjector = require('./app-injector')
  * @param {String} stylesheetName
  * @param {String} id
  * @param {String} version
- * @param {{imports: Function?, immediate: Function?, main: Function?, exit: Function?}} entryHooks
+ * @param {{imports: Function?, immediate: Function?, main: Function?, exit: Function?, extractThemes: Boolean}} entryHooks
  * @returns {{apply: String, generateBundle({}, {}): void, name: String, enforce: String}}
  */
 module.exports = (bundleFilename, stylesheetName, id, version, entryHooks = {}) => {

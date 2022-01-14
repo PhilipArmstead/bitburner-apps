@@ -17,4 +17,5 @@ export default {
 
 	globalThis[\`\${id}-macro-list\`] = config
 `,
+	extractThemes: true,
 }

@@ -57,8 +57,9 @@ ${entryHooks.exit ? `
 		} catch (e) {
 			console.log(e)
 		}
-	})
 ` : ''}
+	})
+
 	await vueLoad
 
 ${entryHooks.main ? entryHooks.main() : ''}

@@ -28,4 +28,5 @@ export default {
 			doc.body.removeEventListener('theme:preview', previewTheme)
 			doc.body.removeEventListener('theme:cancel-preview', resetTheme)
 `,
+	extractThemes: true,
 }
