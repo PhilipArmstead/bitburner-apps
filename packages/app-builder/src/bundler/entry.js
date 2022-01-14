@@ -51,9 +51,7 @@ ${themeExtractor}
 		doc.body.removeEventListener('app:update:${id}', updateApp)
 
 ${entryHooks.exit ? `
-		try {
-${entryHooks.exit()}
-		} catch (e) {
+		try {${entryHooks.exit()}} catch (e) {
 			console.log(e)
 		}
 	})

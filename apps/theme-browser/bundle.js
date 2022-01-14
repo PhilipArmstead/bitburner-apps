@@ -25,7 +25,7 @@ export default {
 	doc.body.addEventListener('theme:cancel-preview', resetTheme)
 `,
 	exit: () => `
-		doc.body.removeEventListener('theme:preview', previewTheme)
-		doc.body.removeEventListener('theme:cancel-preview', resetTheme)
+			doc.body.removeEventListener('theme:preview', previewTheme)
+			doc.body.removeEventListener('theme:cancel-preview', resetTheme)
 `,
 }
