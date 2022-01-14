@@ -2,6 +2,15 @@ import { themesEndpoint } from '../../config/app'
 
 
 /**
+ * @param {Number} themeId
+ * @returns {Promise<{json: String}>}
+ */
+export async function getTheme (themeId) {
+	return await fetch(`${themesEndpoint}/${themeId}`).then((response) => response.json())
+}
+
+
+/**
  * @returns {Promise<Response>}
  */
 export async function getThemes () {

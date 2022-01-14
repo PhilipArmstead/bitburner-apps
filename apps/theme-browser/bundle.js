@@ -14,10 +14,12 @@ export const appEntry = () => `
 	}
 	const resetTheme = () => ns.ui.setTheme(currentTheme)
 
-	const themeToApply = ns.flags([['apply', ""]]).apply
+	const { apply: themeToApply, 'apply-id': themeIdToApply } = ns.flags([['apply', ""], ['apply-id', ""]])
 	if (themeToApply) {
 		return previewTheme({ detail: themeToApply })
 	}
+
+	globalThis[\`\${id}-theme-id\`] = themeIdToApply
 
 	doc.body.addEventListener('theme:preview', previewTheme)
 	doc.body.addEventListener('theme:cancel-preview', resetTheme)
