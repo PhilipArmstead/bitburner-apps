@@ -3,8 +3,9 @@ const documentReplacement = 'rockument'
 
 
 /**
+ * Take the App's JS/CSS and dump them in to a script as a callable function and a string of CSS respectively.
  * @param {String} code
- * @param {String} css
+ * @param {Object} css
  * @returns {String}
  */
 module.exports = (code, css) => `

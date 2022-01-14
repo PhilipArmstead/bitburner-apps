@@ -1,5 +1,5 @@
 const generateEntry = require('./entry')
-const appWrapper = require('./wrapper')
+const appInjector = require('./app-injector')
 
 /**
  * @param {String} bundleFilename
@@ -24,7 +24,7 @@ module.exports = (bundleFilename, stylesheetName, id, version, appEntry = () => 
 			component.code = `
 ${generateEntry(id, version, appEntry, onExit)}
 ${'\n'.repeat(15)}
-${appWrapper(component.code, rawCss)}
+${appInjector(component.code, rawCss)}
 `.trim()
 
 			// remove from final bundle
