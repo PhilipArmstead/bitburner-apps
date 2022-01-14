@@ -7,7 +7,7 @@ const versionOutput = require('./version-output/version-output')
 
 /**
  * @param {{
- * bundleFilename: String?, stylesheetName: String?, id: String, version: String, appEntry: Function, onExit: Function
+ * bundleFilename: String?, stylesheetName: String?, id: String, version: String, appEntry: Function, onExit?: Function
  * }} options
  * @returns {UserConfigExport}
  */
