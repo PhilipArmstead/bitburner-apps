@@ -1,5 +1,3 @@
-undefined
-
 export async function main(ns) {
 
 	// Immediate app-specific code
@@ -19,7 +17,7 @@ export async function main(ns) {
 
 	const doc = globalThis['document']
 	const id = 'theme-browser-app'
-	globalThis[`${id}-version`] = '0.0.39'
+	globalThis[`${id}-version`] = '0.0.40'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
@@ -72,7 +70,8 @@ ${Object.entries(ns.ui.getTheme()).map(([key, value]) => `--${key}: ${value};`).
 		try {
 			doc.body.removeEventListener('theme:preview', previewTheme)
 			doc.body.removeEventListener('theme:cancel-preview', resetTheme)
-} catch (e) {
+
+		} catch (e) {
 			console.log(e)
 		}
 	})
