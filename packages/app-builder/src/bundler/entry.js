@@ -58,5 +58,11 @@ ${onExit()}
 	await vueLoad
 
 ${appEntry()}
+
+	mount()
+
+	while (doc.getElementById(id)) {
+		await ns.asleep(2000)
+	}
 } 
 `

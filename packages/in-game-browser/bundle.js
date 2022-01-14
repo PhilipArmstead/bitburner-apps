@@ -21,12 +21,6 @@ export const appEntry = () => `
 
 	doc.body.addEventListener('theme:preview', previewTheme)
 	doc.body.addEventListener('theme:cancel-preview', resetTheme)
-
-	mount()
-
-	while (doc.getElementById(id)) {
-		await ns.asleep(2000)
-	}
 `
 
 export const onExit = () => `
