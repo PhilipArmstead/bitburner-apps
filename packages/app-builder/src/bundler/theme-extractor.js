@@ -10,7 +10,7 @@ module.exports = `
 	}
 
 	stylesheet.innerHTML = \`:root {
-		--font-family: \${getComputedStyle(doc.querySelector('p'))['font-family']};
+		--font-family: "\${ns.ui.getStyles().fontFamily.replaceAll(/, /g, '", "')}";
 \${Object.entries(ns.ui.getTheme()).map(([key, value]) => \`--\${key}: \${value};\`).join('\\n')}
 	}\`
 `
