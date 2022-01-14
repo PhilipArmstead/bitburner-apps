@@ -1,13 +1,13 @@
 <template>
 	<div class='app-wrapper'>
-		<app-window
+		<app-container
 			v-bind='{ title, availableUpdate }'
-			class='app-window'
+			class='app-container'
 			@app:click:update='showUpdateModal = true'
 			@app:close='destroy'
 		>
 			<slot />
-		</app-window>
+		</app-container>
 		<update-modal
 			v-if='showUpdateModal'
 			:version='availableUpdate'
@@ -22,12 +22,12 @@
 	import { onMounted, ref } from 'vue'
 	import { getAvailableUpdate } from '@bitburner-theme-browser/common-helpers'
 
-	import AppWindow from '../AppWindow/AppWindow.vue'
+	import AppContainer from '../AppContainer/AppContainer.vue'
 	import UpdateModal from '../UpdateModal/UpdateModal.vue'
 
 	export default {
 		name: 'AppWrapper',
-		components: { AppWindow, UpdateModal },
+		components: { AppContainer, UpdateModal },
 		props: {
 			title: {
 				type: String,

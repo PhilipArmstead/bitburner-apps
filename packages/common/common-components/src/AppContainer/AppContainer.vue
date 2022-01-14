@@ -1,5 +1,5 @@
 <template>
-	<div class='app-window'>
+	<div class='app-container'>
 		<div class='app'>
 			<div class='app__toolbar'>
 				<h1 class='app__title'>
@@ -77,13 +77,11 @@
 				default: null,
 			},
 		},
-		setup (props) {
-		},
 	}
 </script>
 
 <style scoped lang="scss">
-	.app-window {
+	.app-container {
 		bottom: 0;
 		left: 0;
 		pointer-events: none;

@@ -2,7 +2,7 @@
  * @param {String} id
  */
 export function closeApp (id) {
-	document.querySelector(`#${id} .app-window`).dispatchEvent(new CustomEvent('app:close'))
+	document.querySelector(`#${id} .app-container`).dispatchEvent(new CustomEvent('app:close'))
 }
 
 
