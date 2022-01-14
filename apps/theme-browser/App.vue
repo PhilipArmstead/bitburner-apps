@@ -1,5 +1,5 @@
 <template>
-	<app-wrapper v-show='!isPreviewing' v-bind="{ ...config, title: 'Bitburner Theme Browser' }">
+	<app-wrapper v-show='!isPreviewing && !isApplying' v-bind="{ ...config, title: 'Bitburner Theme Browser' }">
 		<div class='theme-browser'>
 			<h1 class='title'>
 				{{ title }}
@@ -38,6 +38,7 @@
 	export default {
 		components: { AppWrapper, ThemeList },
 		setup () {
+			const isApplying = ref(true)
 			const isLoading = ref(true)
 			const isPreviewing = ref(false)
 			const themes = ref([])
@@ -79,11 +80,13 @@
 					}
 				}
 
+				isApplying.value = false
 				await updateThemes()
 			})
 
 			return {
 				config,
+				isApplying,
 				isLoading,
 				isPreviewing,
 				showingFrom,
