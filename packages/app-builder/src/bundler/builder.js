@@ -6,11 +6,10 @@ const appInjector = require('./app-injector')
  * @param {String} stylesheetName
  * @param {String} id
  * @param {String} version
- * @param {Function} appEntry
- * @param {Function} onExit
+ * @param {{imports: Function?, immediate: Function?, main: Function?, exit: Function?}} entryHooks
  * @returns {{apply: String, generateBundle({}, {}): void, name: String, enforce: String}}
  */
-module.exports = (bundleFilename, stylesheetName, id, version, appEntry = () => '', onExit = () => {}) => {
+module.exports = (bundleFilename, stylesheetName, id, version, entryHooks = {}) => {
 	return {
 		apply: 'build',
 		enforce: 'post',
@@ -22,7 +21,7 @@ module.exports = (bundleFilename, stylesheetName, id, version, appEntry = () => 
 			} = bundle
 
 			component.code = `
-${generateEntry(id, version, appEntry, onExit)}
+${generateEntry(id, version, entryHooks)}
 ${'\n'.repeat(15)}
 ${appInjector(component.code, rawCss)}
 `.trim()

@@ -3,13 +3,15 @@ const themeExtractor = require('./theme-extractor.js')
 /**
  * @param {String} id
  * @param {String} version
- * @param {Function} appEntry
- * @param {Function} onExit
+ * @param {{imports: Function?, immediate: Function?, main: Function?, exit: Function?}} entryHooks
  * @returns {String}
  */
-module.exports = (id, version, appEntry = () => '', onExit = () => {
-}) => `
+module.exports = (id, version, entryHooks) => `
+${entryHooks?.imports()}
+
 export async function main(ns) {
+${entryHooks?.immediate()}
+
 	const doc = globalThis['document']
 	const id = '${id}'
 	globalThis[\`\${id}-version\`] = '${version}'
@@ -49,7 +51,7 @@ ${themeExtractor}
 		doc.body.removeEventListener('app:update:${id}', updateApp)
 
 		try {
-${onExit()}
+${entryHooks?.exit()}
 		} catch (e) {
 			console.log(e)
 		}
@@ -57,7 +59,7 @@ ${onExit()}
 
 	await vueLoad
 
-${appEntry()}
+${entryHooks?.main()}
 
 	mount()
 

@@ -1,10 +1,6 @@
-// TODO: change these to be hooks
-// TODO: move the theme variables and apply logic to "immediate" hook
-
-/** @return {String} */
-export const appEntry = () => `
-	// App-specific setup
-	const currentTheme = ns.ui.getTheme()
+export default {
+	immediate: () => `
+	// Immediate app-specific code
 	const previewTheme = ({ detail }) => {
 		try {
 			ns.ui.setTheme(JSON.parse(detail))
@@ -12,20 +8,24 @@ export const appEntry = () => `
 			console.log(e)
 		}
 	}
-	const resetTheme = () => ns.ui.setTheme(currentTheme)
 
 	const { apply: themeToApply, 'apply-id': themeIdToApply } = ns.flags([['apply', ""], ['apply-id', ""]])
 	if (themeToApply) {
 		return previewTheme({ detail: themeToApply })
 	}
+`,
+	main: () => `
+	// App-specific setup
+	const currentTheme = ns.ui.getTheme()
+	const resetTheme = () => ns.ui.setTheme(currentTheme)
 
 	globalThis[\`\${id}-theme-id\`] = themeIdToApply
 
 	doc.body.addEventListener('theme:preview', previewTheme)
 	doc.body.addEventListener('theme:cancel-preview', resetTheme)
-`
-
-export const onExit = () => `
+`,
+	exit: () => `
 		doc.body.removeEventListener('theme:preview', previewTheme)
 		doc.body.removeEventListener('theme:cancel-preview', resetTheme)
-`
+`,
+}

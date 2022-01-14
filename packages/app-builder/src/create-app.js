@@ -6,13 +6,11 @@ const versionOutput = require('./version-output/version-output')
 
 
 /**
- * @param {{
- * bundleFilename: String?, stylesheetName: String?, id: String, version: String, appEntry: Function, onExit?: Function
- * }} options
+ * @param {{bundleFilename: String?, stylesheetName: String?, id: String, version: String, entryHooks: Object}} options
  * @returns {UserConfigExport}
  */
 module.exports = (options) => {
-	const { bundleFilename = 'main.js', stylesheetName = 'style.css', id, version, appEntry, onExit } = options
+	const { bundleFilename = 'main.js', stylesheetName = 'style.css', id, version, entryHooks } = options
 
 	return defineConfig({
 		plugins: [vue()],
@@ -30,7 +28,7 @@ module.exports = (options) => {
 					globals: { vue: 'Vue' },
 				},
 				plugins: [
-					appBuilder(bundleFilename, stylesheetName, id, version, appEntry, onExit),
+					appBuilder(bundleFilename, stylesheetName, id, version, entryHooks),
 					versionOutput('version.txt', version),
 				],
 			},
