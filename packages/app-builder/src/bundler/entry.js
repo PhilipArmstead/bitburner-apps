@@ -7,10 +7,10 @@ const themeExtractor = require('./theme-extractor.js')
  * @returns {String}
  */
 module.exports = (id, version, entryHooks) => `
-${entryHooks?.imports()}
+${entryHooks.imports?.()}
 
 export async function main(ns) {
-${entryHooks?.immediate()}
+${entryHooks.immediate?.()}
 
 	const doc = globalThis['document']
 	const id = '${id}'
@@ -50,16 +50,17 @@ ${themeExtractor}
 		doc.getElementById(\`\${id}-css\`)?.remove()
 		doc.body.removeEventListener('app:update:${id}', updateApp)
 
+${entryHooks.exit ? `
 		try {
-${entryHooks?.exit()}
+${entryHooks.exit()}
 		} catch (e) {
 			console.log(e)
 		}
 	})
-
+` : ''}
 	await vueLoad
 
-${entryHooks?.main()}
+${entryHooks.main?.()}
 
 	mount()
 
