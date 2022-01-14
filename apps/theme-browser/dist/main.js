@@ -19,7 +19,7 @@ export async function main(ns) {
 
 	const doc = globalThis['document']
 	const id = 'theme-browser-app'
-	globalThis[`${id}-version`] = '0.0.38'
+	globalThis[`${id}-version`] = '0.0.39'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
@@ -70,11 +70,9 @@ ${Object.entries(ns.ui.getTheme()).map(([key, value]) => `--${key}: ${value};`).
 
 
 		try {
-
-		doc.body.removeEventListener('theme:preview', previewTheme)
-		doc.body.removeEventListener('theme:cancel-preview', resetTheme)
-
-		} catch (e) {
+			doc.body.removeEventListener('theme:preview', previewTheme)
+			doc.body.removeEventListener('theme:cancel-preview', resetTheme)
+} catch (e) {
 			console.log(e)
 		}
 	})
