@@ -9,8 +9,10 @@ const documentReplacement = 'rockument'
  * @returns {String}
  */
 module.exports = (code, css) => `
+// App CSS
 const bundledCss = ${JSON.stringify(css)}
 
+// Don't worry about it.
 function mount() {
 	const ${windowReplacement} = globalThis
 	const ${documentReplacement} = globalThis['document'];

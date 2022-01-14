@@ -3,7 +3,7 @@ const themeExtractor = require('./theme-extractor.js')
 /**
  * @param {String} id
  * @param {String} version
- * @param {{imports: Function?, immediate: Function?, main: Function?, exit: Function?}} entryHooks
+ * @param {{imports: Function?, immediate: Function?, main: Function?, exit: Function?, extractThemes: Boolean?}} entryHooks
  * @returns {String}
  */
 module.exports = (id, version, entryHooks) => `
@@ -12,6 +12,7 @@ ${entryHooks.imports ? entryHooks.imports() : ''}
 export async function main(ns) {
 ${entryHooks.immediate ? entryHooks.immediate() : ''}
 
+	// Boilerplate
 	const doc = globalThis['document']
 	const id = '${id}'
 	globalThis[\`\${id}-version\`] = '${version}'
@@ -29,7 +30,7 @@ ${entryHooks.immediate ? entryHooks.immediate() : ''}
 		vueLoaded()
 	}
 
-${themeExtractor}
+${entryHooks.extractThemes ? themeExtractor : ''}
 
 	// Add app's CSS and mount point
 	doc.getElementById(id)?.remove()
@@ -45,6 +46,7 @@ ${themeExtractor}
 
 	doc.body.addEventListener('app:update:${id}', updateApp)
 
+	// Unset some stuff on app death
 	ns.atExit(() => {
 		doc.getElementById(id)?.remove()
 		doc.getElementById(\`\${id}-css\`)?.remove()
@@ -61,6 +63,7 @@ ${entryHooks.exit ? `
 
 ${entryHooks.main ? entryHooks.main() : ''}
 
+	// Let's go
 	mount()
 
 	while (doc.getElementById(id)) {
