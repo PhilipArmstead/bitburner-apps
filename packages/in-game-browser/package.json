@@ -1,15 +1,15 @@
 {
-  "name": "@bitburner-theme-browser/in-game-browser",
-  "version": "0.0.32",
-  "scripts": {
-    "start": "vite",
-    "build": "vite build --emptyOutDir",
-    "lint": "eslint  --fix --ext .js,.vue .",
-    "make-release": "bash release.sh"
-  },
-  "devDependencies": {
-    "@bitburner-theme-browser/app-builder": "^0.0.1",
-    "@bitburner-theme-browser/common-config": "^0.0.1",
-    "@bitburner-theme-browser/common-helpers": "^0.0.1"
-  }
+	"name": "@bitburner-theme-browser/in-game-browser",
+	"version": "0.0.32",
+	"scripts": {
+		"start": "vite",
+		"build": "vite build --emptyOutDir",
+		"lint": "eslint  --fix --ext .js,.vue .",
+		"make-release": "bash release.sh"
+	},
+	"devDependencies": {
+		"@bitburner-theme-browser/app-builder": "^0.0.1",
+		"@bitburner-theme-browser/common-config": "^0.0.1",
+		"@bitburner-theme-browser/common-helpers": "^0.0.1"
+	}
 }
