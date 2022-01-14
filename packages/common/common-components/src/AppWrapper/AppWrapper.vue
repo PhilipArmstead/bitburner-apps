@@ -65,8 +65,10 @@
 </script>
 
 <style scoped lang="scss">
+	@import "@bitburner-theme-browser/common-styles";
+
 	.app-wrapper, .update-modal, button {
-		font-family: 'Fira Sans', 'Trebuchet MS', Ubuntu, Helvetica, Arial, sans-serif;
+		font-family: $font-primary;
 	}
 
 	.update-modal {

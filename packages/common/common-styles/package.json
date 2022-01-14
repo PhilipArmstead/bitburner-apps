@@ -1,0 +1,8 @@
+{
+	"name": "@bitburner-theme-browser/common-styles",
+	"version": "0.0.1",
+	"main": "./index.scss",
+	"scripts": {
+		"lint": "eslint  --fix --ext .js,.vue ."
+	}
+}

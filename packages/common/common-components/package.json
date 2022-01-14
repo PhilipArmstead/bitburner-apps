@@ -3,5 +3,8 @@
 	"version": "0.0.1",
 	"scripts": {
 		"lint": "eslint  --fix --ext .js,.vue ."
+	},
+	"devDependencies": {
+		"@bitburner-theme-browser/common-styles": "^0.0.1"
 	}
 }
