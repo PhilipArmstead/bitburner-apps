@@ -7,9 +7,6 @@
     "lint": "eslint  --fix --ext .js,.vue .",
     "make-release": "bash release.sh"
   },
-  "dependencies": {
-    "vue": "^3.2.26"
-  },
   "devDependencies": {
     "@bitburner-theme-browser/app-builder": "^0.0.1",
     "@bitburner-theme-browser/common-config": "^0.0.1",
