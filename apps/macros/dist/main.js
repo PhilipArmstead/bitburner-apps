@@ -4,7 +4,7 @@ export async function main(ns) {
 	// Boilerplate
 	const doc = globalThis['document']
 	const id = 'macros-app'
-	globalThis[`${id}-version`] = '0.0.1'
+	globalThis[`${id}-version`] = '0.0.2'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
@@ -19,6 +19,19 @@ export async function main(ns) {
 		vueLoaded()
 	}
 
+
+	// Extract current theme as CSS varibles for apps
+	let stylesheet = doc.getElementById('theme-variables')
+	if (!stylesheet) {
+		stylesheet = doc.createElement('style')
+		stylesheet.id = 'theme-variables'
+		doc.head.insertAdjacentElement('beforeend', stylesheet)
+	}
+
+	stylesheet.innerHTML = `:root {
+		--font-family: ${getComputedStyle(doc.querySelector('p'))['font-family']};
+${Object.entries(ns.ui.getTheme()).map(([key, value]) => `--${key}: ${value};`).join('\n')}
+	}`
 
 
 	// Add app's CSS and mount point
@@ -41,6 +54,8 @@ export async function main(ns) {
 		doc.getElementById(`${id}-css`)?.remove()
 		doc.body.removeEventListener('app:update:macros-app', updateApp)
 
+
+	})
 
 	await vueLoad
 
