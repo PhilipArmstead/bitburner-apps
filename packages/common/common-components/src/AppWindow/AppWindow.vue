@@ -1,5 +1,5 @@
 <template>
-	<div class='app-container'>
+	<div class='app-window'>
 		<div class='app'>
 			<div class='app__toolbar'>
 				<h1 class='app__title'>
@@ -15,7 +15,10 @@
 					>
 						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 417 417' class='icon icon--update'>
 							<path fill='#FFF' d='M120 90h180v235H120z' />
-							<path fill='currentColor' d='M208.5 417a208.5 208.5 0 1 0 0-417 208.5 208.5 0 0 0 0 417zm-81.3-197.5 68.3-118.3a15 15 0 0 1 26 0l68.2 118.3a15 15 0 0 1-13 22.5h-33.2v66.2a15 15 0 0 1-15 15h-40a15 15 0 0 1-15-15V242h-33.3a15 15 0 0 1-13-22.5z' />
+							<path
+								fill='currentColor'
+								d='M208.5 417a208.5 208.5 0 1 0 0-417 208.5 208.5 0 0 0 0 417zm-81.3-197.5 68.3-118.3a15 15 0 0 1 26 0l68.2 118.3a15 15 0 0 1-13 22.5h-33.2v66.2a15 15 0 0 1-15 15h-40a15 15 0 0 1-15-15V242h-33.3a15 15 0 0 1-13-22.5z'
+							/>
 						</svg>
 					</button>
 					<button
@@ -51,8 +54,11 @@
 </template>
 
 <script>
+	import { onMounted, ref } from 'vue'
+
 	export default {
 		name: 'AppContainer',
+		components: {  },
 		props: {
 			title: {
 				type: String,
@@ -62,12 +68,22 @@
 				type: [String, Promise],
 				default: null,
 			},
+			versionFilePath: {
+				type: String,
+				default: null,
+			},
+			id: {
+				type: String,
+				default: null,
+			},
+		},
+		setup (props) {
 		},
 	}
 </script>
 
-<style scoped lang='scss'>
-	.app-container {
+<style scoped lang="scss">
+	.app-window {
 		bottom: 0;
 		left: 0;
 		pointer-events: none;
@@ -138,7 +154,7 @@
 					}
 
 					&--update {
-						color: #6bd700;
+						color: #6BD700;
 					}
 				}
 

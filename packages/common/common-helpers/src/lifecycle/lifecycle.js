@@ -1,8 +1,8 @@
 /**
  * @param {String} id
  */
-export function destroyApp (id) {
-	document.getElementById(id).remove()
+export function closeApp (id) {
+	document.querySelector(`#${id} .app-window`).dispatchEvent(new CustomEvent('app:close'))
 }
 
 

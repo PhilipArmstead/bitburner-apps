@@ -1,12 +1,5 @@
 <template>
-	<app-container
-		v-show='!isPreviewing'
-		title='Bitburner Theme Browser'
-		:available-update='availableUpdate'
-		class='app-container'
-		@app:close='destroy'
-		@app:click:update='showUpdateModal = true'
-	>
+	<app-wrapper v-show='!isPreviewing' v-bind="{ id, title: 'Bitburner Theme Browser', versionFilePath }">
 		<div class='theme-browser'>
 			<h1 class='title'>
 				{{ title }}
@@ -22,46 +15,33 @@
 			/>
 			<div v-else class='loader' />
 		</div>
-	</app-container>
+	</app-wrapper>
 	<div class='preview__ctas' :class='{ "preview__ctas--visible" : isPreviewing }'>
 		<button class='preview__cta preview__cta--cancel' @click='cancelPreview'>
 			<span class='sr-only'>Cancel</span>
 		</button>
-		<button class='preview__cta preview__cta--confirm' @click='destroy'>
+		<button class='preview__cta preview__cta--confirm' @click='closeApp'>
 			<span class='sr-only'>Confirm</span>
 		</button>
 	</div>
-	<update-modal
-		v-if='showUpdateModal'
-		:version='availableUpdate'
-		class='update-modal'
-		@modal:close='showUpdateModal = false'
-		@app:updated='availableUpdate = null'
-	/>
 </template>
 
 <script>
 	import { computed, onMounted, ref } from 'vue'
-	import { getAvailableUpdate } from '@bitburner-theme-browser/common-helpers'
+	import { AppWrapper } from '@bitburner-theme-browser/common-components'
+	import { closeApp, dispatchEvent } from '@bitburner-theme-browser/common-helpers'
 
-	import AppContainer from './src/components/AppContainer/AppContainer.vue'
-	import UpdateModal from './src/components/UpdateModal/UpdateModal.vue'
 	import ThemeList from './src/components/ThemeList/ThemeList.vue'
-	import { destroyApp, dispatchEvent } from './src/helpers/lifecycle'
-	import { getThemes } from './src/services/themes'
+	import { getThemes, handleThemeResponse } from './src/services/themes'
 	import { id, versionFilePath } from './config/app'
-	import { version } from './package.json'
 
 	export default {
-		components: { AppContainer, ThemeList, UpdateModal },
+		components: { AppWrapper, ThemeList },
 		setup () {
 			const isLoading = ref(true)
 			const isPreviewing = ref(false)
-			const availableUpdate = ref(null)
-			const showUpdateModal = ref(false)
 			const themes = ref([])
 			const meta = ref({})
-			const destroy = () => destroyApp(id)
 
 			const title = computed(() => isLoading.value ? 'Loading...' : !themes.value.length ? 'Uh oh...' : 'Browse themes')
 			const showingFrom = computed(() => Math.max(1, showingTo.value - meta.value.items_per_page))
@@ -80,33 +60,28 @@
 			const updateThemes = async () => {
 				isLoading.value = true
 
-				const { data, meta: resultsMeta } = await getThemes()
-					.then((response) => response.json())
-					.catch(() => ({ data: [], meta: {} }))
+				const response = getThemes()
+				const { data, meta: resultsMeta } = await handleThemeResponse(response)
 				meta.value = resultsMeta
 				themes.value = data
-					.map(({ name, json, images, author }) => ({ name, json, src: images[1]?.src, author: author.name }))
 
 				isLoading.value = false
 			}
 
-			onMounted(async () => {
-				updateThemes()
-				availableUpdate.value = await getAvailableUpdate(window[`${id}-version`] || version, versionFilePath)
-			})
+			onMounted(async () => await updateThemes())
 
 			return {
-				availableUpdate,
+				id,
 				isLoading,
 				isPreviewing,
 				showingFrom,
 				showingTo,
-				showUpdateModal,
 				themes,
 				title,
 				totalItems,
+				versionFilePath,
 				cancelPreview,
-				destroy,
+				closeApp: () => closeApp(id),
 				showPreview,
 			}
 		},
@@ -114,10 +89,6 @@
 </script>
 
 <style scoped lang='scss'>
-	.app-container, .update-modal, button {
-		font-family: 'Fira Sans', 'Trebuchet MS', Ubuntu, Helvetica, Arial, sans-serif;
-	}
-
 	:deep(.app) {
 		max-width: 1166px;
 	}
@@ -210,16 +181,6 @@
 				background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 122.877 101.052\'%3E%3Cpath fill=\'white\' d=\'M4.43 63.63A14.383 14.383 0 0 1 .003 53.52a14.393 14.393 0 0 1 4.015-10.281 14.372 14.372 0 0 1 10.106-4.425 14.373 14.373 0 0 1 10.283 4.012l24.787 23.851L98.543 3.989l1.768 1.349-1.77-1.355a2.27 2.27 0 0 1 .479-.466A14.383 14.383 0 0 1 109.243.022V.018l.176.016c3.623.24 7.162 1.85 9.775 4.766a14.383 14.383 0 0 1 3.662 10.412h.004l-.016.176a14.362 14.362 0 0 1-4.609 9.632L59.011 97.11l.004.004a2.157 2.157 0 0 1-.372.368 14.392 14.392 0 0 1-9.757 3.569 14.381 14.381 0 0 1-9.741-4.016L4.43 63.63z\'/%3E%3C/svg%3E');
 			}
 		}
-	}
-
-	.update-modal {
-		background: rgba(#333, .7);
-		height: 100%;
-		left: 0;
-		position: fixed;
-		top: 0;
-		width: 100%;
-		z-index: 1512;
 	}
 
 	.sr-only {

@@ -34,8 +34,8 @@
 <script>
 	import { ref } from 'vue'
 
-	import { dispatchEvent } from '../../helpers/lifecycle'
-	import { appFilePath, id } from '../../../config/app'
+	import { dispatchEvent } from '@bitburner-theme-browser/common-helpers/src/lifecycle/lifecycle'
+	import { appFilePath, id } from '@bitburner-theme-browser/in-game-browser/config/app'
 
 	export default {
 		name: 'UpdateModal',

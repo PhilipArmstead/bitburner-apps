@@ -8,3 +8,5 @@ const packageName = 'in-game-browser'
 export const id = 'theme-browser-app'
 export const appFilePath = `${repositoryRaw}/${repositoryBranch}/packages/${packageName}/dist/main.js`
 export const versionFilePath = `${repositoryRaw}/${repositoryBranch}/packages/${packageName}/dist/version.txt`
+
+export const themesEndpoint = 'https://bitburner.daft.host/api/themes'
