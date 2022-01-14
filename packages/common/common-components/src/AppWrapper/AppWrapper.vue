@@ -10,6 +10,7 @@
 		</app-container>
 		<update-modal
 			v-if='showUpdateModal'
+			v-bind='{ appFilePath, id }'
 			:version='availableUpdate'
 			class='update-modal'
 			@modal:close='showUpdateModal = false'
@@ -37,17 +38,21 @@
 				type: String,
 				default: null,
 			},
+			appFilePath: {
+				type: String,
+				default: null,
+			},
 			versionFilePath: {
 				type: String,
 				default: null,
 			},
 		},
-		setup ({ id, versionFilePath }) {
+		setup ({ appFilePath, id, versionFilePath }) {
 			const showUpdateModal = ref(false)
 			const availableUpdate = ref(null)
 
 			onMounted(async () => {
-				if (versionFilePath) {
+				if (appFilePath && versionFilePath) {
 					availableUpdate.value = await getAvailableUpdate(window[`${id}-version`] || '0.0.0', versionFilePath)
 				}
 			})

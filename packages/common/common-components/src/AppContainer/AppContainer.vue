@@ -54,8 +54,6 @@
 </template>
 
 <script>
-	import { onMounted, ref } from 'vue'
-
 	export default {
 		name: 'AppContainer',
 		components: {  },

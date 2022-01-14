@@ -34,18 +34,25 @@
 <script>
 	import { ref } from 'vue'
 
-	import { dispatchEvent } from '@bitburner-theme-browser/common-helpers/src/lifecycle/lifecycle'
-	import { appFilePath, id } from '@bitburner-theme-browser/in-game-browser/config/app'
+	import { dispatchEvent } from '@bitburner-theme-browser/common-helpers'
 
 	export default {
 		name: 'UpdateModal',
 		props: {
+			appFilePath: {
+				type: String,
+				default: null,
+			},
+			id: {
+				type: String,
+				default: null,
+			},
 			version: {
 				type: String,
 				default: null,
 			},
 		},
-		setup () {
+		setup ({ appFilePath, id }) {
 			const element = ref(null)
 			const hasUpdated = ref(false)
 

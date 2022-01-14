@@ -4,9 +4,10 @@
 const repositoryRaw = 'https://raw.githubusercontent.com/PhilipArmstead/bitburner-theme-browser'
 const repositoryBranch = 'master'
 
-const packageName = 'in-game-browser'
+// TODO: calculate this + path from root to dist with node Path
+const packageName = 'theme-browser'
 export const id = 'theme-browser-app'
-export const appFilePath = `${repositoryRaw}/${repositoryBranch}/packages/${packageName}/dist/main.js`
-export const versionFilePath = `${repositoryRaw}/${repositoryBranch}/packages/${packageName}/dist/version.txt`
+export const appFilePath = `${repositoryRaw}/${repositoryBranch}/apps/${packageName}/dist/main.js`
+export const versionFilePath = `${repositoryRaw}/${repositoryBranch}/apps/${packageName}/dist/version.txt`
 
 export const themesEndpoint = 'https://bitburner.daft.host/api/themes'

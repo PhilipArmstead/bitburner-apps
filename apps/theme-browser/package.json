@@ -1,10 +1,10 @@
 {
-	"name": "@bitburner-theme-browser/in-game-browser",
+	"name": "@bitburner-theme-browser/theme-browser",
 	"version": "0.0.34",
 	"scripts": {
 		"start": "vite",
 		"build": "vite build --emptyOutDir",
-		"lint": "eslint  --fix --ext .js,.vue .",
+		"lint": "eslint  --fix --ext .js,.vue ",
 		"make-release": "bash release.sh"
 	},
 	"devDependencies": {

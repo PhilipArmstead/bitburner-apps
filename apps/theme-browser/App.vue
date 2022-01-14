@@ -1,5 +1,5 @@
 <template>
-	<app-wrapper v-show='!isPreviewing' v-bind="{ id, title: 'Bitburner Theme Browser', versionFilePath }">
+	<app-wrapper v-show='!isPreviewing' v-bind="{ ...config, title: 'Bitburner Theme Browser' }">
 		<div class='theme-browser'>
 			<h1 class='title'>
 				{{ title }}
@@ -33,7 +33,7 @@
 
 	import ThemeList from './src/components/ThemeList/ThemeList.vue'
 	import { getThemes, handleThemeResponse } from './src/services/themes'
-	import { id, versionFilePath } from './config/app'
+	import * as config from './config/app'
 
 	export default {
 		components: { AppWrapper, ThemeList },
@@ -71,7 +71,7 @@
 			onMounted(async () => await updateThemes())
 
 			return {
-				id,
+				config,
 				isLoading,
 				isPreviewing,
 				showingFrom,
@@ -79,9 +79,8 @@
 				themes,
 				title,
 				totalItems,
-				versionFilePath,
 				cancelPreview,
-				closeApp: () => closeApp(id),
+				closeApp: () => closeApp(config.id),
 				showPreview,
 			}
 		},
