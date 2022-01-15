@@ -3,7 +3,7 @@
 		class='app-container'
 		:class='{
 			"app--is-minimised": isMinimised,
-			"app--can-resize": options.canResize,
+			"app--can-resize": windowOptions.canResize,
 		}'
 	>
 		<div
@@ -164,13 +164,11 @@
 			let modalStart = {}
 			const isMinimised = ref(false)
 
-			options = Object.assign({
+			const windowOptions = Object.assign({
 				canDrag: true,
 				canMinimise: true,
 				canResize: true,
 			}, options)
-
-			const { canMinimise } = options
 
 			const setPosition = () => {
 				const width = process.value.offsetWidth
@@ -182,7 +180,7 @@
 			}
 
 			onMounted(() => {
-				if (options.canResize) {
+				if (windowOptions.canResize) {
 					new ResizeObserver(([{ borderBoxSize: [{ inlineSize, blockSize }] }]) => {
 						if (hasInitialised.value && !isMinimised.value) {
 							processWidth.value = inlineSize
@@ -195,13 +193,13 @@
 					hasInitialised.value = true
 				}
 
-				if (options.canDrag) {
+				if (windowOptions.canDrag) {
 					setPosition()
 				}
 			})
 
 			const beginGrabbing = ({ x, y, button }) => {
-				if (!options.canDrag) {
+				if (!windowOptions.canDrag) {
 					return
 				}
 
@@ -277,13 +275,13 @@
 			}
 
 			return {
-				canMinimise,
 				isMinimised,
 				left,
+				process,
 				processHeight,
 				processWidth,
 				top,
-				process,
+				windowOptions,
 				beginGrabbing,
 				setPosition,
 				toggleMinimise,

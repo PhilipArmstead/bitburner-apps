@@ -48,7 +48,7 @@
 			},
 			windowOptions: {
 				type: Object,
-				default: () => ({})
+				default: () => ({}),
 			},
 		},
 		setup ({ appFilePath, id, versionFilePath }) {
