@@ -1,6 +1,6 @@
 {
 	"name": "@bitburner-theme-browser/theme-browser",
-	"version": "0.0.45",
+	"version": "0.0.46",
 	"scripts": {
 		"start": "vite",
 		"build": "vite build --emptyOutDir",
