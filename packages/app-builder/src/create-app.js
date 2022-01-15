@@ -14,9 +14,6 @@ module.exports = (options) => {
 
 	return defineConfig({
 		plugins: [vue()],
-		optimizeDeps: {
-			include: ['@bitburner-theme-browser/common-config'],
-		},
 		build: {
 			lib: {
 				entry: bundleFilename,
