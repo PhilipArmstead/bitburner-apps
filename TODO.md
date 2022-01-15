@@ -1,8 +1,4 @@
 # TODO
-**Centralise config**  
-I don't know why I can't import config from an ES module at run/build time but I know it's possible. Figure this out and do it so all apps don't need to declare the repository config.
-
-
 **Duplicated tools**  
 Release.sh is generic and should exist only in one place (app-builder, perhaps, and accepting on the path to dir as a parameter).
 
@@ -16,3 +12,7 @@ Release.sh is generic and should exist only in one place (app-builder, perhaps, 
 
 **Release tool should write app in commit message**
 In addition to the version, it would be nice to know _what_ was being updated (now I have multiple apps)
+
+
+**External SVGs**  
+Find the Vite inline SVG plugin

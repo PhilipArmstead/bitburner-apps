@@ -1,5 +1,5 @@
 <template>
-	<app-wrapper v-bind="{ ...config, title: 'Macros' }">
+	<app-wrapper v-bind="{ ...$props, title: 'Macros' }">
 		<div class='macro-list'>
 			<div v-for='(lists, category) in items' :key='category' class='macro__group'>
 				<h1 v-if="category !== 'uncategorised'" class='macro__title'>
@@ -24,7 +24,21 @@
 
 	export default {
 		components: { AppWrapper },
-		setup () {
+		props: {
+			id: {
+				type: String,
+				required: true,
+			},
+			appFilePath: {
+				type: String,
+				default: null,
+			},
+			versionFilePath: {
+				type: String,
+				default: null,
+			},
+		},
+		setup ({ id }) {
 			const items = ref({})
 
 			// window[`${config.id}-macro-list`] = {
@@ -38,7 +52,7 @@
 			// }
 
 			const generateList = () => {
-				const list = window[`${config.id}-macro-list`] || {}
+				const list = window[`${id}-macro-list`] || {}
 				items.value = {
 					uncategorised: Object.fromEntries(Object.entries(list)
 						.filter(([, list]) => Array.isArray(list))

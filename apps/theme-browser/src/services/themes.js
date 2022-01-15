@@ -31,7 +31,7 @@ export async function handleThemeResponse (response) {
 		.catch(() => ({ data: [], meta: {} }))
 
 	return {
-		data: data.map(({ name, json, images, author }) => ({ name, json, src: images[1]?.src, author: author.name })),
+		data: data.map?.(({ name, json, images, author }) => ({ name, json, src: images[1]?.src, author: author.name })) || [],
 		meta,
 	}
 }

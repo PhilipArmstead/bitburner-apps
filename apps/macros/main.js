@@ -1,5 +1,5 @@
 import App from './App.vue'
 import { createApp } from 'vue'
-import { id } from './config/app'
+import config from './config/app'
 
-createApp(App).mount(`#${id}`)
+createApp(App, config).mount(`#${config.id}`)

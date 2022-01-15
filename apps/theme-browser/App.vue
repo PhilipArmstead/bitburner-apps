@@ -1,5 +1,5 @@
 <template>
-	<app-wrapper v-show='!isPreviewing && !isApplying' v-bind="{ ...config, title: 'Bitburner Theme Browser', windowOptions }">
+	<app-wrapper v-show='!isPreviewing && !isApplying' v-bind="{ ...$props, title: 'Bitburner Theme Browser', windowOptions }">
 		<div class='theme-browser'>
 			<h1 class='title'>
 				{{ title }}
@@ -33,11 +33,24 @@
 
 	import ThemeList from './src/components/ThemeList/ThemeList.vue'
 	import { getTheme, getThemes, handleThemeResponse } from './src/services/themes'
-	import * as config from './config/app'
 
 	export default {
 		components: { AppWrapper, ThemeList },
-		setup () {
+		props: {
+			id: {
+				type: String,
+				required: true,
+			},
+			appFilePath: {
+				type: String,
+				default: null,
+			},
+			versionFilePath: {
+				type: String,
+				default: null,
+			},
+		},
+		setup ({ id }) {
 			const isApplying = ref(true)
 			const isLoading = ref(true)
 			const isPreviewing = ref(false)
@@ -75,12 +88,12 @@
 			}
 
 			onMounted(async () => {
-				const themeId = Number(window[`${config.id}-theme-id`])
+				const themeId = Number(window[`${id}-theme-id`])
 				if (themeId) {
 					try {
 						const { json } = await getTheme(themeId)
 						showPreview(json)
-						return closeApp(config.id)
+						return closeApp(id)
 					} catch (e) {
 						console.log(e)
 					}
@@ -91,7 +104,6 @@
 			})
 
 			return {
-				config,
 				isApplying,
 				isLoading,
 				isPreviewing,
@@ -102,7 +114,7 @@
 				totalItems,
 				windowOptions,
 				cancelPreview,
-				closeApp: () => closeApp(config.id),
+				closeApp: () => closeApp(id),
 				showPreview,
 			}
 		},
@@ -122,6 +134,7 @@
 	}
 
 	.theme-browser {
+		align-content: flex-start;
 		align-items: baseline;
 		background: $background-colour;
 		box-sizing: border-box;
@@ -149,6 +162,7 @@
 	}
 
 	.themes {
+		flex: 1 0 100%;
 		margin-top: 16px;
 	}
 
