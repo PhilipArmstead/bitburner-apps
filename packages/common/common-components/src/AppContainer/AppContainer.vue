@@ -36,7 +36,7 @@
 						</svg>
 					</button>
 					<button
-						v-if='canMinimise'
+						v-if='windowOptions.canMinimise'
 						class='btn btn--small app__cta-minimise'
 						@click='toggleMinimise'
 						@mousedown.stop
