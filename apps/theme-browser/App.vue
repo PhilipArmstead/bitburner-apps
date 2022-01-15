@@ -1,5 +1,5 @@
 <template>
-	<app-wrapper v-show='!isPreviewing && !isApplying' v-bind="{ ...config, title: 'Bitburner Theme Browser' }">
+	<app-wrapper v-show='!isPreviewing && !isApplying' v-bind="{ ...config, title: 'Bitburner Theme Browser', windowOptions }">
 		<div class='theme-browser'>
 			<h1 class='title'>
 				{{ title }}
@@ -49,6 +49,12 @@
 			const showingTo = computed(() => Math.min(meta.value.total_items, meta.value.page * meta.value.items_per_page))
 			const totalItems = computed(() => meta.value.total_items)
 
+			const windowOptions = {
+				canDrag: false,
+				canMinimise: false,
+				canResize: false,
+			}
+
 			const cancelPreview = (themeData) => {
 				dispatchEvent('theme:cancel-preview', themeData)
 				isPreviewing.value = false
@@ -94,6 +100,7 @@
 				themes,
 				title,
 				totalItems,
+				windowOptions,
 				cancelPreview,
 				closeApp: () => closeApp(config.id),
 				showPreview,
@@ -103,13 +110,20 @@
 </script>
 
 <style scoped lang='scss'>
-	:deep(.app) {
+	@import "@bitburner-theme-browser/common-styles";
+
+	:deep(.app-container .app) {
+		left: 50%;
+		height: 90vh;
 		max-width: 1166px;
+		top: 50%;
+		transform: translate(-50%, -52%);
+		width: 90vw;
 	}
 
 	.theme-browser {
 		align-items: baseline;
-		background: #171A22;
+		background: $background-colour;
 		box-sizing: border-box;
 		color: #FFF;
 		display: flex;

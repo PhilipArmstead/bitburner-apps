@@ -27,15 +27,15 @@
 		setup () {
 			const items = ref({})
 
-			window[`${config.id}-macro-list`] = {
-			  	"Root everything": ["home", "run /util/server/root-everything.js"],
-			  	"Show servers": ["home", "run /gui/server-list.js"],
-			  	"Show processes": ["home", "run /gui/process-list.js"],
-			  	"Buy": {
-			  		"Buy hacks": ["buy BruteSSH.exe", "buy FTPCrack.exe", "buy relaySMTP.exe", "buy HTTPWorm.exe", "buy SQLInject.exe"],
-			  		"Buy servers": ["home", "run server-purchase.js --once"],
-			  	}
-			  }
+			// window[`${config.id}-macro-list`] = {
+			// 	'Root everything': ['home', 'run /util/server/root-everything.js'],
+			// 	'Show servers': ['home', 'run /gui/server-list.js'],
+			// 	'Show processes': ['home', 'run /gui/process-list.js'],
+			// 	'Buy': {
+			// 		'Buy hacks': ['buy BruteSSH.exe', 'buy FTPCrack.exe', 'buy relaySMTP.exe', 'buy HTTPWorm.exe', 'buy SQLInject.exe'],
+			// 		'Buy servers': ['home', 'run server-purchase.js --once'],
+			// 	},
+			// }
 
 			const generateList = () => {
 				const list = window[`${config.id}-macro-list`] || {}
@@ -66,9 +66,8 @@
 
 	.macro-list {
 		align-content: flex-start;
-		background: rgba(#000, .85);
+		background: var(--backgroundprimary, $background-colour);
 		box-sizing: border-box;
-		color: #0F0;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: flex-start;
@@ -86,7 +85,7 @@
 		}
 
 		&__title {
-			color: #FFF;
+			color: var(--secondary, #FFF);
 			flex: 1 0 100%;
 			font-family: $font-primary;
 			font-size: 16px;
@@ -96,9 +95,10 @@
 			background: none;
 			border: none;
 			border-radius: 2px;
-			box-shadow: 0 0 0 1px rgba(#AAA, .33);
-			color: #17af17;
+			box-shadow: 0 0 0 1px var(--primary-dark, #444);
+			color: var(--primary, #17af17);
 			cursor: pointer;
+			font-family: var(--fontfamily, monospace);
 			line-height: 1;
 			margin: 0;
 			padding: 6px 8px;
@@ -106,7 +106,7 @@
 			width: auto;
 
 			&:hover {
-				box-shadow: 0 0 0 1px #AAA;
+				box-shadow: 0 0 0 1px var(--primary-light, #BBB);
 			}
 		}
 	}

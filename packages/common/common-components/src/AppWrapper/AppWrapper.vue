@@ -1,7 +1,7 @@
 <template>
 	<div class='app-wrapper'>
 		<app-container
-			v-bind='{ title, availableUpdate }'
+			v-bind='{ title, availableUpdate, options: windowOptions }'
 			class='app-container'
 			@app:click:update='showUpdateModal = true'
 			@app:close='destroy'
@@ -45,6 +45,10 @@
 			versionFilePath: {
 				type: String,
 				default: null,
+			},
+			windowOptions: {
+				type: Object,
+				default: () => ({})
 			},
 		},
 		setup ({ appFilePath, id, versionFilePath }) {

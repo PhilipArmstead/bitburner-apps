@@ -1,7 +1,21 @@
 <template>
-	<div class='app-container'>
-		<div class='app'>
-			<div class='app__toolbar'>
+	<div
+		class='app-container'
+		:class='{
+			"app--is-minimised": isMinimised,
+			"app--can-resize": options.canResize,
+		}'
+	>
+		<div
+			ref='process'
+			class='app'
+			:style='{
+				transform: `translate(${left}px, ${top}px)`,
+				width: `${processWidth}px`,
+				height: `${processHeight}px`,
+			}'
+		>
+			<div class='app__toolbar' @mousedown='beginGrabbing'>
 				<h1 class='app__title'>
 					{{ title }}
 				</h1>
@@ -18,6 +32,62 @@
 							<path
 								fill='currentColor'
 								d='M208.5 417a208.5 208.5 0 1 0 0-417 208.5 208.5 0 0 0 0 417zm-81.3-197.5 68.3-118.3a15 15 0 0 1 26 0l68.2 118.3a15 15 0 0 1-13 22.5h-33.2v66.2a15 15 0 0 1-15 15h-40a15 15 0 0 1-15-15V242h-33.3a15 15 0 0 1-13-22.5z'
+							/>
+						</svg>
+					</button>
+					<button
+						v-if='canMinimise'
+						class='btn btn--small app__cta-minimise'
+						@click='toggleMinimise'
+						@mousedown.stop
+					>
+						<svg
+							v-show='!isMinimised'
+							xmlns='http://www.w3.org/2000/svg'
+							viewBox='0 0 18 18'
+							class='icon icon--minimise'
+						>
+							<path d='m3 13h12v2h-12z' fill='currentColor' />
+						</svg>
+						<svg
+							v-show='isMinimised'
+							xmlns='http://www.w3.org/2000/svg'
+							viewBox='0 0 18 18'
+							class='icon icon--restore'
+						>
+							<rect
+								x='5'
+								y='1.5'
+								width='11'
+								height='3'
+								stroke='none'
+								fill='#000'
+							/>
+							<g fill='currentColor'>
+								<rect
+									x='5.8'
+									y='4.3'
+									width='9.4'
+									height='6.5'
+									stroke='#000'
+									stroke-width='1.6'
+								/>
+								<rect
+									x='1.8'
+									y='9'
+									width='9.4'
+									height='6.5'
+									stroke='#000'
+									stroke-width='1.6'
+								/>
+							</g>
+							<rect
+								x='1'
+								y='6.2'
+								width='11'
+								height='3'
+								stroke='none'
+								fill='#000'
 							/>
 						</svg>
 					</button>
@@ -54,9 +124,10 @@
 </template>
 
 <script>
+	import { onMounted, onUnmounted, ref } from 'vue'
+
 	export default {
 		name: 'AppContainer',
-		components: {  },
 		props: {
 			title: {
 				type: String,
@@ -74,6 +145,149 @@
 				type: String,
 				default: null,
 			},
+			options: {
+				type: Object,
+				default: () => ({}),
+			},
+		},
+		setup ({ options }) {
+			const process = ref(null)
+			const hasInitialised = ref(false)
+			const processWidth = ref()
+			const processHeight = ref()
+			const heightBeforeMinimise = ref()
+			const winHeight = ref()
+			const winWidth = ref()
+			const left = ref()
+			const top = ref()
+			let grabStart = {}
+			let modalStart = {}
+			const isMinimised = ref(false)
+
+			options = Object.assign({
+				canDrag: true,
+				canMinimise: true,
+				canResize: true,
+			}, options)
+
+			const { canMinimise } = options
+
+			const setPosition = () => {
+				const width = process.value.offsetWidth
+				const height = process.value.offsetHeight
+				winHeight.value = window.innerWidth
+				winWidth.value = window.innerHeight
+				left.value = winHeight.value / 2 - width / 2
+				top.value = winWidth.value / 2 - height / 2
+			}
+
+			onMounted(() => {
+				if (options.canResize) {
+					new ResizeObserver(([{ borderBoxSize: [{ inlineSize, blockSize }] }]) => {
+						if (hasInitialised.value && !isMinimised.value) {
+							processWidth.value = inlineSize
+							processHeight.value = blockSize
+						}
+
+						hasInitialised.value = true
+					}).observe(process.value)
+				} else {
+					hasInitialised.value = true
+				}
+
+				if (options.canDrag) {
+					setPosition()
+				}
+			})
+
+			const beginGrabbing = ({ x, y, button }) => {
+				if (!options.canDrag) {
+					return
+				}
+
+				const body = document.body
+
+				if (!button) {
+					grabStart = { x, y }
+					processWidth.value = process.value.offsetWidth
+					processHeight.value = process.value.offsetHeight
+					modalStart = { x: left.value, y: top.value }
+					winHeight.value = window.innerWidth
+					winWidth.value = window.innerHeight
+
+					body.addEventListener('mousemove', mouseMove)
+					body.addEventListener('mouseup', endGrabbing)
+					body.addEventListener('mouseleave', endGrabbing)
+				}
+			}
+
+			const endGrabbing = () => {
+				const body = document.body
+				body.removeEventListener('mousemove', mouseMove)
+				body.removeEventListener('mouseup', endGrabbing)
+				body.removeEventListener('mouseleave', endGrabbing)
+			}
+
+			onUnmounted(endGrabbing)
+
+			const mouseMove = ({ x, y }) => {
+				let leftFinal = modalStart.x + (x - grabStart.x)
+				let topFinal = modalStart.y + (y - grabStart.y)
+
+				const leftIsBeforeScreen = leftFinal < 0
+				const leftIsAfterScreen = leftFinal + processWidth.value > winHeight.value
+				if (leftIsBeforeScreen || leftIsAfterScreen) {
+					if (leftIsBeforeScreen) {
+						leftFinal = 0
+					} else {
+						leftFinal = winHeight.value - processWidth.value
+					}
+
+					modalStart.x = leftFinal
+					grabStart.x = Math.max(Math.min(x, winHeight.value - 5), 5)
+				}
+
+				const topIsBeforeScreen = topFinal < 0
+				const topIsAfterScreen = topFinal + processHeight.value > winWidth.value
+				if (topIsBeforeScreen || topIsAfterScreen) {
+					if (topIsBeforeScreen) {
+						topFinal = 0
+					} else {
+						topFinal = winWidth.value - processHeight.value
+					}
+
+					modalStart.y = topFinal
+					grabStart.y = Math.max(Math.min(y, winWidth.value), 5)
+				}
+
+				left.value = leftFinal
+				top.value = topFinal
+			}
+
+			const toggleMinimise = () => {
+				if (!isMinimised.value) {
+					heightBeforeMinimise.value = processHeight.value
+				}
+
+				isMinimised.value = !isMinimised.value
+
+				if (!isMinimised.value) {
+					processHeight.value = heightBeforeMinimise.value
+				}
+			}
+
+			return {
+				canMinimise,
+				isMinimised,
+				left,
+				processHeight,
+				processWidth,
+				top,
+				process,
+				beginGrabbing,
+				setPosition,
+				toggleMinimise,
+			}
 		},
 	}
 </script>
@@ -88,6 +302,21 @@
 		width: 100%;
 		z-index: 1510;
 
+		&.app--can-resize .app {
+			resize: both;
+		}
+
+		&.app--is-minimised .app {
+				height: auto !important;
+				min-height: 0;
+				min-width: 0;
+				resize: none;
+
+				.app__content {
+					display: none;
+				}
+		}
+
 		* {
 			box-sizing: border-box;
 		}
@@ -97,15 +326,15 @@
 			border: 1px solid #4E4E4E6B;
 			display: inline-flex;
 			flex-direction: column;
-			left: 50%;
-			height: 90vh;
+			left: 0;
+			height: 500px;
 			overflow: hidden;
 			pointer-events: auto;
 			position: absolute;
 			resize: none;
-			top: 50%;
+			top: 0;
 			transform: translate(-50%, -52%);
-			width: 90vw;
+			width: 300px;
 
 			&__toolbar {
 				background: #111;
