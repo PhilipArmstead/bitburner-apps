@@ -16,3 +16,20 @@ In addition to the version, it would be nice to know _what_ was being updated (n
 
 **External SVGs**  
 Find the Vite inline SVG plugin
+
+
+**Server Browser**  
+List all servers with the following data
+- Root status
+- Backdoor status
+- Hackable status (with required hacking skill if not)
+- Name
+- Contract count
+- Security
+- Max money
+- Current money %
+- Threads to weaken
+- Threads to grow
+- Profit per second (assuming we hack for X%)
+
+Toggle theming, sort on each column, hide/show purchased servers
