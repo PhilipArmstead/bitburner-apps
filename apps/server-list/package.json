@@ -1,0 +1,16 @@
+{
+	"name": "@bitburner-theme-browser/server-list",
+	"version": "0.0.9",
+	"scripts": {
+		"start": "vite",
+		"build": "vite build --emptyOutDir",
+		"lint": "eslint  --fix --ext .js,.vue .",
+		"make-release": "bash ../../packages/app-builder/bin/release.sh"
+	},
+	"devDependencies": {
+		"@bitburner-theme-browser/app-builder": "^0.0.1",
+		"@bitburner-theme-browser/common-components": "^0.0.1",
+		"@bitburner-theme-browser/common-config": "^0.0.1",
+		"@bitburner-theme-browser/common-styles": "^0.0.1"
+	}
+}
