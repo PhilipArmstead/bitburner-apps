@@ -27,13 +27,7 @@
 						@click="$emit('app:click:update')"
 						@mousedown.stop
 					>
-						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 417 417' class='icon icon--update'>
-							<path fill='#FFF' d='M120 90h180v235H120z' />
-							<path
-								fill='currentColor'
-								d='M208.5 417a208.5 208.5 0 1 0 0-417 208.5 208.5 0 0 0 0 417zm-81.3-197.5 68.3-118.3a15 15 0 0 1 26 0l68.2 118.3a15 15 0 0 1-13 22.5h-33.2v66.2a15 15 0 0 1-15 15h-40a15 15 0 0 1-15-15V242h-33.3a15 15 0 0 1-13-22.5z'
-							/>
-						</svg>
+						<icon-update class='icon icon--update' />
 					</button>
 					<button
 						v-if='windowOptions.canMinimise'
@@ -41,55 +35,8 @@
 						@click='toggleMinimise'
 						@mousedown.stop
 					>
-						<svg
-							v-show='!isMinimised'
-							xmlns='http://www.w3.org/2000/svg'
-							viewBox='0 0 18 18'
-							class='icon icon--minimise'
-						>
-							<path d='m3 13h12v2h-12z' fill='currentColor' />
-						</svg>
-						<svg
-							v-show='isMinimised'
-							xmlns='http://www.w3.org/2000/svg'
-							viewBox='0 0 18 18'
-							class='icon icon--restore'
-						>
-							<rect
-								x='5'
-								y='1.5'
-								width='11'
-								height='3'
-								stroke='none'
-								fill='#000'
-							/>
-							<g fill='currentColor'>
-								<rect
-									x='5.8'
-									y='4.3'
-									width='9.4'
-									height='6.5'
-									stroke='#000'
-									stroke-width='1.6'
-								/>
-								<rect
-									x='1.8'
-									y='9'
-									width='9.4'
-									height='6.5'
-									stroke='#000'
-									stroke-width='1.6'
-								/>
-							</g>
-							<rect
-								x='1'
-								y='6.2'
-								width='11'
-								height='3'
-								stroke='none'
-								fill='#000'
-							/>
-						</svg>
+						<icon-minimise v-show='!isMinimised' class='icon icon--minimise' />
+						<icon-restore v-show='isMinimised' class='icon icon--restore' />
 					</button>
 					<button
 						class='btn btn--small app__cta-close'
@@ -97,22 +44,7 @@
 						@click="$emit('app:close')"
 						@mousedown.stop
 					>
-						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' class='icon icon--close'>
-							<g stroke='currentColor' stroke-width='1.5'>
-								<line
-									x1='3'
-									y1='3'
-									x2='15'
-									y2='15'
-								/>
-								<line
-									x2='3'
-									y1='3'
-									x1='15'
-									y2='15'
-								/>
-							</g>
-						</svg>
+						<icon-close class='icon icon--close' />
 					</button>
 				</div>
 			</div>
@@ -126,8 +58,14 @@
 <script>
 	import { onMounted, onUnmounted, ref } from 'vue'
 
+	import IconClose from '../../assets/icons/close.svg'
+	import IconMinimise from '../../assets/icons/minimise.svg'
+	import IconRestore from '../../assets/icons/restore.svg'
+	import IconUpdate from '../../assets/icons/update.svg'
+
 	export default {
 		name: 'AppContainer',
+		components: { IconClose, IconMinimise, IconRestore, IconUpdate },
 		props: {
 			title: {
 				type: String,

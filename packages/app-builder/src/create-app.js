@@ -1,5 +1,6 @@
 const { defineConfig } = require('vite')
 const vue = require('@vitejs/plugin-vue')
+const svgLoader = require('vite-svg-loader')
 
 const appBuilder = require('./bundler/builder')
 const versionOutput = require('./version-output/version-output')
@@ -13,7 +14,7 @@ module.exports = (options) => {
 	const { bundleFilename = 'main.js', stylesheetName = 'style.css', id, version, entryHooks } = options
 
 	return defineConfig({
-		plugins: [vue()],
+		plugins: [vue(), svgLoader()],
 		build: {
 			lib: {
 				entry: bundleFilename,
