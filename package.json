@@ -4,7 +4,8 @@
 	"scripts": {
 		"start": "npm run start --workspaces -if-present",
 		"build": "npm run build --workspaces -if-present",
-		"lint": "npm run lint --workspaces --if-present"
+		"lint": "npm run lint --workspaces --if-present",
+		"make-release": "npm run make-release --workspaces --if-present"
 	},
 	"workspaces": [
 		"apps/**",
