@@ -18,7 +18,7 @@ export async function main(ns) {
 	// Boilerplate
 	const doc = globalThis['document']
 	const id = 'theme-browser-app'
-	globalThis[`${id}-version`] = '0.0.46'
+	globalThis[`${id}-version`] = '0.0.47'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))

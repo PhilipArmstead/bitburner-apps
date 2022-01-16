@@ -1,11 +1,11 @@
 {
 	"name": "@bitburner-theme-browser/theme-browser",
-	"version": "0.0.47",
+	"version": "0.0.48",
 	"scripts": {
 		"start": "vite",
 		"build": "vite build --emptyOutDir",
 		"lint": "eslint  --fix --ext .js,.vue .",
-		"make-release": "bash release.sh"
+		"make-release": "bash ../../packages/app-builder/bin/release.sh"
 	},
 	"devDependencies": {
 		"@bitburner-theme-browser/app-builder": "^0.0.1",
