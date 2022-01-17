@@ -1,6 +1,6 @@
 <template>
-	<app-wrapper 
-		v-show='!isPreviewing && !isApplying' 
+	<app-wrapper
+		v-show='!isPreviewing && !isApplying'
 		v-bind="{ ...$props, title: 'Bitburner Theme Browser', windowOptions }"
 		@keydown.stop
 		@keyup.stop
@@ -15,10 +15,10 @@
 			<form v-show='showThemeSubmit' @submit='onThemeSubmit'>
 				<div>
 					<label for='name'>Theme Name</label>
-					<input 
+					<input
 						id='name'
-						name='name' 
-						type='text' 
+						name='name'
+						type='text'
 						placeholder='BB Monokai'
 						@keydown.stop
 					>
@@ -35,20 +35,20 @@
 			<form v-show='showLogin' @submit='onLogin'>
 				<div>
 					<label for='email'>Email</label>
-					<input 
+					<input
 						id='email'
-						name='email' 
-						type='email' 
+						name='email'
+						type='email'
 						placeholder='elliot.alderson@allsafe.org'
 						@keydown.stop
 					>
 				</div>
 				<div>
 					<label for='password'>Password</label>
-					<input 
+					<input
 						id='password'
 						name='password'
-						type='password' 
+						type='password'
 						placeholder='password'
 						@keydown.stop
 					>
@@ -68,20 +68,20 @@
 			<form v-show='showRegister' @submit='onRegister'>
 				<div>
 					<label for='name'>Name</label>
-					<input 
-						id='name' 
+					<input
+						id='name'
 						name='name'
-						type='text' 
+						type='text'
 						placeholder='Elliot Alderson'
 						@keydown.stop
 					>
 				</div>
 				<div>
 					<label for='email'>Email</label>
-					<input 
-						id='email' 
+					<input
+						id='email'
 						name='email'
-						type='email' 
+						type='email'
 						placeholder='elliot.alderson@allsafe.org'
 						@keydown.stop
 					>
@@ -89,18 +89,18 @@
 				<div>
 					<label for='password'>Password</label>
 					<input
-						id='password' 
+						id='password'
 						name='password'
-						type='password' 
+						type='password'
 						placeholder='password'
 					>
 				</div>
 				<div>
 					<label for='password_confirm'>Password Confirmation</label>
-					<input 
-						id='password_confirm' 
+					<input
+						id='password_confirm'
 						name='password_confirm'
-						type='password' 
+						type='password'
 						placeholder='password'
 					>
 				</div>
@@ -120,7 +120,7 @@
 				<div class='pagination-wrapper'>
 					<div style='margin-right: auto;'>
 						<button
-							v-if='!!(user && user.id)' 
+							v-if='!!(user && user.id)'
 							@click='toggleSubmitTheme'
 						>
 							Submit my theme
