@@ -1,19 +1,130 @@
 <template>
 	<app-wrapper v-show='!isPreviewing && !isApplying' v-bind="{ ...$props, title: 'Bitburner Theme Browser', windowOptions }">
 		<div class='theme-browser'>
-			<h1 class='title'>
-				{{ title }}
-			</h1>
-			<p v-if='themes.length' class='pagination-details'>
-				Showing {{ showingFrom }} to {{ showingTo }} of {{ totalItems }}
-			</p>
-			<theme-list
-				v-if='!isLoading'
-				:themes='themes'
-				class='themes'
-				@theme:preview='showPreview'
+			<tb-header
+				:title='title'
+				:user='user || null'
+				@login:click='triggerLoginRegister'
 			/>
-			<div v-else class='loader' />
+			<form v-show='showThemeSubmit' @submit='onThemeSubmit'>
+				<div>
+					<label for='name'>Theme Name</label>
+					<input 
+						id='name'
+						name='name' 
+						type='text' 
+						placeholder='BB Monokai'
+					>
+				</div>
+				<div class='buttons'>
+					<button type='submit'>
+						Submit
+					</button>
+					<button type='cancel'>
+						Cancel
+					</button>
+				</div>
+				<div>
+					If you don't already have an account then <a @click='toggleLoginRegister'>Register</a>
+				</div>
+			</form>
+			<form v-show='showLogin' @submit='onLogin'>
+				<div>
+					<label for='email'>Email</label>
+					<input 
+						id='email'
+						name='email' 
+						type='email' 
+						placeholder='elliot.alderson@allsafe.org'
+					>
+				</div>
+				<div>
+					<label for='password'>Password</label>
+					<input 
+						id='password'
+						name='password'
+						type='password' 
+						placeholder='password'
+					>
+				</div>
+				<div class='buttons'>
+					<button type='submit'>
+						Login
+					</button>
+					<button type='cancel'>
+						Cancel
+					</button>
+				</div>
+				<div>
+					If you don't already have an account then <a @click='toggleLoginRegister'>Register</a>
+				</div>
+			</form>
+			<form v-show='showRegister' @submit='onRegister'>
+				<div>
+					<label for='name'>Name</label>
+					<input 
+						id='name' 
+						name='name'
+						type='text' 
+						placeholder='Elliot Alderson'
+					>
+				</div>
+				<div>
+					<label for='email'>Email</label>
+					<input 
+						id='email' 
+						name='email'
+						type='email' 
+						placeholder='elliot.alderson@allsafe.org'
+					>
+				</div>
+				<div>
+					<label for='password'>Password</label>
+					<input
+						id='password' 
+						name='password'
+						type='password' 
+						placeholder='password'
+					>
+				</div>
+				<div>
+					<label for='password_confirm'>Password Confirmation</label>
+					<input 
+						id='password_confirm' 
+						name='password_confirm'
+						type='password' 
+						placeholder='password'
+					>
+				</div>
+				<div class='buttons'>
+					<button type='submit'>
+						Register
+					</button>
+					<button type='cancel'>
+						Cancel
+					</button>
+				</div>
+				<div>
+					If you already have an account then <a @click='toggleLoginRegister'>Login</a>
+				</div>
+			</form>
+			<div v-if='!showRegister && !showLogin'>
+				<div class='pagination-wrapper'>
+					<p v-if='themes.length' class='pagination-details'>
+						Showing {{ showingFrom }} to {{ showingTo }} of {{ totalItems }}
+					</p>
+					<a v-if='!!(user && user.id)' @click='toggleSubmitTheme' style='margin-left: auto;'>Submit my theme</a>
+				</div>
+				<div v-if='!showThemeSubmit'>
+					<theme-list
+						v-if='!isLoading'
+						:themes='themes'
+						class='themes'
+						@theme:preview='showPreview'
+					/>
+					<div v-else class='loader' />
+				</div>
+			</div>
 		</div>
 	</app-wrapper>
 	<div class='preview__ctas' :class='{ "preview__ctas--visible" : isPreviewing }'>
@@ -32,10 +143,11 @@
 	import { closeApp, dispatchEvent } from '@bitburner-theme-browser/common-helpers'
 
 	import ThemeList from './src/components/ThemeList/ThemeList.vue'
+	import TbHeader from './src/components/TbHeader/TbHeader.vue'
 	import { getTheme, getThemes, handleThemeResponse } from './src/services/themes'
 
 	export default {
-		components: { AppWrapper, ThemeList },
+		components: { AppWrapper, ThemeList, TbHeader },
 		props: {
 			id: {
 				type: String,
@@ -56,6 +168,11 @@
 			const isPreviewing = ref(false)
 			const themes = ref([])
 			const meta = ref({})
+
+			const showThemeSubmit = ref(false)
+			const showLogin = ref(false)
+			const showRegister = ref(false)
+			const user = ref({})
 
 			const title = computed(() => isLoading.value ? 'Loading...' : !themes.value.length ? 'Uh oh...' : 'Browse themes')
 			const showingFrom = computed(() => Math.max(1, showingTo.value - meta.value.items_per_page))
@@ -87,6 +204,133 @@
 				isLoading.value = false
 			}
 
+			const d = eval('document')
+			const onLogin = async (e) => {
+				e.preventDefault()
+				console.log('login', e)
+
+				let fields = {
+					email: null,
+					password: null,
+				}
+
+				// get the email and password
+				for (let i = 0; i < e.target.length; i++) {
+					if (e.target[i].nodeName !== 'INPUT') {
+						continue
+					}
+
+					fields[e.target[i].name] = e.target[i].value
+				}
+
+				if (!fields.email || !fields.password) {
+					return
+				}
+
+				const response = await fetch ('https://bitburner.daft.host/api/sanctum/token', {
+					'method': 'POST',
+					'headers': {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json',
+					},
+					'body': JSON.stringify({
+						email: fields.email,
+						password: fields.password,
+					}),
+				}).then(r => r.json())
+
+				if (d.saveFile) {
+					// use document save file to avoid more ram usage
+					d.saveFile('/etc/theme-browser/token.json.txt', response)
+				} else {
+					localStorage.setItem('token', response)
+				}
+			}
+
+			const onThemeSubmit = async (e) => {
+				e.preventDefault()
+
+				let fields = {
+					name: null,
+					json: null,
+				}
+
+				// get the email and password
+				for (let i = 0; i < e.target.length; i++) {
+					if (e.target[i].nodeName !== 'INPUT') {
+						continue
+					}
+
+					fields[e.target[i].name] = e.target[i].value
+				}
+
+				// grab the ui style
+				fields.json = '{}'
+
+				if (!fields.name || !fields.json) {
+					return
+				}
+
+				fetch ('https://bitburner.daft.host/api/themes', {
+					'method': 'POST',
+					'headers': {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json',
+					},
+					'body': JSON.stringify({
+						name: fields.name,
+						json: JSON.stringify(fields.json),
+					}),
+				}).then(r => r.json())
+			}
+
+			const onRegister = async (e) => {
+				e.preventDefault()
+				console.log('register', e)
+
+				let fields = {
+					email: null,
+					password: null,
+				}
+
+				// get the name, email, password and confirmation
+				for (let i = 0; i < e.target.length; i++) {
+					if (e.target[i].nodeName !== 'INPUT') {
+						continue
+					}
+
+					fields[e.target[i].name] = e.target[i].value
+				}
+
+				if (!fields.email || !fields.name || !fields.password_confirm || !fields.password) {
+					return
+				}
+
+				if (fields.password !== fields.password_confirm) {
+					return
+				}
+
+				const response = await fetch ('https://bitburner.daft.host/api/sanctum/token', {
+					'method': 'POST',
+					'headers': {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json',
+					},
+					'body': JSON.stringify({
+						name: fields.name,
+						email: fields.email,
+						password: fields.password,
+					}),
+				}).then(r => r.json())
+
+				if (d.saveFile) {
+					// use document save file to avoid more ram usage
+					d.saveFile('/etc/theme-browser/token.json.txt', response)
+				} else {
+					localStorage.setItem('token', response)
+				}
+			}
+
 			onMounted(async () => {
 				const themeId = Number(window[`${id}-theme-id`])
 				if (themeId) {
@@ -99,9 +343,53 @@
 					}
 				}
 
+				// grab the token
+				let token = localStorage.getItem('token')
+				if (token) {
+					try {
+						token = JSON.parse(token).token
+					} catch (e) {
+						token = false
+					}
+				}
+
+				if (token) {
+					user.value = await fetch('https://bitburner.daft.host/api/user', {
+						'method': 'POST',
+						'headers': {
+							'Content-Type': 'application/json',
+							'Accept': 'application/json',
+							'Authorization': `Bearer ${token}`,
+						},
+					}).then(r => r.json())
+				}
+
 				isApplying.value = false
 				await updateThemes()
 			})
+
+			const triggerLoginRegister = () => {
+				if (showLogin.value || showRegister.value) {
+					showLogin.value = false
+					showRegister.value = false
+				} else {
+					showLogin.value = true
+				}
+			}
+
+			const toggleLoginRegister = () => {
+				if (showLogin.value) {
+					showLogin.value = false
+					showRegister.value = true
+				} else if (showRegister.value) {
+					showRegister.value = false
+					showLogin.value = true
+				}
+			}
+
+			const toggleSubmitTheme = () => {
+				showThemeSubmit.value = !showThemeSubmit.value
+			}
 
 			return {
 				isApplying,
@@ -116,6 +404,16 @@
 				cancelPreview,
 				closeApp: () => closeApp(id),
 				showPreview,
+				user,
+				onThemeSubmit,
+				onLogin,
+				onRegister,
+				showThemeSubmit,
+				showLogin,
+				showRegister,
+				triggerLoginRegister,
+				toggleLoginRegister,
+				toggleSubmitTheme,
 			}
 		},
 	}
@@ -156,9 +454,16 @@
 		margin-right: 20px;
 	}
 
-	.pagination-details {
-		color: #CECECE;
-		margin-left: 20px;
+	.pagination-wrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		.pagination-details {
+			color: #CECECE;
+			margin-left: auto;
+		}
 	}
 
 	.themes {
@@ -173,6 +478,70 @@
 		height: 200px;
 		margin: auto 0 40%;
 		width: 200px;
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		width: 60%;
+		margin: 0 auto;
+
+		div {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+
+			&.buttons {
+				flex-direction: row;
+			}
+
+			label {
+				margin-bottom: 0.4em;
+			}
+
+			input, button {
+				box-sizing: border-box;
+				background: rgba(255, 255, 255, 0.3);
+				color: white;
+				appearance: none;
+				border: 0;
+				padding: 6px 12px;
+				line-height: 1.4em;
+				margin: 0 0 1em;
+				width: 100%;
+				max-width: 100%;
+				border-radius: 4px;
+
+				&:focus, &:hover, &:active {
+					background: rgba(255, 255, 255, 0.6);
+				}
+			}
+
+			input {
+				display: block;
+				width: 100%;
+			}
+
+			button {
+				cursor: pointer;
+				flex-basis: 50%;
+				display: inline-block;
+				width: auto;
+				padding: 8px 12px;
+
+				&:first-child {
+					border-radius: 4px 0 0 4px;
+				}
+
+				&:last-child {
+					border-radius: 0 4px 4px 0;
+				}
+			}
+		}
+	}
+
+	.app__content {
+		overflow-y: scroll;
 	}
 
 	.preview__ctas {
