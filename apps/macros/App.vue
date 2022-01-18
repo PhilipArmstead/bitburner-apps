@@ -20,8 +20,6 @@
 	import { AppWrapper } from '@bitburner-theme-browser/common-components'
 	import { inputTerminalCommands } from '@bitburner-theme-browser/common-helpers'
 
-	import * as config from './config/app'
-
 	export default {
 		components: { AppWrapper },
 		props: {
@@ -41,7 +39,7 @@
 		setup ({ id }) {
 			const items = ref({})
 
-			// window[`${config.id}-macro-list`] = {
+			// window[`${id}-macro-list`] = {
 			// 	'Root everything': ['home', 'run /util/server/root-everything.js'],
 			// 	'Show servers': ['home', 'run /gui/server-list.js'],
 			// 	'Show processes': ['home', 'run /gui/process-list.js'],
@@ -65,7 +63,7 @@
 
 			onMounted((() => generateList()))
 
-			return { config, items, inputTerminalCommands }
+			return { items, inputTerminalCommands }
 		},
 	}
 </script>
