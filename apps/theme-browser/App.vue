@@ -214,13 +214,13 @@
 
 			&--cancel {
 				background-color: #E33030D4;
-				background-image: url('./assets/icons/cross.svg');
+				background-image: url("../../packages/common/common-assets/icons/cross.svg");
 				transform: translateY(40px);
 			}
 
 			&--confirm {
 				background-color: #72D000D4;
-				background-image: url('./assets/icons/tick.svg');
+				background-image: url("../../packages/common/common-assets/icons/tick.svg");
 			}
 		}
 	}
