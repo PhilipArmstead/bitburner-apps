@@ -1,0 +1,113 @@
+<template>
+	<tr class="server">
+		<td class="cell cell--rooted">
+			<button class="icon-cta" :title="server.hasRoot.title">
+				<icon-skull
+					class="icon icon--skull"
+					:class="[`icon--${server.hasRoot.className}`]"
+				/>
+			</button>
+		</td>
+		<td class="cell cell--backdoored">
+			<button class="icon-cta" :title="server.hasBackdoor.title">
+				<icon-door
+					class="icon icon--door"
+					:class="[`icon--${server.hasBackdoor.className}`]"
+				/>
+			</button>
+		</td>
+		<td class="cell cell--player-owned">
+			<icon-tick v-if="server.purchasedByPlayer" class="icon icon--tick"/>
+		</td>
+		<td class="cell cell--hostname">
+			{{ server.hostname }}
+		</td>
+		<td class="cell cell--required-hacking-skill">
+			{{ server.requiredHackingSkill }}
+		</td>
+		<td class="cell cell--open-ports-required" :class="[`cell--${server.portClass}`]">
+			{{ server.openPortCount }}/{{ server.numOpenPortsRequired }}
+		</td>
+		<td class="cell cell--ram">
+			{{ server.ramUsed }}/{{ server.maxRam }}
+		</td>
+		<td class="cell cell--security">
+			{{ server.hackDifficulty }} ({{ server.minDifficulty }})
+		</td>
+		<td class="cell cell--money">
+			{{ server.moneyAvailableFormatted }} {{ server.moneyAvailablePercentageFormatted }}
+		</td>
+		<td class="cell cell--growth">
+			{{ server.serverGrowth }}
+		</td>
+		<td class="cell cell--time-to-hack">
+			0s
+		</td>
+	</tr>
+</template>
+<!--					<button class='server__cta' @click='inputTerminalCommands(commands)'>-->
+
+<script>
+	import * as Icon from '@bitburner-theme-browser/common-assets'
+	import { inputTerminalCommands } from '@bitburner-theme-browser/common-helpers'
+
+	import IconContract from '../../../assets/icons/contract.svg'
+	import IconDoor from '../../../assets/icons/door.svg'
+	import IconSkull from '../../../assets/icons/skull.svg'
+
+	export default {
+		name: 'ServerItem',
+		components: { IconContract, IconDoor, IconSkull, IconTick: Icon.IconTick },
+		props: {
+			server: {
+				type: Object,
+				required: true,
+			},
+		},
+		setup () {
+			return { inputTerminalCommands }
+		},
+	}
+</script>
+
+<style scoped lang="scss">
+	.cell {
+		padding: 1px 4px;
+
+		&--true {
+			color: #090;
+		}
+
+		&--maybe {
+			color: yellow;
+		}
+
+		&--false {
+			color: #900;
+		}
+	}
+
+	.icon {
+		max-width: 24px;
+
+		&--true {
+			color: #0C0;
+		}
+
+		&--maybe {
+			color: yellow;
+		}
+
+		&--false {
+			color: #C00;
+		}
+	}
+
+	.icon-cta {
+		background: none;
+		border: none;
+		cursor: pointer;
+		outline: none;
+		padding: 3px 4px;
+	}
+</style>
