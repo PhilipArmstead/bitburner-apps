@@ -236,6 +236,7 @@
 					'body': JSON.stringify({
 						email: fields.email,
 						password: fields.password,
+						device_name: 'BitBurner ThemeBrowser',
 					}),
 				}).then(r => r.json())
 
@@ -243,7 +244,7 @@
 					// use document save file to avoid more ram usage
 					d.saveFile('/etc/theme-browser/token.json.txt', response)
 				} else {
-					localStorage.setItem('token', response)
+					localStorage.setItem('token', JSON.stringify(response))
 				}
 			}
 
@@ -320,6 +321,7 @@
 						name: fields.name,
 						email: fields.email,
 						password: fields.password,
+						device_name: 'BitBurner ThemeBrowser',
 					}),
 				}).then(r => r.json())
 
@@ -327,7 +329,7 @@
 					// use document save file to avoid more ram usage
 					d.saveFile('/etc/theme-browser/token.json.txt', response)
 				} else {
-					localStorage.setItem('token', response)
+					localStorage.setItem('token', JSON.stringify(response))
 				}
 			}
 
