@@ -1,6 +1,9 @@
 export default {
+	imports: () => `
+import { getServers } from "/gui/lib/servers.js"
+`,
 	main: () => `
-	// Load recent config and inject it in to app
+	window[\`\${id}-server-list\`] = getServers(ns)
 `,
 	extractThemes: true,
 }
