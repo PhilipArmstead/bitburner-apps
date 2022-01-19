@@ -93,6 +93,7 @@
 						name='password'
 						type='password'
 						placeholder='password'
+						@keydown.stop
 					>
 				</div>
 				<div>
@@ -102,6 +103,7 @@
 						name='password_confirm'
 						type='password'
 						placeholder='password'
+						@keydown.stop
 					>
 				</div>
 				<div class='buttons'>
