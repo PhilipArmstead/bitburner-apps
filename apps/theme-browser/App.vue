@@ -271,7 +271,6 @@
 					return
 				}
 
-				// get the email and password
 				for (let i = 0; i < e.target.length; i++) {
 					if (e.target[i].nodeName !== 'INPUT') {
 						continue
@@ -280,25 +279,27 @@
 					fields[e.target[i].name] = e.target[i].value
 				}
 
-				// grab the ui style
-				fields.json = '{}'
-
-				if (!fields.name || !fields.json) {
+				if (!fields.name) {
 					return
 				}
 
-				fetch (`${baseUri}/api/themes`, {
-					'method': 'POST',
-					'headers': {
-						'Content-Type': 'application/json',
-						'Accept': 'application/json',
-						'Authorization': `Bearer ${token}`,
-					},
-					'body': JSON.stringify({
-						name: fields.name,
-						json: JSON.stringify(fields.json),
-					}),
-				}).then(r => r.json())
+				const callback = (themeData) => {
+					fetch (`${baseUri}/api/themes`, {
+						'method': 'POST',
+						'headers': {
+							'Content-Type': 'application/json',
+							'Accept': 'application/json',
+							'Authorization': `Bearer ${token}`,
+						},
+						'body': JSON.stringify({
+							name: fields.name,
+							json: JSON.stringify(themeData),
+						}),
+					}).then(r => r.json())
+				}
+
+				dispatchEvent('theme:submit', { callback })
+				showThemeSubmit.value = false
 			}
 
 			const onRegister = async (e) => {
