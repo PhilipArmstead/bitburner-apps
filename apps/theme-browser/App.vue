@@ -20,12 +20,9 @@
 					<button type='submit'>
 						Submit
 					</button>
-					<button type='cancel'>
+					<button type='cancel' @click='cancelForm'>
 						Cancel
 					</button>
-				</div>
-				<div>
-					If you don't already have an account then <a @click='toggleLoginRegister'>Register</a>
 				</div>
 			</form>
 			<form v-show='showLogin' @submit='onLogin'>
@@ -51,7 +48,7 @@
 					<button type='submit'>
 						Login
 					</button>
-					<button type='cancel'>
+					<button type='cancel' @click='cancelForm'>
 						Cancel
 					</button>
 				</div>
@@ -100,7 +97,7 @@
 					<button type='submit'>
 						Register
 					</button>
-					<button type='cancel'>
+					<button type='cancel' @click='cancelForm'>
 						Cancel
 					</button>
 				</div>
@@ -108,19 +105,29 @@
 					If you already have an account then <a @click='toggleLoginRegister'>Login</a>
 				</div>
 			</form>
-			<div v-if='!showRegister && !showLogin'>
+			<div v-if='!showRegister && !showLogin && !showThemeSubmit'>
 				<div class='pagination-wrapper'>
+					<div style='margin-right: auto;'>
+						<button
+							v-if='!!(user && user.id)' 
+							@click='toggleSubmitTheme'
+						>
+							Submit my theme
+						</button>
+					</div>
+
 					<p v-if='themes.length' class='pagination-details'>
 						Showing {{ showingFrom }} to {{ showingTo }} of {{ totalItems }}
 					</p>
-					<a v-if='!!(user && user.id)' @click='toggleSubmitTheme' style='margin-left: auto;'>Submit my theme</a>
 				</div>
 				<div v-if='!showThemeSubmit'>
 					<theme-list
 						v-if='!isLoading'
 						:themes='themes'
+						:user='user'
 						class='themes'
 						@theme:preview='showPreview'
+						@theme:reload='reloadTheme'
 					/>
 					<div v-else class='loader' />
 				</div>
@@ -142,6 +149,7 @@
 	import { AppWrapper } from '@bitburner-theme-browser/common-components'
 	import { closeApp, dispatchEvent } from '@bitburner-theme-browser/common-helpers'
 
+	import { baseUri, themesEndpoint } from './config/app'
 	import ThemeList from './src/components/ThemeList/ThemeList.vue'
 	import TbHeader from './src/components/TbHeader/TbHeader.vue'
 	import { getTheme, getThemes, handleThemeResponse } from './src/services/themes'
@@ -196,7 +204,8 @@
 			const updateThemes = async () => {
 				isLoading.value = true
 
-				const response = getThemes()
+				const token = getToken()
+				const response = getThemes(token)
 				const { data, meta: resultsMeta } = await handleThemeResponse(response)
 				meta.value = resultsMeta
 				themes.value = data
@@ -207,7 +216,6 @@
 			const d = eval('document')
 			const onLogin = async (e) => {
 				e.preventDefault()
-				console.log('login', e)
 
 				let fields = {
 					email: null,
@@ -227,7 +235,7 @@
 					return
 				}
 
-				const response = await fetch ('https://bitburner.daft.host/api/sanctum/token', {
+				const response = await fetch (`${baseUri}/api/sanctum/token`, {
 					'method': 'POST',
 					'headers': {
 						'Content-Type': 'application/json',
@@ -246,6 +254,8 @@
 				} else {
 					localStorage.setItem('token', JSON.stringify(response))
 				}
+
+				checkLogin()
 			}
 
 			const onThemeSubmit = async (e) => {
@@ -254,6 +264,11 @@
 				let fields = {
 					name: null,
 					json: null,
+				}
+
+				const token = getToken()
+				if (!token) {
+					return
 				}
 
 				// get the email and password
@@ -272,11 +287,12 @@
 					return
 				}
 
-				fetch ('https://bitburner.daft.host/api/themes', {
+				fetch (`${baseUri}/api/themes`, {
 					'method': 'POST',
 					'headers': {
 						'Content-Type': 'application/json',
 						'Accept': 'application/json',
+						'Authorization': `Bearer ${token}`,
 					},
 					'body': JSON.stringify({
 						name: fields.name,
@@ -287,7 +303,6 @@
 
 			const onRegister = async (e) => {
 				e.preventDefault()
-				console.log('register', e)
 
 				let fields = {
 					email: null,
@@ -311,7 +326,7 @@
 					return
 				}
 
-				const response = await fetch ('https://bitburner.daft.host/api/sanctum/token', {
+				const response = await fetch (`${baseUri}/api/sanctum/token`, {
 					'method': 'POST',
 					'headers': {
 						'Content-Type': 'application/json',
@@ -331,6 +346,8 @@
 				} else {
 					localStorage.setItem('token', JSON.stringify(response))
 				}
+
+				checkLogin()
 			}
 
 			onMounted(async () => {
@@ -345,7 +362,15 @@
 					}
 				}
 
+				await checkLogin()
+
+				isApplying.value = false
+				await updateThemes()
+			})
+
+			const getToken = () => {
 				// grab the token
+				// TODO: How do ns?
 				let token = localStorage.getItem('token')
 				if (token) {
 					try {
@@ -355,20 +380,25 @@
 					}
 				}
 
+				return token
+			}
+
+			const checkLogin = async () => {
+				const token = getToken()
+
 				if (token) {
-					user.value = await fetch('https://bitburner.daft.host/api/user', {
-						'method': 'POST',
+					user.value = await fetch(`${baseUri}/api/user`, {
 						'headers': {
 							'Content-Type': 'application/json',
 							'Accept': 'application/json',
 							'Authorization': `Bearer ${token}`,
 						},
-					}).then(r => r.json())
+					}).then(r => r.json()).then((u) => {
+						u.token = token
+						return u
+					})
 				}
-
-				isApplying.value = false
-				await updateThemes()
-			})
+			}
 
 			const triggerLoginRegister = () => {
 				if (showLogin.value || showRegister.value) {
@@ -393,7 +423,37 @@
 				showThemeSubmit.value = !showThemeSubmit.value
 			}
 
+			const cancelForm = () => {
+				showThemeSubmit.value = false
+				showLogin.value = false
+				showRegister.value = false
+			}
+
+			const reloadTheme = async (themeId) => {
+				const headers = {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json',
+				}
+
+				const token = getToken()
+				if (token) {
+					headers.Authorization = `Bearer ${token}`
+				}
+
+				const theme = await fetch(`${baseUri}/api/themes/${themeId}`, {
+					headers: headers,
+				})
+					.then(r => r.json())
+
+				for (let i = 0; i < themes._rawValue.length; i++) {
+					if (themes.value[i].id === theme.id) {
+						themes.value[i] = theme
+					}
+				}
+			}
+
 			return {
+				cancelForm,
 				isApplying,
 				isLoading,
 				isPreviewing,
@@ -416,6 +476,7 @@
 				triggerLoginRegister,
 				toggleLoginRegister,
 				toggleSubmitTheme,
+				reloadTheme,
 			}
 		},
 	}
@@ -445,6 +506,48 @@
 		justify-content: space-between;
 		min-height: 100%;
 		padding: 24px 32px;
+
+		input, button {
+			box-sizing: border-box;
+			background: rgba(255, 255, 255, 0.3);
+			color: white;
+			appearance: none;
+			border: 0;
+			padding: 6px 12px;
+			line-height: 1.4em;
+			margin: 0 0 1em;
+			width: 100%;
+			max-width: 100%;
+			border-radius: 4px;
+
+			&:focus, &:hover, &:active {
+				background: rgba(255, 255, 255, 0.6);
+			}
+		}
+
+		input {
+			display: block;
+			width: 100%;
+		}
+
+		button {
+			cursor: pointer;
+			flex-basis: 50%;
+			display: inline-block;
+			width: auto;
+			padding: 8px 12px;
+			border-radius: 0;
+
+			&:first-child {
+				border-top-left-radius: 4px;
+				border-bottom-left-radius: 4px;
+			}
+
+			&:last-child {
+				border-top-right-radius: 4px;
+				border-bottom-right-radius: 4px;
+			}
+		}
 	}
 
 	.title, .pagination-details {
@@ -461,6 +564,10 @@
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
+
+		button {
+			flex: 0 0 auto;
+		}
 
 		.pagination-details {
 			color: #CECECE;
@@ -499,45 +606,6 @@
 
 			label {
 				margin-bottom: 0.4em;
-			}
-
-			input, button {
-				box-sizing: border-box;
-				background: rgba(255, 255, 255, 0.3);
-				color: white;
-				appearance: none;
-				border: 0;
-				padding: 6px 12px;
-				line-height: 1.4em;
-				margin: 0 0 1em;
-				width: 100%;
-				max-width: 100%;
-				border-radius: 4px;
-
-				&:focus, &:hover, &:active {
-					background: rgba(255, 255, 255, 0.6);
-				}
-			}
-
-			input {
-				display: block;
-				width: 100%;
-			}
-
-			button {
-				cursor: pointer;
-				flex-basis: 50%;
-				display: inline-block;
-				width: auto;
-				padding: 8px 12px;
-
-				&:first-child {
-					border-radius: 4px 0 0 4px;
-				}
-
-				&:last-child {
-					border-radius: 0 4px 4px 0;
-				}
 			}
 		}
 	}
