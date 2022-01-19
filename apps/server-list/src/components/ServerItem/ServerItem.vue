@@ -1,51 +1,49 @@
 <template>
-	<tr class="server">
-		<td class="cell cell--rooted">
-			<button class="icon-cta" :title="server.hasRoot.title">
+	<tr class='server'>
+		<td class='cell cell--rooted'>
+			<button class='icon-cta' :title='server.hasRoot.title'>
 				<icon-skull
-					class="icon icon--skull"
-					:class="[`icon--${server.hasRoot.className}`]"
+					class='icon icon--skull'
+					:class='[`icon--${server.hasRoot.className}`]'
 				/>
 			</button>
 		</td>
-		<td class="cell cell--backdoored">
-			<button class="icon-cta" :title="server.hasBackdoor.title">
+		<td class='cell cell--backdoored'>
+			<button class='icon-cta' :title='server.hasBackdoor.title'>
 				<icon-door
-					class="icon icon--door"
-					:class="[`icon--${server.hasBackdoor.className}`]"
+					class='icon icon--door'
+					:class='[`icon--${server.hasBackdoor.className}`]'
 				/>
 			</button>
 		</td>
-		<td class="cell cell--player-owned">
-			<icon-tick v-if="server.purchasedByPlayer" class="icon icon--tick"/>
+		<td class='cell cell--player-owned'>
+			<icon-tick v-if='server.purchasedByPlayer' class='icon icon--tick' />
 		</td>
-		<td class="cell cell--hostname">
-			{{ server.hostname }}
+		<td class='cell cell--hostname'>
+			<button class='cta' :title='`Connect to ${server.hostname}`'>
+				{{ server.hostname }}
+			</button>
 		</td>
-		<td class="cell cell--required-hacking-skill">
+		<td class='cell cell--required-hacking-skill'>
 			{{ server.requiredHackingSkill }}
 		</td>
-		<td class="cell cell--open-ports-required" :class="[`cell--${server.portClass}`]">
+		<td class='cell cell--open-ports-required' :class='[`cell--${server.portClass}`]'>
 			{{ server.openPortCount }}/{{ server.numOpenPortsRequired }}
 		</td>
-		<td class="cell cell--ram">
+		<td class='cell cell--ram'>
 			{{ server.ramUsed }}/{{ server.maxRam }}
 		</td>
-		<td class="cell cell--security">
+		<td class='cell cell--security'>
 			{{ server.hackDifficulty }} ({{ server.minDifficulty }})
 		</td>
-		<td class="cell cell--money">
+		<td class='cell cell--money'>
 			{{ server.moneyAvailableFormatted }} {{ server.moneyAvailablePercentageFormatted }}
 		</td>
-		<td class="cell cell--growth">
+		<td class='cell cell--growth'>
 			{{ server.serverGrowth }}
-		</td>
-		<td class="cell cell--time-to-hack">
-			0s
 		</td>
 	</tr>
 </template>
-<!--					<button class='server__cta' @click='inputTerminalCommands(commands)'>-->
 
 <script>
 	import * as Icon from '@bitburner-theme-browser/common-assets'
@@ -71,8 +69,14 @@
 </script>
 
 <style scoped lang="scss">
+	.server:first-child {
+		.cell {
+			padding-top: 6px;
+		}
+	}
+
 	.cell {
-		padding: 1px 4px;
+		padding: 3px;
 
 		&--true {
 			color: #090;
@@ -88,7 +92,7 @@
 	}
 
 	.icon {
-		max-width: 24px;
+		width: 20px;
 
 		&--true {
 			color: #0C0;
@@ -103,11 +107,17 @@
 		}
 	}
 
-	.icon-cta {
+	.cta, .icon-cta {
 		background: none;
 		border: none;
 		cursor: pointer;
 		outline: none;
-		padding: 3px 4px;
+		padding: 0;
+	}
+
+	.cta {
+		border-bottom: 1px dotted;
+		color: inherit;
+		cursor: pointer;
 	}
 </style>
