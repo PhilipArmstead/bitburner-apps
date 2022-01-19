@@ -224,7 +224,7 @@
 				isLoading.value = false
 			}
 
-			const d = eval('document')
+			// const d = eval('document')
 			const onLogin = async (e) => {
 				e.preventDefault()
 
@@ -259,12 +259,12 @@
 					}),
 				}).then(r => r.json())
 
-				if (d.saveFile) {
+				// if (d.saveFile) {
 					// use document save file to avoid more ram usage
-					d.saveFile('/etc/theme-browser/token.json.txt', response)
-				} else {
+					// d.saveFile('/etc/theme-browser/token.json.txt', response)
+				// } else {
 					localStorage.setItem('token', JSON.stringify(response))
-				}
+				// }
 
 				checkLogin()
 			}
