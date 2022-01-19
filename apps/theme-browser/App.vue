@@ -14,6 +14,7 @@
 						name='name' 
 						type='text' 
 						placeholder='BB Monokai'
+						@keydown.stop
 					>
 				</div>
 				<div class='buttons'>
@@ -33,6 +34,7 @@
 						name='email' 
 						type='email' 
 						placeholder='elliot.alderson@allsafe.org'
+						@keydown.stop
 					>
 				</div>
 				<div>
@@ -42,6 +44,7 @@
 						name='password'
 						type='password' 
 						placeholder='password'
+						@keydown.stop
 					>
 				</div>
 				<div class='buttons'>
@@ -64,6 +67,7 @@
 						name='name'
 						type='text' 
 						placeholder='Elliot Alderson'
+						@keydown.stop
 					>
 				</div>
 				<div>
@@ -73,6 +77,7 @@
 						name='email'
 						type='email' 
 						placeholder='elliot.alderson@allsafe.org'
+						@keydown.stop
 					>
 				</div>
 				<div>
@@ -82,6 +87,7 @@
 						name='password'
 						type='password' 
 						placeholder='password'
+						@keydown.stop
 					>
 				</div>
 				<div>
@@ -91,6 +97,7 @@
 						name='password_confirm'
 						type='password' 
 						placeholder='password'
+						@keydown.stop
 					>
 				</div>
 				<div class='buttons'>
