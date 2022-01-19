@@ -1,5 +1,11 @@
 <template>
-	<app-wrapper v-show='!isPreviewing && !isApplying' v-bind="{ ...$props, title: 'Bitburner Theme Browser', windowOptions }">
+	<app-wrapper 
+		v-show='!isPreviewing && !isApplying' 
+		v-bind="{ ...$props, title: 'Bitburner Theme Browser', windowOptions }"
+		@keydown.stop
+		@keyup.stop
+		@keypress.stop
+	>
 		<div class='theme-browser'>
 			<tb-header
 				:title='title'
@@ -14,9 +20,7 @@
 						name='name' 
 						type='text' 
 						placeholder='BB Monokai'
-						@keyup.stop
 						@keydown.stop
-						@keypress.stop
 					>
 				</div>
 				<div class='buttons'>
@@ -36,9 +40,7 @@
 						name='email' 
 						type='email' 
 						placeholder='elliot.alderson@allsafe.org'
-						@keyup.stop
 						@keydown.stop
-						@keypress.stop
 					>
 				</div>
 				<div>
@@ -48,9 +50,7 @@
 						name='password'
 						type='password' 
 						placeholder='password'
-						@keyup.stop
 						@keydown.stop
-						@keypress.stop
 					>
 				</div>
 				<div class='buttons'>
@@ -73,9 +73,7 @@
 						name='name'
 						type='text' 
 						placeholder='Elliot Alderson'
-						@keyup.stop
 						@keydown.stop
-						@keypress.stop
 					>
 				</div>
 				<div>
@@ -85,9 +83,7 @@
 						name='email'
 						type='email' 
 						placeholder='elliot.alderson@allsafe.org'
-						@keyup.stop
 						@keydown.stop
-						@keypress.stop
 					>
 				</div>
 				<div>
@@ -97,9 +93,6 @@
 						name='password'
 						type='password' 
 						placeholder='password'
-						@keyup.stop
-						@keydown.stop
-						@keypress.stop
 					>
 				</div>
 				<div>
@@ -109,9 +102,6 @@
 						name='password_confirm'
 						type='password' 
 						placeholder='password'
-						@keyup.stop
-						@keydown.stop
-						@keypress.stop
 					>
 				</div>
 				<div class='buttons'>
