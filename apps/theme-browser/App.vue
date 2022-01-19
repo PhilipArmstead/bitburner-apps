@@ -15,6 +15,8 @@
 						type='text' 
 						placeholder='BB Monokai'
 						@keyup.stop
+						@keydown.stop
+						@keypress.stop
 					>
 				</div>
 				<div class='buttons'>
@@ -35,6 +37,8 @@
 						type='email' 
 						placeholder='elliot.alderson@allsafe.org'
 						@keyup.stop
+						@keydown.stop
+						@keypress.stop
 					>
 				</div>
 				<div>
@@ -45,6 +49,8 @@
 						type='password' 
 						placeholder='password'
 						@keyup.stop
+						@keydown.stop
+						@keypress.stop
 					>
 				</div>
 				<div class='buttons'>
@@ -68,6 +74,8 @@
 						type='text' 
 						placeholder='Elliot Alderson'
 						@keyup.stop
+						@keydown.stop
+						@keypress.stop
 					>
 				</div>
 				<div>
@@ -78,6 +86,8 @@
 						type='email' 
 						placeholder='elliot.alderson@allsafe.org'
 						@keyup.stop
+						@keydown.stop
+						@keypress.stop
 					>
 				</div>
 				<div>
@@ -88,6 +98,8 @@
 						type='password' 
 						placeholder='password'
 						@keyup.stop
+						@keydown.stop
+						@keypress.stop
 					>
 				</div>
 				<div>
@@ -98,6 +110,8 @@
 						type='password' 
 						placeholder='password'
 						@keyup.stop
+						@keydown.stop
+						@keypress.stop
 					>
 				</div>
 				<div class='buttons'>
