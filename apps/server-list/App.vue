@@ -33,6 +33,7 @@
 	import IconDoor from './assets/icons/door.svg'
 	import IconSkull from './assets/icons/skull.svg'
 	import ServerItem from './src/components/ServerItem/ServerItem.vue'
+	import { getItems } from './src/helpers/servers'
 
 	export default {
 		components: { AppWrapper, IconDoor, IconSkull, ServerItem },
@@ -101,7 +102,6 @@
 			// 		'serverGrowth': 0,
 			// 	},
 			// ]
-			console.log(window[`${id}-server-list`])
 
 			const sortKey = ref(null)
 			const sortAscending = ref(true)
@@ -109,37 +109,9 @@
 			const playerPortsOwned = computed(() => 3) // TODO
 
 			// In this, get icons, titles, statuses etc pre-generated
-			const servers = computed(
-				() => window[`${id}-server-list`].map((server) => {
-					const hasRoot = getServerRootStatus(server)
-					const hasBackdoor = getServerBackdoorStatus(server, hasRoot)
-					const portClass = getServerPortStatus(server)
-					const moneyAvailable = Math.round(server.moneyAvailable)
-					const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
-
-					return {
-						hostname: server.hostname,
-						purchasedByPlayer: server.purchasedByPlayer,
-						requiredHackingSkill: server.requiredHackingSkill,
-						hasBackdoor,
-						hasRoot,
-						openPortCount: server.openPortCount,
-						numOpenPortsRequired: server.numOpenPortsRequired,
-						portClass,
-						ramUsed: server.ramUsed,
-						maxRam: server.maxRam,
-						hackDifficulty: toFixedNumber(server.hackDifficulty,2),
-						minDifficulty: server.minDifficulty,
-						moneyAvailable,
-						moneyAvailableFormatted: moneyAvailable ? `$${new Intl.NumberFormat({ currency: 'USD' }).format(moneyAvailable)}` : '',
-						moneyAvailablePercentage,
-						moneyAvailablePercentageFormatted: moneyAvailable ? `(${moneyAvailablePercentage}%)` : '',
-						moneyMax: server.moneyMax,
-						serverGrowth: server.serverGrowth,
-						sortHasBackdoor: hasBackdoor.status,
-						sortHasRoot: hasRoot.status,
-					}
-				}).sort((a, b) => {
+			const servers = computed(() =>
+				getItems(window[`${id}-ns`], window[`${id}-server-list`].connections, playerPortsOwned)
+				.sort((a, b) => {
 					const valA = a[sortKey.value]
 					const valB = b[sortKey.value]
 					if (typeof valA === 'undefined' && typeof valB === 'undefined') {
@@ -183,63 +155,6 @@
 				{ className: 'growth', sortKey: 'serverGrowth', content: 'Growth', title: 'Growth' },
 				// { className: 'time-to-hack', sortKey: 'serverGrowth', content: 'Time to hack', title: 'Time to hack' },
 			]
-
-			// TODO: make these external
-			const toFixedNumber = (value, decimalPlaces) => Number(value.toFixed(decimalPlaces))
-			const getServerPortStatus = (server) => {
-				if (server.openPortCount >= server.numOpenPortsRequired) {
-					return 'true'
-				} else if (playerPortsOwned >= server.numOpenPortsRequired) {
-					return 'maybe'
-				} else {
-					return 'false'
-				}
-			}
-			const getServerRootStatus = (server) => {
-				let hasRoot = {
-					className: 'true',
-					status: 1,
-					title: 'This server is rooted',
-				}
-
-				if (!server.hasAdminRights) {
-					if (playerPortsOwned.value >= server.numOpenPortsRequired || server.openPortCount > server.numOpenPortsRequired) {
-						hasRoot.className = 'maybe'
-						hasRoot.status = 0
-						hasRoot.title = 'Click to root'
-					} else {
-						hasRoot.className = 'false'
-						hasRoot.status = -1
-						hasRoot.title =
-							`${server.hostname} needs ${server.numOpenPortsRequired} port${server.numOpenPortsRequired !== 1 ?
-								's' :
-								''} open to root `
-					}
-				}
-
-				return hasRoot
-			}
-			const getServerBackdoorStatus = (server, { status }) => {
-				let hasBackdoor = {
-					className: 'true',
-					title: 'This server has a backdoor',
-					status: 1,
-				}
-
-				if (!server.backdoorInstalled ) {
-					if (status === 1 && player.value?.hacking >= server.requiredHackingSkill) {
-						hasBackdoor.className = 'maybe'
-						hasBackdoor.status = 0
-						hasBackdoor.title = 'Click to install backdoor'
-					} else {
-						hasBackdoor.className = 'false'
-						hasBackdoor.status = -1
-						hasBackdoor.title = `${server.hostname} has a minimum required hacking skill of ${server.requiredHackingSkill}`
-					}
-				}
-
-				return hasBackdoor
-			}
 
 			return { headers, servers, sortAscending, sortKey, applySort }
 		},
