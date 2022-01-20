@@ -8,7 +8,6 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 	 * @return {{hostname: String, contractCount: Number, hasBackdoorTitle: String, hasBackdoorClass: String, hasRootTitle: String, hasRootClass: String, ancestors: {String}[], connections: {Object}[], purchasedByPlayer: {Boolean}}}
 	 */
 	function getItem (hostname, children, ancestors = ['home']) {
-		console.log(hostname, children)
 		const server = ns.getServer(hostname)
 		const latestAncestors = [...ancestors, hostname]
 
