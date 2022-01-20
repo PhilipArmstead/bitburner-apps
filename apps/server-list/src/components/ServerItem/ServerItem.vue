@@ -43,13 +43,6 @@
 			{{ server.serverGrowth }}
 		</td>
 	</tr>
-	<template v-if="server.connections.length">
-		<server-item
-			v-for='child in server.connections'
-			:key='child.hostname'
-			:server='child'
-		/>
-	</template>
 </template>
 
 <script>

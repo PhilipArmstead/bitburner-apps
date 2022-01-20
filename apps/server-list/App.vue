@@ -290,8 +290,6 @@
 				// 	"myserver-1024-0": {},
 				// 	"myserver-2048": {}
 				// }
-
-				console.log(window[`${id}-get-servers`](window[`${id}-ns`]))
 				return window[`${id}-get-servers`](window[`${id}-ns`]).connections
 			}
 

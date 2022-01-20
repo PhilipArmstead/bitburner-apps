@@ -1,5 +1,15 @@
 export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
-	return Object.entries(servers).map(([hostname, { connections }]) => getItem(hostname, connections))
+	return getAllItems(servers).flat()
+
+	function getAllItems(servers, ancestors = ['home']) {
+			return Object.entries(servers).map(([hostname, obj]) => {
+				return [
+					{ ...getItem(hostname), ancestors: ancestors.concat(hostname) },
+					(obj.connections ? [ ...getAllItems(obj.connections, ancestors.concat(hostname)) ] : []).flat()
+				].flat()
+			})
+		}
+	}
 
 	/**
 	 * @param {String} hostname
@@ -7,9 +17,8 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 	 * @param {String[]} ancestors
 	 * @return {{hostname: String, contractCount: Number, hasBackdoorTitle: String, hasBackdoorClass: String, hasRootTitle: String, hasRootClass: String, ancestors: {String}[], connections: {Object}[], purchasedByPlayer: {Boolean}}}
 	 */
-	function getItem (hostname, children, ancestors = ['home']) {
+	function getItem (hostname) {
 		const server = ns.getServer(hostname)
-		const latestAncestors = [...ancestors, hostname]
 
 		const hasRoot = getServerRootStatus(server, playerPortsOwned)
 		const hasBackdoor = getServerBackdoorStatus(server, hasRoot, hackingSkill)
@@ -18,10 +27,6 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 		const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
 
 		return {
-			ancestors: latestAncestors,
-			connections: children ?
-				Object.entries(children)?.map(([hostname, { connections }]) => getItem(hostname, connections, latestAncestors)) :
-				[],
 			hostname: server.hostname,
 			purchasedByPlayer: server.purchasedByPlayer,
 			requiredHackingSkill: server.requiredHackingSkill,
@@ -32,7 +37,7 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 			portClass,
 			ramUsed: server.ramUsed,
 			maxRam: server.maxRam,
-			hackDifficulty: toFixedNumber(server.hackDifficulty,2),
+			hackDifficulty: toFixedNumber(server.hackDifficulty, 2),
 			minDifficulty: server.minDifficulty,
 			moneyAvailable,
 			moneyAvailableFormatted: moneyAvailable ? `$${new Intl.NumberFormat({ currency: 'USD' }).format(moneyAvailable)}` : '',
@@ -43,7 +48,6 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 			sortHasBackdoor: hasBackdoor.status,
 			sortHasRoot: hasRoot.status,
 		}
-	}
 }
 
 
