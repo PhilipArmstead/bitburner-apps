@@ -129,9 +129,8 @@
 
 			const refreshPlayer = () => {
 				serverList.value = getServers()
-				console.log(serverList.value)
 				player.value = window[`${id}-ns`]?.getPlayer()
-				console.log(player.value)
+				console.log(servers.value)
 				setTimeout(refreshPlayer, 2000)
 			}
 
