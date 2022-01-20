@@ -7,4 +7,5 @@ import { getServers } from "/gui/lib/servers.js"
 	globalThis[\`\${id}-get-servers\`] = getServers
 `,
 	extractThemes: true,
+	keepAlive: true,
 }
