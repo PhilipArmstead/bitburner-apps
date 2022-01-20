@@ -16,7 +16,7 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 		const portClass = getServerPortStatus(server, playerPortsOwned)
 		const moneyAvailable = Math.round(server.moneyAvailable)
 		const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
-
+console.log(hostname, children, ancestors)
 		return {
 			ancestors: latestAncestors,
 			connections: children ?
