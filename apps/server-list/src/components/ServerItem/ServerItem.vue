@@ -1,7 +1,7 @@
 <template>
 	<tr class='server'>
 		<td class='cell cell--rooted'>
-			<button class='icon-cta' :title='server.hasRoot.title'>
+			<button class='icon-cta' :title='server.hasRoot.title' @click='root'>
 				<icon-skull
 					class='icon icon--skull'
 					:class='[`icon--${server.hasRoot.className}`]'
@@ -9,7 +9,7 @@
 			</button>
 		</td>
 		<td class='cell cell--backdoored'>
-			<button class='icon-cta' :title='server.hasBackdoor.title'>
+			<button class='icon-cta' :title='server.hasBackdoor.title' @click='backdoor'>
 				<icon-door
 					class='icon icon--door'
 					:class='[`icon--${server.hasBackdoor.className}`]'
@@ -20,7 +20,7 @@
 			<icon-tick v-if='server.purchasedByPlayer' class='icon icon--tick' />
 		</td>
 		<td class='cell cell--hostname'>
-			<button class='cta' :title='`Connect to ${server.hostname}`'>
+			<button class='cta' :title='`Connect to ${server.hostname}`' @click='connect'>
 				{{ server.hostname }}
 			</button>
 		</td>
@@ -61,9 +61,25 @@
 				type: Object,
 				required: true,
 			},
+			cracksOwned: {
+				type: Array,
+				default: () => [],
+			},
 		},
-		setup () {
-			return { inputTerminalCommands }
+		setup ({ cracksOwned, server }) {
+			const getConnectCommand = (servers) => servers.slice(1).map((node) => `connect ${node}`)
+			const backdoor = () => inputTerminalCommands([
+				...getConnectCommand(server.ancestors),
+				"backdoor"
+			])
+			const connect = () => inputTerminalCommands(getConnectCommand(server.ancestors))
+			const hack = () => inputTerminalCommands([
+				...getConnectCommand(server.ancestors),
+				...cracksOwned.slice(0, server.numOpenPortsRequired).map((crack) => `run ${crack}`),
+				"run NUKE.exe"
+			])
+
+			return { backdoor, connect, hack }
 		},
 	}
 </script>

@@ -52,15 +52,17 @@
 			},
 		},
 		setup ({ id }) {
+			const ns = `${id}-ns`
+
 			const sortKey = ref(null)
 			const sortAscending = ref(true)
 			const serverList = ref(getServers())
-			const player = ref(window[`${id}-ns`]?.getPlayer())
-			const playerPortsOwned = computed(() => 3) // TODO
+			const player = ref({})
+			const playerOwnedCracks = ref([])
 
 			// In this, get icons, titles, statuses etc pre-generated
 			const servers = computed(() =>
-				getItems(window[`${id}-ns`], serverList.value, player.value?.hacking, playerPortsOwned)
+				getItems(ns, serverList.value, player.value?.hacking, playerOwnedCracks.value.length)
 				.sort((a, b) => {
 					const valA = a[sortKey.value]
 					const valB = b[sortKey.value]
@@ -77,12 +79,24 @@
 			)
 
 			const refreshPlayer = () => {
-				player.value = window[`${id}-ns`]?.getPlayer()
+				player.value = ns?.getPlayer()
+				playerOwnedCracks.value = getCracksOwned(ns)
 				serverList.value = getServers()
 				setTimeout(refreshPlayer, 2000)
 			}
 
 			onMounted(refreshPlayer)
+
+			/** @param {NS} ns */
+			function getCracksOwned (ns) {
+				return [
+					"BruteSSH.exe",
+					"SQLInject.exe",
+					"HTTPWorm.exe",
+					"FTPCrack.exe",
+					"relaySMTP.exe",
+				].filter(crack => ns.fileExists(crack))
+			}
 
 			function getServers () {
 				// return {
@@ -290,7 +304,7 @@
 				// 	"myserver-1024-0": {},
 				// 	"myserver-2048": {}
 				// }
-				return window[`${id}-get-servers`](window[`${id}-ns`]).connections
+				return window[`${id}-get-servers`](ns).connections
 			}
 
 			const applySort = (key) => {
