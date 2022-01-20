@@ -52,57 +52,6 @@
 			},
 		},
 		setup ({ id }) {
-			// window[`${id}-server-list`] = [
-			// 	{
-			// 		'hasAdminRights': 1,
-			// 		'hostname': 'n00dles',
-			// 		'maxRam': 4,
-			// 		'ramUsed': 0,
-			// 		'purchasedByPlayer': 0,
-			// 		'backdoorInstalled': 1,
-			// 		'hackDifficulty': 1,
-			// 		'minDifficulty': 1,
-			// 		'moneyAvailable': 70000,
-			// 		'moneyMax': 1750000,
-			// 		'numOpenPortsRequired': 0,
-			// 		'openPortCount': 0,
-			// 		'requiredHackingSkill': 1,
-			// 		'serverGrowth': 3000,
-			// 	},
-			// 	{
-			// 		'hasAdminRights': 0,
-			// 		'hostname': 'joesguns',
-			// 		'maxRam': 4,
-			// 		'ramUsed': 0,
-			// 		'purchasedByPlayer': 0,
-			// 		'backdoorInstalled': 0,
-			// 		'hackDifficulty': 12.00000046,
-			// 		'minDifficulty': 5,
-			// 		'moneyAvailable': 135896.1235879,
-			// 		'moneyMax': 1750000,
-			// 		'numOpenPortsRequired': 3,
-			// 		'openPortCount': 1,
-			// 		'requiredHackingSkill': 45,
-			// 		'serverGrowth': 40,
-			// 	},
-			// 	{
-			// 		'hasAdminRights': 1,
-			// 		'hostname': 'pserv',
-			// 		'maxRam': 512,
-			// 		'ramUsed': 64,
-			// 		'purchasedByPlayer': 1,
-			// 		'backdoorInstalled': 0,
-			// 		'hackDifficulty': 1,
-			// 		'minDifficulty': 1,
-			// 		'moneyAvailable': 0,
-			// 		'moneyMax': 0,
-			// 		'numOpenPortsRequired': 0,
-			// 		'openPortCount': 0,
-			// 		'requiredHackingSkill': 1,
-			// 		'serverGrowth': 0,
-			// 	},
-			// ]
-
 			const sortKey = ref(null)
 			const sortAscending = ref(true)
 			const serverList = ref(getServers())
@@ -111,7 +60,7 @@
 
 			// In this, get icons, titles, statuses etc pre-generated
 			const servers = computed(() =>
-				getItems(window[`${id}-ns`], serverList.value?.connections, player.value?.hacking, playerPortsOwned)
+				getItems(window[`${id}-ns`], serverList.value, player.value?.hacking, playerPortsOwned)
 				.sort((a, b) => {
 					const valA = a[sortKey.value]
 					const valB = b[sortKey.value]
