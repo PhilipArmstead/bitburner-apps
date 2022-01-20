@@ -28,7 +28,7 @@
 			{{ server.requiredHackingSkill }}
 		</td>
 		<td class='cell cell--open-ports-required' :class='[`cell--${server.portClass}`]'>
-			{{ server.openPortCount }}/{{ server.numOpenPortsRequired }}
+			{{ server.portDisplay }}
 		</td>
 		<td class='cell cell--ram'>
 			{{ server.ramUsed }}/{{ server.maxRam }}
@@ -121,6 +121,10 @@
 
 		&--false {
 			color: #C00;
+		}
+
+		&--hidden {
+			display: none;
 		}
 	}
 

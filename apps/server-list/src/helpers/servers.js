@@ -31,6 +31,7 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 			hasRoot,
 			openPortCount: server.openPortCount,
 			numOpenPortsRequired: server.numOpenPortsRequired,
+			portDisplay: !server.purchasedByPlayer ? `${server.openPortCount}/${server.numOpenPortsRequired}` : '',
 			portClass,
 			ramUsed: toFixedNumber(server.ramUsed, 2),
 			maxRam: server.maxRam,
@@ -91,16 +92,20 @@ function getServerBackdoorStatus (server, { status }, hackingSkill) {
 		status: 1,
 	}
 
-	if (!server.backdoorInstalled && !server.purchasedByPlayer) {
-		if (status === 1 && hackingSkill >= server.requiredHackingSkill) {
-			hasBackdoor.className = 'maybe'
-			hasBackdoor.status = 0
-			hasBackdoor.title = 'Click to install backdoor'
-		} else {
-			hasBackdoor.className = 'false'
-			hasBackdoor.status = -1
-			hasBackdoor.title = `${server.hostname} has a minimum required hacking skill of ${server.requiredHackingSkill}`
+	if (!server.purchasedByPlayer) {
+		if (!server.backdoorInstalled) {
+			if (status === 1 && hackingSkill >= server.requiredHackingSkill) {
+				hasBackdoor.className = 'maybe'
+				hasBackdoor.status = 0
+				hasBackdoor.title = 'Click to install backdoor'
+			} else {
+				hasBackdoor.className = 'false'
+				hasBackdoor.status = -1
+				hasBackdoor.title = `${server.hostname} has a minimum required hacking skill of ${server.requiredHackingSkill}`
+			}
 		}
+	} else {
+		hasBackdoor.className = 'hidden'
 	}
 
 	return hasBackdoor
