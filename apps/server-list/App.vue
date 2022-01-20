@@ -111,7 +111,7 @@
 
 			// In this, get icons, titles, statuses etc pre-generated
 			const servers = computed(() =>
-				getItems(serverList.value?.connections, player.value?.hacking, playerPortsOwned)
+				getItems(window[`${id}-ns`], serverList.value?.connections, player.value?.hacking, playerPortsOwned)
 				.sort((a, b) => {
 					const valA = a[sortKey.value]
 					const valB = b[sortKey.value]
@@ -130,7 +130,7 @@
 			const refreshPlayer = () => {
 				serverList.value = getServers()
 				player.value = window[`${id}-ns`]?.getPlayer()
-				console.log(servers.value)
+				console.log(serverList.value?.connections)
 				setTimeout(refreshPlayer, 2000)
 			}
 
