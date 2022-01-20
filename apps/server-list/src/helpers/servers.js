@@ -108,6 +108,7 @@ function getServerBackdoorStatus (server, { status }, hackingSkill) {
 		}
 	} else {
 		hasBackdoor.className = 'hidden'
+		hasBackdoor.status = -2
 	}
 
 	return hasBackdoor
