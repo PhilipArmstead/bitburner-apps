@@ -110,7 +110,7 @@
 
 			// In this, get icons, titles, statuses etc pre-generated
 			const servers = computed(() =>
-				getItems(window[`${id}-ns`], window[`${id}-server-list`].connections, playerPortsOwned)
+				getItems(window[`${id}-ns`], getServers().connections, playerPortsOwned)
 				.sort((a, b) => {
 					const valA = a[sortKey.value]
 					const valB = b[sortKey.value]
@@ -132,6 +132,8 @@
 			}
 
 			onMounted(refreshPlayer)
+
+			const getServers = () => window[`${id}-get-servers`](window[`${id}-ns`])
 
 			const applySort = (key) => {
 				if (sortKey.value === key) {

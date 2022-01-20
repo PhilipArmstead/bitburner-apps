@@ -3,7 +3,8 @@ export default {
 import { getServers } from "/gui/lib/servers.js"
 `,
 	main: () => `
-	window[\`\${id}-server-list\`] = getServers(ns)
+	window[\`\${id}-ns\`] = ns
+	window[\`\${id}-get-servers\`] = getServers
 `,
 	extractThemes: true,
 }
