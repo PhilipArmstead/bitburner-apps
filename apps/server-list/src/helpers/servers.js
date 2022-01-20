@@ -91,7 +91,7 @@ function getServerBackdoorStatus (server, { status }, hackingSkill) {
 		status: 1,
 	}
 
-	if (!server.backdoorInstalled) {
+	if (!server.backdoorInstalled && !server.purchasedByPlayer) {
 		if (status === 1 && hackingSkill >= server.requiredHackingSkill) {
 			hasBackdoor.className = 'maybe'
 			hasBackdoor.status = 0

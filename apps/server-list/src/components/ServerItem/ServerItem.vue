@@ -67,7 +67,7 @@
 			},
 		},
 		setup (props) {
-			const getConnectCommand = (servers) => servers.slice(1).map((node) => `connect ${node}`)
+			const getConnectCommand = (servers) => ['home', ...servers.slice(1).map((node) => `connect ${node}`)]
 			const getRootCommand = (servers) => [
 				...getConnectCommand(servers),
 				...props.cracksOwned.slice(0, props.server.numOpenPortsRequired).map((crack) => `run ${crack}`),

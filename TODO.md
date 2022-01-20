@@ -12,5 +12,4 @@ List all servers with the following data
 - Threads to grow
 - Profit per second (assuming we hack for X%)
 
-Show has-hacked and remove has-backdoored for purchased servers
 Toggle theming, toggle filtering
