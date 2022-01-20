@@ -93,6 +93,9 @@
 	}
 
 	.cell {
+		border: 1px solid #3e3e3e2e;
+		border-bottom: none;
+		border-right: none;
 		padding: 3px;
 
 		&--true {
@@ -105,6 +108,10 @@
 
 		&--false {
 			color: #900;
+		}
+
+		&--rooted, &--backdoored, &--player-owned {
+			text-align: center;
 		}
 	}
 

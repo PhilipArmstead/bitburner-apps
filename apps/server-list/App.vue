@@ -186,7 +186,7 @@
 				padding-bottom: 6px;
 
 				&--sorting {
-					padding-right: 20px;
+					padding-right: 8px;
 					position: relative;
 
 					&::before {
