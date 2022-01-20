@@ -105,7 +105,7 @@
 
 			const sortKey = ref(null)
 			const sortAscending = ref(true)
-			const serverList = ref(getServers(window[`${id}-ns`]))
+			const serverList = ref(getServers())
 			const player = ref(window[`${id}-ns`]?.getPlayer())
 			const playerPortsOwned = computed(() => 3) // TODO
 
@@ -128,14 +128,16 @@
 			)
 
 			const refreshPlayer = () => {
-				serverList.value = getServers(window[`${id}-ns`])
+				serverList.value = getServers()
 				player.value = window[`${id}-ns`]?.getPlayer()
 				setTimeout(refreshPlayer, 2000)
 			}
 
 			onMounted(refreshPlayer)
 
-			const getServers = () => window[`${id}-get-servers`](window[`${id}-ns`])
+			function getServers () {
+				return window[`${id}-get-servers`](window[`${id}-ns`])
+			}
 
 			const applySort = (key) => {
 				if (sortKey.value === key) {
