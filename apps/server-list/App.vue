@@ -358,6 +358,10 @@
 		min-height: 100%;
 		padding: 6px;
 
+		&, &-table, thead, &__head {
+			background: inherit;
+		}
+
 		&-table {
 			border-collapse: collapse;
 			border-spacing: 0;
@@ -365,8 +369,23 @@
 		}
 
 		&__head {
+			background: #000;
+			position: sticky;
+			top: 0;
+			transform: translateY(-1px);
+
+			&::after {
+				background: #FFF;
+				content: '';
+				display: block;
+				height: 1px;
+				left: 0;
+				position: absolute;
+				top: 100%;
+				width: 100%;
+			}
+
 			.cell {
-				border-bottom: 1px solid;
 				padding-bottom: 6px;
 
 				&--sorting {
