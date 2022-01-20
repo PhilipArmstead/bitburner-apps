@@ -66,18 +66,19 @@
 				default: () => [],
 			},
 		},
-		setup ({ cracksOwned, server }) {
+		setup (props) {
 			const getConnectCommand = (servers) => servers.slice(1).map((node) => `connect ${node}`)
+			const getRootCommand = (servers) => [
+				...getConnectCommand(servers),
+				...props.cracksOwned.slice(0, props.server.numOpenPortsRequired).map((crack) => `run ${crack}`),
+				"run NUKE.exe"
+			]
 			const backdoor = () => inputTerminalCommands([
-				...getConnectCommand(server.ancestors),
+				...getRootCommand(props.server.ancestors),
 				"backdoor"
 			])
-			const connect = () => inputTerminalCommands(getConnectCommand(server.ancestors))
-			const root = () => inputTerminalCommands([
-				...getConnectCommand(server.ancestors),
-				...cracksOwned.slice(0, server.numOpenPortsRequired).map((crack) => `run ${crack}`),
-				"run NUKE.exe"
-			])
+			const connect = () => inputTerminalCommands(getConnectCommand(props.server.ancestors))
+			const root = () => inputTerminalCommands(getRootCommand(props.server.ancestors))
 
 			return { backdoor, connect, root }
 		},
