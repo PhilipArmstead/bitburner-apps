@@ -18,7 +18,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<server-item v-for='server in servers' :key='server.hostname' :server='server' />
+					<server-item v-for='server in servers' :key='server.hostname' :server='server' :cracks-owned='playerOwnedCracks' />
 				</tbody>
 			</table>
 		</div>
@@ -330,7 +330,7 @@
 				// { className: 'time-to-hack', sortKey: 'serverGrowth', content: 'Time to hack', title: 'Time to hack' },
 			]
 
-			return { headers, servers, sortAscending, sortKey, applySort }
+			return { headers, playerOwnedCracks, servers, sortAscending, sortKey, applySort }
 		},
 	}
 </script>
