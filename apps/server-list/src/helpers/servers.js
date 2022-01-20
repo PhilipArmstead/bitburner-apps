@@ -67,7 +67,7 @@ function getServerRootStatus (server, playerPortsOwned) {
 	}
 
 	if (!server.hasAdminRights) {
-		if (playerPortsOwned.value >= server.numOpenPortsRequired || server.openPortCount > server.numOpenPortsRequired) {
+		if (playerPortsOwned >= server.numOpenPortsRequired || server.openPortCount > server.numOpenPortsRequired) {
 			hasRoot.className = 'maybe'
 			hasRoot.status = 0
 			hasRoot.title = 'Click to root'

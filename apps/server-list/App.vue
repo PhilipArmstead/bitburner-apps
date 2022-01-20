@@ -87,7 +87,10 @@
 
 			onMounted(refreshPlayer)
 
-			/** @param {NS} ns */
+			/**
+			 * @param {NS} ns
+			 * @return {String[]}
+			 */
 			function getCracksOwned (ns) {
 				return [
 					"BruteSSH.exe",

@@ -73,13 +73,13 @@
 				"backdoor"
 			])
 			const connect = () => inputTerminalCommands(getConnectCommand(server.ancestors))
-			const hack = () => inputTerminalCommands([
+			const root = () => inputTerminalCommands([
 				...getConnectCommand(server.ancestors),
 				...cracksOwned.slice(0, server.numOpenPortsRequired).map((crack) => `run ${crack}`),
 				"run NUKE.exe"
 			])
 
-			return { backdoor, connect, hack }
+			return { backdoor, connect, root }
 		},
 	}
 </script>
