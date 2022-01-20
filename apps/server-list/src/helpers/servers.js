@@ -22,6 +22,7 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 		const portClass = getServerPortStatus(server, playerPortsOwned)
 		const moneyAvailable = Math.round(server.moneyAvailable)
 		const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
+		const hackDifficulty = toFixedNumber(server.hackDifficulty, 2)
 
 		return {
 			hostname: server.hostname,
@@ -35,9 +36,9 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 			portClass,
 			ramUsed: toFixedNumber(server.ramUsed, 2),
 			maxRam: server.maxRam,
-			hackDifficulty: toFixedNumber(server.hackDifficulty, 2),
+			hackDifficulty,
 			minDifficulty: server.minDifficulty,
-			difficultyDisplay: moneyAvailable ? `${server.hackDifficulty} (${server.minDifficulty})` : '',
+			difficultyDisplay: moneyAvailable ? `${hackDifficulty} (${server.minDifficulty})` : '',
 			moneyAvailable,
 			moneyAvailableFormatted: moneyAvailable ? `$${new Intl.NumberFormat({ currency: 'USD' }).format(moneyAvailable)}` : '',
 			moneyAvailablePercentage,
