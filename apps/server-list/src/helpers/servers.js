@@ -1,4 +1,4 @@
-export function getItems(ns, servers, playerPortsOwned) {
+export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 	return Object.entries(servers).map(([hostname, { connections }]) => getItem(hostname, connections))
 
 	/**
@@ -11,8 +11,8 @@ export function getItems(ns, servers, playerPortsOwned) {
 		const server = ns.getServer(hostname)
 		const latestAncestors = [...ancestors, hostname]
 
-		const hasRoot = getServerRootStatus(server)
-		const hasBackdoor = getServerBackdoorStatus(server, hasRoot)
+		const hasRoot = getServerRootStatus(server, playerPortsOwned)
+		const hasBackdoor = getServerBackdoorStatus(server, hasRoot, hackingSkill)
 		const portClass = getServerPortStatus(server, playerPortsOwned)
 		const moneyAvailable = Math.round(server.moneyAvailable)
 		const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
@@ -57,7 +57,7 @@ function getServerPortStatus (server, playerPortsOwned) {
 	}
 }
 
-function getServerRootStatus (server) {
+function getServerRootStatus (server, playerPortsOwned) {
 	let hasRoot = {
 		className: 'true',
 		status: 1,
@@ -82,7 +82,7 @@ function getServerRootStatus (server) {
 	return hasRoot
 }
 
-function getServerBackdoorStatus (server, { status }) {
+function getServerBackdoorStatus (server, { status }, hackingSkill) {
 	let hasBackdoor = {
 		className: 'true',
 		title: 'This server has a backdoor',
@@ -90,7 +90,7 @@ function getServerBackdoorStatus (server, { status }) {
 	}
 
 	if (!server.backdoorInstalled) {
-		if (status === 1 && player.value?.hacking >= server.requiredHackingSkill) {
+		if (status === 1 && hackingSkill >= server.requiredHackingSkill) {
 			hasBackdoor.className = 'maybe'
 			hasBackdoor.status = 0
 			hasBackdoor.title = 'Click to install backdoor'

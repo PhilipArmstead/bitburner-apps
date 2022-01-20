@@ -105,12 +105,13 @@
 
 			const sortKey = ref(null)
 			const sortAscending = ref(true)
-			const player = ref({})
+			const serverList = ref(getServers(window[`${id}-ns`]))
+			const player = ref(window[`${id}-ns`]?.getPlayer())
 			const playerPortsOwned = computed(() => 3) // TODO
 
 			// In this, get icons, titles, statuses etc pre-generated
 			const servers = computed(() =>
-				getItems(window[`${id}-ns`], getServers().connections, playerPortsOwned)
+				getItems(serverList.value?.connections, player.value?.hacking, playerPortsOwned)
 				.sort((a, b) => {
 					const valA = a[sortKey.value]
 					const valB = b[sortKey.value]
@@ -127,6 +128,7 @@
 			)
 
 			const refreshPlayer = () => {
+				serverList.value = getServers(window[`${id}-ns`])
 				player.value = window[`${id}-ns`]?.getPlayer()
 				setTimeout(refreshPlayer, 2000)
 			}
