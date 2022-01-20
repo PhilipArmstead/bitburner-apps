@@ -32,7 +32,7 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 			openPortCount: server.openPortCount,
 			numOpenPortsRequired: server.numOpenPortsRequired,
 			portClass,
-			ramUsed: server.ramUsed,
+			ramUsed: toFixedNumber(server.ramUsed, 2),
 			maxRam: server.maxRam,
 			hackDifficulty: toFixedNumber(server.hackDifficulty, 2),
 			minDifficulty: server.minDifficulty,
