@@ -52,7 +52,7 @@
 			},
 		},
 		setup ({ id }) {
-			const ns = `${id}-ns`
+			const ns = window[`${id}-ns`]
 
 			const sortKey = ref(null)
 			const sortAscending = ref(true)
