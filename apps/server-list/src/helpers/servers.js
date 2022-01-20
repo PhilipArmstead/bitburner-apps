@@ -9,12 +9,9 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 				].flat()
 			})
 		}
-	}
 
 	/**
 	 * @param {String} hostname
-	 * @param {Object[]} children
-	 * @param {String[]} ancestors
 	 * @return {{hostname: String, contractCount: Number, hasBackdoorTitle: String, hasBackdoorClass: String, hasRootTitle: String, hasRootClass: String, ancestors: {String}[], connections: {Object}[], purchasedByPlayer: {Boolean}}}
 	 */
 	function getItem (hostname) {
@@ -48,6 +45,7 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 			sortHasBackdoor: hasBackdoor.status,
 			sortHasRoot: hasRoot.status,
 		}
+	}
 }
 
 
