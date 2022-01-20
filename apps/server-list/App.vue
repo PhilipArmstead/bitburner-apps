@@ -85,7 +85,212 @@
 			onMounted(refreshPlayer)
 
 			function getServers () {
-				return window[`${id}-get-servers`](window[`${id}-ns`])
+				// return {
+				// 	"n00dles": {},
+				// 	"foodnstuff": {},
+				// 	"sigma-cosmetics": {
+				// 		"connections": {
+				// 			"max-hardware": {},
+				// 			"CSEC": {
+				// 				"connections": {
+				// 					"neo-net": {
+				// 						"connections": {
+				// 							"netlink": {
+				// 								"connections": {
+				// 									"rothman-uni": {
+				// 										"connections": {
+				// 											"rho-construction": {
+				// 												"connections": {
+				// 													"snap-fitness": {
+				// 														"connections": {
+				// 															"deltaone": {
+				// 																"connections": {
+				// 																	"univ-energy": {},
+				// 																	"zeus-med": {
+				// 																		"connections": {
+				// 																			"taiyang-digital": {
+				// 																				"connections": {
+				// 																					"titan-labs": {},
+				// 																					"applied-energetics": {
+				// 																						"connections": {
+				// 																							"fulcrumtech": {}
+				// 																						}
+				// 																					}
+				// 																				}
+				// 																			}
+				// 																		}
+				// 																	}
+				// 																}
+				// 															}
+				// 														}
+				// 													}
+				// 												}
+				// 											}
+				// 										}
+				// 									}
+				// 								}
+				// 							}
+				// 						}
+				// 					},
+				// 					"silver-helix": {
+				// 						"connections": {
+				// 							"johnson-ortho": {
+				// 								"connections": {
+				// 									"summit-uni": {
+				// 										"connections": {
+				// 											"aevum-police": {
+				// 												"connections": {
+				// 													"aerocorp": {}
+				// 												}
+				// 											}
+				// 										}
+				// 									}
+				// 								}
+				// 							},
+				// 							"crush-fitness": {}
+				// 						}
+				// 					}
+				// 				}
+				// 			}
+				// 		}
+				// 	},
+				// 	"joesguns": {
+				// 		"connections": {
+				// 			"zer0": {}
+				// 		}
+				// 	},
+				// 	"hong-fang-tea": {},
+				// 	"harakiri-sushi": {},
+				// 	"iron-gym": {
+				// 		"connections": {
+				// 			"nectar-net": {
+				// 				"connections": {
+				// 					"phantasy": {
+				// 						"connections": {
+				// 							"comptek": {
+				// 								"connections": {
+				// 									"syscore": {},
+				// 									"catalyst": {}
+				// 								}
+				// 							}
+				// 						}
+				// 					},
+				// 					"omega-net": {
+				// 						"connections": {
+				// 							"the-hub": {
+				// 								"connections": {
+				// 									"zb-institute": {
+				// 										"connections": {
+				// 											"alpha-ent": {},
+				// 											"millenium-fitness": {
+				// 												"connections": {
+				// 													"global-pharm": {}
+				// 												}
+				// 											}
+				// 										}
+				// 									}
+				// 								}
+				// 							},
+				// 							"avmnite-02h": {
+				// 								"connections": {
+				// 									"I.I.I.I": {
+				// 										"connections": {
+				// 											"lexo-corp": {
+				// 												"connections": {
+				// 													"galactic-cyber": {
+				// 														"connections": {
+				// 															"omnia": {
+				// 																"connections": {
+				// 																	"defcomm": {},
+				// 																	"icarus": {
+				// 																		"connections": {
+				// 																			"infocomm": {
+				// 																				"connections": {
+				// 																					"microdyne": {
+				// 																						"connections": {
+				// 																							"stormtech": {
+				// 																								"connections": {
+				// 																									"4sigma": {}
+				// 																								}
+				// 																							},
+				// 																							"helios": {
+				// 																								"connections": {
+				// 																									"omnitek": {
+				// 																										"connections": {
+				// 																											"clarkinc": {
+				// 																												"connections": {
+				// 																													"megacorp": {},
+				// 																													"The-Cave": {}
+				// 																												}
+				// 																											}
+				// 																										}
+				// 																									}
+				// 																								}
+				// 																							},
+				// 																							"vitalife": {
+				// 																								"connections": {
+				// 																									"kuai-gong": {
+				// 																										"connections": {
+				// 																											"b-and-a": {},
+				// 																											"blade": {
+				// 																												"connections": {
+				// 																													"ecorp": {}
+				// 																												}
+				// 																											},
+				// 																											"nwo": {},
+				// 																											"powerhouse-fitness": {
+				// 																												"connections": {
+				// 																													"fulcrumassets": {}
+				// 																												}
+				// 																											}
+				// 																										}
+				// 																									},
+				// 																									".": {}
+				// 																								}
+				// 																							}
+				// 																						}
+				// 																					}
+				// 																				}
+				// 																			},
+				// 																			"zb-def": {}
+				// 																		}
+				// 																	}
+				// 																}
+				// 															},
+				// 															"unitalife": {
+				// 																"connections": {
+				// 																	"solaris": {
+				// 																		"connections": {
+				// 																			"nova-med": {
+				// 																				"connections": {
+				// 																					"run4theh111z": {}
+				// 																				}
+				// 																			}
+				// 																		}
+				// 																	}
+				// 																}
+				// 															}
+				// 														}
+				// 													}
+				// 												}
+				// 											}
+				// 										}
+				// 									}
+				// 								}
+				// 							}
+				// 						}
+				// 					}
+				// 				}
+				// 			}
+				// 		}
+				// 	},
+				// 	"darkweb": {},
+				// 	"myserver-512": {},
+				// 	"myserver-1024": {},
+				// 	"myserver-1024-0": {},
+				// 	"myserver-2048": {}
+				// }
+				return window[`${id}-get-servers`](window[`${id}-ns`]).connections
 			}
 
 			const applySort = (key) => {
