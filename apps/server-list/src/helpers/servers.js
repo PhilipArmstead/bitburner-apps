@@ -37,6 +37,7 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 			maxRam: server.maxRam,
 			hackDifficulty: toFixedNumber(server.hackDifficulty, 2),
 			minDifficulty: server.minDifficulty,
+			difficultyDisplay: moneyAvailable ? `${server.hackDifficulty} (${server.minDifficulty})` : '',
 			moneyAvailable,
 			moneyAvailableFormatted: moneyAvailable ? `$${new Intl.NumberFormat({ currency: 'USD' }).format(moneyAvailable)}` : '',
 			moneyAvailablePercentage,

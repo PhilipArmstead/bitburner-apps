@@ -34,7 +34,7 @@
 			{{ server.ramUsed }}/{{ server.maxRam }}
 		</td>
 		<td class='cell cell--security'>
-			{{ server.hackDifficulty }} ({{ server.minDifficulty }})
+			{{ server.difficultyDisplay }}
 		</td>
 		<td class='cell cell--money'>
 			{{ server.moneyAvailableFormatted }} {{ server.moneyAvailablePercentageFormatted }}
