@@ -164,7 +164,6 @@
 		}
 
 		&__head {
-			background: #000;
 			position: sticky;
 			top: 0;
 			transform: translateY(-1px);
