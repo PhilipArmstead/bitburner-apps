@@ -33,7 +33,7 @@
 	import IconDoor from './assets/icons/door.svg'
 	import IconSkull from './assets/icons/skull.svg'
 	import ServerItem from './src/components/ServerItem/ServerItem.vue'
-	import { getItems } from './src/helpers/servers'
+	import { getItems, getServers } from './src/helpers/servers'
 
 	export default {
 		components: { AppWrapper, IconDoor, IconSkull, ServerItem },
@@ -56,7 +56,7 @@
 
 			const sortKey = ref(null)
 			const sortAscending = ref(true)
-			const serverList = ref(getServers())
+			const serverList = ref(getServers(ns))
 			const player = ref({})
 			const playerOwnedCracks = ref([])
 
@@ -81,7 +81,7 @@
 			const refreshPlayer = () => {
 				player.value = ns?.getPlayer()
 				playerOwnedCracks.value = getCracksOwned(ns)
-				serverList.value = getServers()
+				serverList.value = getServers(ns)
 				setTimeout(refreshPlayer, 2000)
 			}
 
@@ -99,10 +99,6 @@
 					"FTPCrack.exe",
 					"relaySMTP.exe",
 				].filter(crack => ns.fileExists(crack))
-			}
-
-			function getServers () {
-				return window[`${id}-get-servers`](ns).connections
 			}
 
 			const applySort = (key) => {

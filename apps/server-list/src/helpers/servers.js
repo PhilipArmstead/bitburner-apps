@@ -1,7 +1,11 @@
-export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
+export const getServers = (ns) => {
+	return runScan(ns).connections
+}
+
+export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 	return getAllItems(servers).flat()
 
-	function getAllItems(servers, ancestors = ['home']) {
+	const getAllItems =(servers, ancestors = ['home']) => {
 			return Object.entries(servers).map(([hostname, obj]) => {
 				return [
 					{ ...getItem(hostname), ancestors: ancestors.concat(hostname) },
@@ -10,11 +14,12 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 			})
 		}
 
+
 	/**
 	 * @param {String} hostname
 	 * @return {{hostname: String, contractCount: Number, hasBackdoorTitle: String, hasBackdoorClass: String, hasRootTitle: String, hasRootClass: String, ancestors: {String}[], connections: {Object}[], purchasedByPlayer: {Boolean}}}
 	 */
-	function getItem (hostname) {
+	const getItem = (hostname) => {
 		const server = ns.getServer(hostname)
 
 		const hasRoot = getServerRootStatus(server, playerPortsOwned)
@@ -53,7 +58,7 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 }
 
 
-function getServerPortStatus (server, playerPortsOwned) {
+const getServerPortStatus = (server, playerPortsOwned) => {
 	if (server.openPortCount >= server.numOpenPortsRequired) {
 		return 'true'
 	} else if (playerPortsOwned >= server.numOpenPortsRequired) {
@@ -63,7 +68,7 @@ function getServerPortStatus (server, playerPortsOwned) {
 	}
 }
 
-function getServerRootStatus (server, playerPortsOwned) {
+const getServerRootStatus = (server, playerPortsOwned) => {
 	let hasRoot = {
 		className: 'true',
 		status: 1,
@@ -88,7 +93,7 @@ function getServerRootStatus (server, playerPortsOwned) {
 	return hasRoot
 }
 
-function getServerBackdoorStatus (server, { status }, hackingSkill) {
+const getServerBackdoorStatus = (server, { status }, hackingSkill) => {
 	let hasBackdoor = {
 		className: 'true',
 		title: 'This server has a backdoor',
@@ -113,6 +118,45 @@ function getServerBackdoorStatus (server, { status }, hackingSkill) {
 	}
 
 	return hasBackdoor
+}
+
+
+/**
+ * @param {NS} ns
+ * @return {{ connections: Object }} results
+ **/
+const runScan = (ns) => {
+	const found = new Set()
+	const tree = {}
+	scan(ns, tree, found)
+
+	return tree
+}
+
+/**
+ * @param {NS} ns
+ * @param {Object} tree
+ * @param {Set} found
+ * @param {String?} host
+ **/
+const scan = (ns, tree, found, host = "home") => {
+	found.add(host)
+
+	const targets = ns.scan(host).filter((server, i) => i || host === "home")
+
+	if (targets.length) {
+		tree.connections = {}
+	}
+
+	targets.forEach((server) => {
+		tree.connections[server] = {}
+
+		if (!found.has(server)) {
+			scan(ns, tree.connections[server], found, server)
+		} else {
+			tree.connections[server].duplicate = true
+		}
+	})
 }
 
 const toFixedNumber = (value, decimalPlaces) => Number(value.toFixed(decimalPlaces))
