@@ -116,6 +116,7 @@
 				{ className: 'backdoored', sortKey: 'sortHasBackdoor', title: 'Is server backdoored?', component:  IconDoor },
 				{ className: 'player-owned', sortKey: 'purchasedByPlayer', title: 'Is server player-owned?', component:  IconLoan },
 				{ className: 'hostname', sortKey: 'hostname', content: 'Name' },
+				{ className: 'contracts', sortKey: 'contractsLength', content: 'Contracts' },
 				{ className: 'required-hacking-skill', sortKey: 'requiredHackingSkill', content: 'Req. hack', title: 'Required hacking skill' },
 				{ className: 'open-ports-required', sortKey: 'numOpenPortsRequired', content: 'Ports', title: 'Open ports required' },
 				{ className: 'ram', sortKey: 'maxRam', content: 'RAM', title: 'RAM in-use/total' },

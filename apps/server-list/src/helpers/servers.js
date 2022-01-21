@@ -28,6 +28,7 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 		const moneyAvailable = Math.round(server.moneyAvailable)
 		const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
 		const hackDifficulty = toFixedNumber(server.hackDifficulty, 2)
+		const contracts = ns.ls(hostname, ".cct")
 
 		return {
 			hostname: server.hostname,
@@ -54,6 +55,8 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 			serverGrowthDisplay: server.serverGrowth || '',
 			sortHasBackdoor: hasBackdoor.status,
 			sortHasRoot: hasRoot.status,
+			contracts,
+			contractsLength: contracts.length,
 		}
 	}
 
