@@ -182,6 +182,10 @@
 			.cell {
 				padding-bottom: 6px;
 
+				&--rooted, &--backdoored, &--player-owned {
+					text-align: center;
+				}
+
 				&--sorting {
 					padding-right: 8px;
 					position: relative;
@@ -212,9 +216,5 @@
 		padding-left: 6px;
 		padding-right: 6px;
 		white-space: nowrap;
-
-		&--rooted, &--backdoored, &--player-owned {
-			text-align: center;
-		}
 	}
 </style>

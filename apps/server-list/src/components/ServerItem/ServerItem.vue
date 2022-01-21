@@ -109,6 +109,10 @@
 		&--false {
 			color: #900;
 		}
+
+		&--rooted, &--backdoored, &--player-owned {
+			text-align: center;
+		}
 	}
 
 	.icon {
