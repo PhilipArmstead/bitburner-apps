@@ -31,7 +31,7 @@
 
 	// import IconContract from './assets/icons/contract.svg'
 	import IconDoor from './assets/icons/door.svg'
-	import IconLoan from '../../../assets/icons/loan.svg'
+	import IconLoan from './assets/icons/loan.svg'
 	import IconSkull from './assets/icons/skull.svg'
 	import ServerItem from './src/components/ServerItem/ServerItem.vue'
 	import { getItems, getServers } from './src/helpers/servers'
