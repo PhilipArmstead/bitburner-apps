@@ -4,7 +4,7 @@ export async function main(ns) {
 	// Boilerplate
 	const doc = globalThis['document']
 	const id = 'macros-app'
-	globalThis[`${id}-version`] = '0.0.9'
+	globalThis[`${id}-version`] = '0.0.10'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
@@ -82,7 +82,6 @@ ${Object.entries(ns.ui.getTheme()).map(([key, value]) => `--${key}: ${value};`).
 	mount()
 
 
-	})
 } 
 
 
