@@ -72,6 +72,5 @@ ${entryHooks.keepAlive ? `
 		await ns.asleep(2000)
 	}
 ` : ''}
-	})
 } 
 `
