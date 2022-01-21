@@ -7,7 +7,7 @@ export async function main(ns) {
 	// Boilerplate
 	const doc = globalThis['document']
 	const id = 'server-list'
-	globalThis[`${id}-version`] = '0.0.40'
+	globalThis[`${id}-version`] = '0.0.41'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
@@ -75,7 +75,6 @@ ${Object.entries(ns.ui.getTheme()).map(([key, value]) => `--${key}: ${value};`).
 		await ns.asleep(2000)
 	}
 
-	})
 } 
 
 
