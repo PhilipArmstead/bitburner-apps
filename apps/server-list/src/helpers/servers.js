@@ -129,7 +129,8 @@ const runScan = (ns) => {
 	const found = new Set()
 	const tree = {}
 	scan(ns, tree, found)
-
+console.log(tree)
+console.log(found)
 	return tree
 }
 
