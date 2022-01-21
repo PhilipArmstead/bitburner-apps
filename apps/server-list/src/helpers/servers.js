@@ -45,6 +45,7 @@ export function getItems(ns, servers, hackingSkill, playerPortsOwned) {
 			moneyAvailablePercentageFormatted: moneyAvailable ? `(${moneyAvailablePercentage}%)` : '',
 			moneyMax: server.moneyMax,
 			serverGrowth: server.serverGrowth,
+			serverGrowthDisplay: server.serverGrowth || '',
 			sortHasBackdoor: hasBackdoor.status,
 			sortHasRoot: hasRoot.status,
 		}

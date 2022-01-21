@@ -40,7 +40,7 @@
 			{{ server.moneyAvailableFormatted }} {{ server.moneyAvailablePercentageFormatted }}
 		</td>
 		<td class='cell cell--growth'>
-			{{ server.serverGrowth }}
+			{{ server.serverGrowthDisplay }}
 		</td>
 	</tr>
 </template>
