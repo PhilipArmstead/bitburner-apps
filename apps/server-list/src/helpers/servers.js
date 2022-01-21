@@ -3,8 +3,6 @@ export const getServers = (ns) => {
 }
 
 export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
-	return getAllItems(servers).flat()
-
 	const getAllItems =(servers, ancestors = ['home']) => {
 			return Object.entries(servers).map(([hostname, obj]) => {
 				return [
@@ -55,6 +53,8 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 			sortHasRoot: hasRoot.status,
 		}
 	}
+
+	return getAllItems(servers).flat()
 }
 
 
@@ -129,8 +129,7 @@ const runScan = (ns) => {
 	const found = new Set()
 	const tree = {}
 	scan(ns, tree, found)
-console.log(tree)
-console.log(found)
+
 	return tree
 }
 
