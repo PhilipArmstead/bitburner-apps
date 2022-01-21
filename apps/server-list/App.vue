@@ -31,12 +31,13 @@
 
 	// import IconContract from './assets/icons/contract.svg'
 	import IconDoor from './assets/icons/door.svg'
+	import IconLoan from '../../../assets/icons/loan.svg'
 	import IconSkull from './assets/icons/skull.svg'
 	import ServerItem from './src/components/ServerItem/ServerItem.vue'
 	import { getItems, getServers } from './src/helpers/servers'
 
 	export default {
-		components: { AppWrapper, IconDoor, IconSkull, ServerItem },
+		components: { AppWrapper, IconDoor, IconLoan, IconSkull, ServerItem },
 		props: {
 			id: {
 				type: String,
@@ -113,7 +114,7 @@
 			const headers = [
 				{ className: 'rooted', sortKey: 'sortHasRoot', title: 'Is server rooted?', component:  IconSkull },
 				{ className: 'backdoored', sortKey: 'sortHasBackdoor', title: 'Is server backdoored?', component:  IconDoor },
-				{ className: 'player-owned', sortKey: 'purchasedByPlayer', title: 'Is server player-owned?', component:  IconSkull },
+				{ className: 'player-owned', sortKey: 'purchasedByPlayer', title: 'Is server player-owned?', component:  IconLoan },
 				{ className: 'hostname', sortKey: 'hostname', content: 'Name' },
 				{ className: 'required-hacking-skill', sortKey: 'requiredHackingSkill', content: 'Req. hack', title: 'Required hacking skill' },
 				{ className: 'open-ports-required', sortKey: 'numOpenPortsRequired', content: 'Ports', title: 'Open ports required' },
@@ -211,5 +212,9 @@
 		padding-left: 6px;
 		padding-right: 6px;
 		white-space: nowrap;
+
+		&--rooted, &--backdoored, &--player-owned {
+			text-align: center;
+		}
 	}
 </style>

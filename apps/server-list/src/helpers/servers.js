@@ -3,6 +3,8 @@ export const getServers = (ns) => {
 }
 
 export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
+	const formatter = new Intl.NumberFormat()
+	const currencyFormatter = new Intl.NumberFormat({ currency: 'USD' })
 	const getAllItems =(servers, ancestors = ['home']) => {
 			return Object.entries(servers).map(([hostname, obj]) => {
 				return [
@@ -31,11 +33,12 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 			hostname: server.hostname,
 			purchasedByPlayer: server.purchasedByPlayer,
 			requiredHackingSkill: server.requiredHackingSkill,
+			requiredHackingSkillDisplay: formatter.format(server.requiredHackingSkill),
 			hasBackdoor,
 			hasRoot,
 			openPortCount: server.openPortCount,
 			numOpenPortsRequired: server.numOpenPortsRequired,
-			portDisplay: !server.purchasedByPlayer ? `${server.openPortCount}/${server.numOpenPortsRequired}` : '',
+			portDisplay: !server.purchasedByPlayer ? server.numOpenPortsRequired : '',
 			portClass,
 			ramUsed: toFixedNumber(server.ramUsed, 2),
 			maxRam: server.maxRam,
@@ -43,7 +46,7 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 			minDifficulty: server.minDifficulty,
 			difficultyDisplay: moneyAvailable ? `${hackDifficulty} (${server.minDifficulty})` : '',
 			moneyAvailable,
-			moneyAvailableFormatted: moneyAvailable ? `$${new Intl.NumberFormat({ currency: 'USD' }).format(moneyAvailable)}` : '',
+			moneyAvailableFormatted: moneyAvailable ? `$${currencyFormatter.format(moneyAvailable)}` : '',
 			moneyAvailablePercentage,
 			moneyAvailablePercentageFormatted: moneyAvailable ? `(${moneyAvailablePercentage}%)` : '',
 			moneyMax: server.moneyMax,

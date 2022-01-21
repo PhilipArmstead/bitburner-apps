@@ -25,7 +25,7 @@
 			</button>
 		</td>
 		<td class='cell cell--required-hacking-skill'>
-			{{ server.requiredHackingSkill }}
+			{{ server.requiredHackingSkillDisplay }}
 		</td>
 		<td class='cell cell--open-ports-required' :class='[`cell--${server.portClass}`]'>
 			{{ server.portDisplay }}
@@ -108,10 +108,6 @@
 
 		&--false {
 			color: #900;
-		}
-
-		&--rooted, &--backdoored, &--player-owned {
-			text-align: center;
 		}
 	}
 
