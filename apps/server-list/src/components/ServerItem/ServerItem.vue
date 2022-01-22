@@ -35,6 +35,9 @@
 				<icon-contract class='icon icon--door' />
 			</button>
 		</td>
+		<td class='cell cell--required-hacking-skill'>
+			{{ server.requiredHackingSkillDisplay }}
+		</td>
 		<td class='cell cell--open-ports-required' :class='[`cell--${server.portClass}`]'>
 			{{ server.portDisplay }}
 		</td>
