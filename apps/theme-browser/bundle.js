@@ -18,8 +18,8 @@ export default {
 	// App-specific setup
 	const currentTheme = ns.ui.getTheme()
 	const resetTheme = () => ns.ui.setTheme(currentTheme)
-	const submitTheme = ({ callback }) => {
-		callback(ns.ui.getTheme())
+	const submitTheme = ({ detail }) => {
+		detail.callback(ns.ui.getTheme())
 	}
 
 	globalThis[\`\${id}-theme-id\`] = themeIdToApply

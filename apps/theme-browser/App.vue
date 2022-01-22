@@ -160,7 +160,7 @@
 	import { AppWrapper } from '@bitburner-theme-browser/common-components'
 	import { closeApp, dispatchEvent } from '@bitburner-theme-browser/common-helpers'
 
-	import { baseUri, themesEndpoint } from './config/app'
+	import { baseUri } from './config/app'
 	import ThemeList from './src/components/ThemeList/ThemeList.vue'
 	import TbHeader from './src/components/TbHeader/TbHeader.vue'
 	import { getTheme, getThemes, handleThemeResponse } from './src/services/themes'
@@ -259,12 +259,11 @@
 					}),
 				}).then(r => r.json())
 
-				// if (d.saveFile) {
-					// use document save file to avoid more ram usage
-					// d.saveFile('/etc/theme-browser/token.json.txt', response)
-				// } else {
-					localStorage.setItem('token', JSON.stringify(response))
-				// }
+				localStorage.setItem('token', JSON.stringify(response))
+
+				showLogin.value = false
+				showRegister.value = false
+				showThemeSubmit.value = false
 
 				checkLogin()
 			}
@@ -310,6 +309,9 @@
 				}
 
 				dispatchEvent('theme:submit', { callback })
+
+				showLogin.value = false
+				showRegister.value = false
 				showThemeSubmit.value = false
 			}
 
@@ -352,12 +354,11 @@
 					}),
 				}).then(r => r.json())
 
-				if (d.saveFile) {
-					// use document save file to avoid more ram usage
-					d.saveFile('/etc/theme-browser/token.json.txt', response)
-				} else {
-					localStorage.setItem('token', JSON.stringify(response))
-				}
+				localStorage.setItem('token', JSON.stringify(response))
+
+				showLogin.value = false
+				showRegister.value = false
+				showThemeSubmit.value = false
 
 				checkLogin()
 			}
