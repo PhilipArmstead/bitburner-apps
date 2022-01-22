@@ -67,10 +67,8 @@ ${entryHooks.main ? entryHooks.main() : ''}
 	// Let's go
 	mount()
 
-${entryHooks.keepAlive ? `
 	while (doc.getElementById(id)) {
 		await ns.asleep(2000)
 	}
-` : ''}
 } 
 `

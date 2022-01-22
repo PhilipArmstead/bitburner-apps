@@ -34,5 +34,4 @@ export default {
 			doc.body.removeEventListener('theme:submit', submitTheme)
 `,
 	extractThemes: true,
-	keepAlive: true,
 }
