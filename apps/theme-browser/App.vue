@@ -303,7 +303,7 @@
 						},
 						'body': JSON.stringify({
 							name: fields.name,
-							json: JSON.stringify(themeData),
+							json: themeData,
 						}),
 					}).then(r => r.json())
 				}
