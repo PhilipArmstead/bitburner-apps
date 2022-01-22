@@ -4,7 +4,7 @@ export async function main(ns) {
 	// Boilerplate
 	const doc = globalThis['document']
 	const id = 'macros-app'
-	globalThis[`${id}-version`] = '0.0.10'
+	globalThis[`${id}-version`] = '0.0.11'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
@@ -81,7 +81,9 @@ ${Object.entries(ns.ui.getTheme()).map(([key, value]) => `--${key}: ${value};`).
 	// Let's go
 	mount()
 
-
+	while (doc.getElementById(id)) {
+		await ns.asleep(2000)
+	}
 } 
 
 
