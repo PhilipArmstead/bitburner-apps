@@ -152,7 +152,7 @@
 		flex-wrap: wrap;
 		justify-content: flex-start;
 		min-height: 100%;
-		padding: 6px;
+		padding: 20px;
 
 		&, &-table, thead, &__head {
 			background: inherit;
