@@ -18,7 +18,7 @@ export async function main(ns) {
 	// Boilerplate
 	const doc = globalThis['document']
 	const id = 'theme-browser-app'
-	globalThis[`${id}-version`] = '0.0.52'
+	globalThis[`${id}-version`] = '0.0.53'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
@@ -86,9 +86,8 @@ ${Object.entries(ns.ui.getTheme()).map(([key, value]) => `--${key}: ${value};`).
 	// App-specific setup
 	const currentTheme = ns.ui.getTheme()
 	const resetTheme = () => ns.ui.setTheme(currentTheme)
-	const submitTheme = ({ callback }) => {
-		console.log(callback)
-		callback(ns.ui.getTheme())
+	const submitTheme = ({ detail }) => {
+		detail.callback(ns.ui.getTheme())
 	}
 
 	globalThis[`${id}-theme-id`] = themeIdToApply
