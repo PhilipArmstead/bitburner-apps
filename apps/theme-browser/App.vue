@@ -1,19 +1,148 @@
 <template>
-	<app-wrapper v-show='!isPreviewing && !isApplying' v-bind="{ ...$props, title: 'Bitburner Theme Browser', windowOptions }">
+	<app-wrapper 
+		v-show='!isPreviewing && !isApplying' 
+		v-bind="{ ...$props, title: 'Bitburner Theme Browser', windowOptions }"
+		@keydown.stop
+		@keyup.stop
+		@keypress.stop
+	>
 		<div class='theme-browser'>
-			<h1 class='title'>
-				{{ title }}
-			</h1>
-			<p v-if='themes.length' class='pagination-details'>
-				Showing {{ showingFrom }} to {{ showingTo }} of {{ totalItems }}
-			</p>
-			<theme-list
-				v-if='!isLoading'
-				:themes='themes'
-				class='themes'
-				@theme:preview='showPreview'
+			<tb-header
+				:title='title'
+				:user='user || null'
+				@login:click='triggerLoginRegister'
 			/>
-			<div v-else class='loader' />
+			<form v-show='showThemeSubmit' @submit='onThemeSubmit'>
+				<div>
+					<label for='name'>Theme Name</label>
+					<input 
+						id='name'
+						name='name' 
+						type='text' 
+						placeholder='BB Monokai'
+						@keydown.stop
+					>
+				</div>
+				<div class='buttons'>
+					<button type='submit'>
+						Submit
+					</button>
+					<button type='cancel' @click='cancelForm'>
+						Cancel
+					</button>
+				</div>
+			</form>
+			<form v-show='showLogin' @submit='onLogin'>
+				<div>
+					<label for='email'>Email</label>
+					<input 
+						id='email'
+						name='email' 
+						type='email' 
+						placeholder='elliot.alderson@allsafe.org'
+						@keydown.stop
+					>
+				</div>
+				<div>
+					<label for='password'>Password</label>
+					<input 
+						id='password'
+						name='password'
+						type='password' 
+						placeholder='password'
+						@keydown.stop
+					>
+				</div>
+				<div class='buttons'>
+					<button type='submit'>
+						Login
+					</button>
+					<button type='cancel' @click='cancelForm'>
+						Cancel
+					</button>
+				</div>
+				<div>
+					If you don't already have an account then <a @click='toggleLoginRegister'>Register</a>
+				</div>
+			</form>
+			<form v-show='showRegister' @submit='onRegister'>
+				<div>
+					<label for='name'>Name</label>
+					<input 
+						id='name' 
+						name='name'
+						type='text' 
+						placeholder='Elliot Alderson'
+						@keydown.stop
+					>
+				</div>
+				<div>
+					<label for='email'>Email</label>
+					<input 
+						id='email' 
+						name='email'
+						type='email' 
+						placeholder='elliot.alderson@allsafe.org'
+						@keydown.stop
+					>
+				</div>
+				<div>
+					<label for='password'>Password</label>
+					<input
+						id='password' 
+						name='password'
+						type='password' 
+						placeholder='password'
+					>
+				</div>
+				<div>
+					<label for='password_confirm'>Password Confirmation</label>
+					<input 
+						id='password_confirm' 
+						name='password_confirm'
+						type='password' 
+						placeholder='password'
+					>
+				</div>
+				<div class='buttons'>
+					<button type='submit'>
+						Register
+					</button>
+					<button type='cancel' @click='cancelForm'>
+						Cancel
+					</button>
+				</div>
+				<div>
+					If you already have an account then <a @click='toggleLoginRegister'>Login</a>
+				</div>
+			</form>
+			<div v-if='!showRegister && !showLogin && !showThemeSubmit'>
+				<div class='pagination-wrapper'>
+					<div style='margin-right: auto;'>
+						<button
+							v-if='!!(user && user.id)' 
+							@click='toggleSubmitTheme'
+						>
+							Submit my theme
+						</button>
+					</div>
+
+					<p v-if='themes.length' class='pagination-details'>
+						Showing {{ showingFrom }} to {{ showingTo }} of {{ totalItems }}
+					</p>
+				</div>
+				<div v-if='!showThemeSubmit'>
+					<theme-list
+						v-if='!isLoading'
+						:themes='themes'
+						:user='user'
+						class='themes'
+						@theme:preview='showPreview'
+						@theme:reload='reloadTheme'
+					/>
+					<div v-else class='loader' />
+				</div>
+			</div>
 		</div>
 	</app-wrapper>
 	<div class='preview__ctas' :class='{ "preview__ctas--visible" : isPreviewing }'>
@@ -31,11 +160,13 @@
 	import { AppWrapper } from '@bitburner-theme-browser/common-components'
 	import { closeApp, dispatchEvent } from '@bitburner-theme-browser/common-helpers'
 
+	import { baseUri } from './config/app'
 	import ThemeList from './src/components/ThemeList/ThemeList.vue'
+	import TbHeader from './src/components/TbHeader/TbHeader.vue'
 	import { getTheme, getThemes, handleThemeResponse } from './src/services/themes'
 
 	export default {
-		components: { AppWrapper, ThemeList },
+		components: { AppWrapper, ThemeList, TbHeader },
 		props: {
 			id: {
 				type: String,
@@ -56,6 +187,11 @@
 			const isPreviewing = ref(false)
 			const themes = ref([])
 			const meta = ref({})
+
+			const showThemeSubmit = ref(false)
+			const showLogin = ref(false)
+			const showRegister = ref(false)
+			const user = ref({})
 
 			const title = computed(() => isLoading.value ? 'Loading...' : !themes.value.length ? 'Uh oh...' : 'Browse themes')
 			const showingFrom = computed(() => Math.max(1, showingTo.value - meta.value.items_per_page))
@@ -79,12 +215,152 @@
 			const updateThemes = async () => {
 				isLoading.value = true
 
-				const response = getThemes()
+				const token = getToken()
+				const response = getThemes(token)
 				const { data, meta: resultsMeta } = await handleThemeResponse(response)
 				meta.value = resultsMeta
 				themes.value = data
 
 				isLoading.value = false
+			}
+
+			// const d = eval('document')
+			const onLogin = async (e) => {
+				e.preventDefault()
+
+				let fields = {
+					email: null,
+					password: null,
+				}
+
+				// get the email and password
+				for (let i = 0; i < e.target.length; i++) {
+					if (e.target[i].nodeName !== 'INPUT') {
+						continue
+					}
+
+					fields[e.target[i].name] = e.target[i].value
+				}
+
+				if (!fields.email || !fields.password) {
+					return
+				}
+
+				const response = await fetch (`${baseUri}/api/sanctum/token`, {
+					'method': 'POST',
+					'headers': {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json',
+					},
+					'body': JSON.stringify({
+						email: fields.email,
+						password: fields.password,
+						device_name: 'BitBurner ThemeBrowser',
+					}),
+				}).then(r => r.json())
+
+				localStorage.setItem('token', JSON.stringify(response))
+
+				showLogin.value = false
+				showRegister.value = false
+				showThemeSubmit.value = false
+
+				checkLogin()
+			}
+
+			const onThemeSubmit = async (e) => {
+				e.preventDefault()
+
+				let fields = {
+					name: null,
+					json: null,
+				}
+
+				const token = getToken()
+				if (!token) {
+					return
+				}
+
+				for (let i = 0; i < e.target.length; i++) {
+					if (e.target[i].nodeName !== 'INPUT') {
+						continue
+					}
+
+					fields[e.target[i].name] = e.target[i].value
+				}
+
+				if (!fields.name) {
+					return
+				}
+
+				const callback = (themeData) => {
+					fetch (`${baseUri}/api/themes`, {
+						'method': 'POST',
+						'headers': {
+							'Content-Type': 'application/json',
+							'Accept': 'application/json',
+							'Authorization': `Bearer ${token}`,
+						},
+						'body': JSON.stringify({
+							name: fields.name,
+							json: themeData,
+						}),
+					}).then(r => r.json())
+				}
+
+				dispatchEvent('theme:submit', { callback })
+
+				showLogin.value = false
+				showRegister.value = false
+				showThemeSubmit.value = false
+			}
+
+			const onRegister = async (e) => {
+				e.preventDefault()
+
+				let fields = {
+					email: null,
+					password: null,
+				}
+
+				// get the name, email, password and confirmation
+				for (let i = 0; i < e.target.length; i++) {
+					if (e.target[i].nodeName !== 'INPUT') {
+						continue
+					}
+
+					fields[e.target[i].name] = e.target[i].value
+				}
+
+				if (!fields.email || !fields.name || !fields.password_confirm || !fields.password) {
+					return
+				}
+
+				if (fields.password !== fields.password_confirm) {
+					return
+				}
+
+				const response = await fetch (`${baseUri}/api/sanctum/token`, {
+					'method': 'POST',
+					'headers': {
+						'Content-Type': 'application/json',
+						'Accept': 'application/json',
+					},
+					'body': JSON.stringify({
+						name: fields.name,
+						email: fields.email,
+						password: fields.password,
+						device_name: 'BitBurner ThemeBrowser',
+					}),
+				}).then(r => r.json())
+
+				localStorage.setItem('token', JSON.stringify(response))
+
+				showLogin.value = false
+				showRegister.value = false
+				showThemeSubmit.value = false
+
+				checkLogin()
 			}
 
 			onMounted(async () => {
@@ -99,11 +375,98 @@
 					}
 				}
 
+				await checkLogin()
+
 				isApplying.value = false
 				await updateThemes()
 			})
 
+			const getToken = () => {
+				// grab the token
+				// TODO: How do ns?
+				let token = localStorage.getItem('token')
+				if (token) {
+					try {
+						token = JSON.parse(token).token
+					} catch (e) {
+						token = false
+					}
+				}
+
+				return token
+			}
+
+			const checkLogin = async () => {
+				const token = getToken()
+
+				if (token) {
+					user.value = await fetch(`${baseUri}/api/user`, {
+						'headers': {
+							'Content-Type': 'application/json',
+							'Accept': 'application/json',
+							'Authorization': `Bearer ${token}`,
+						},
+					}).then(r => r.json()).then((u) => {
+						u.token = token
+						return u
+					})
+				}
+			}
+
+			const triggerLoginRegister = () => {
+				if (showLogin.value || showRegister.value) {
+					showLogin.value = false
+					showRegister.value = false
+				} else {
+					showLogin.value = true
+				}
+			}
+
+			const toggleLoginRegister = () => {
+				if (showLogin.value) {
+					showLogin.value = false
+					showRegister.value = true
+				} else if (showRegister.value) {
+					showRegister.value = false
+					showLogin.value = true
+				}
+			}
+
+			const toggleSubmitTheme = () => {
+				showThemeSubmit.value = !showThemeSubmit.value
+			}
+
+			const cancelForm = () => {
+				showThemeSubmit.value = false
+				showLogin.value = false
+				showRegister.value = false
+			}
+
+			const reloadTheme = async (themeId) => {
+				const headers = {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json',
+				}
+
+				const token = getToken()
+				if (token) {
+					headers.Authorization = `Bearer ${token}`
+				}
+
+				const theme = await fetch(`${baseUri}/api/themes/${themeId}`, {
+					headers: headers,
+				})
+					.then(r => r.json())
+
+				for (let i = 0; i < themes._rawValue.length; i++) {
+					if (themes.value[i].id === theme.id) {
+						themes.value[i] = theme
+					}
+				}
+			}
+
 			return {
+				cancelForm,
 				isApplying,
 				isLoading,
 				isPreviewing,
@@ -116,6 +479,17 @@
 				cancelPreview,
 				closeApp: () => closeApp(id),
 				showPreview,
+				user,
+				onThemeSubmit,
+				onLogin,
+				onRegister,
+				showThemeSubmit,
+				showLogin,
+				showRegister,
+				triggerLoginRegister,
+				toggleLoginRegister,
+				toggleSubmitTheme,
+				reloadTheme,
 			}
 		},
 	}
@@ -145,6 +519,48 @@
 		justify-content: space-between;
 		min-height: 100%;
 		padding: 24px 32px;
+
+		input, button {
+			box-sizing: border-box;
+			background: rgba(255, 255, 255, 0.3);
+			color: white;
+			appearance: none;
+			border: 0;
+			padding: 6px 12px;
+			line-height: 1.4em;
+			margin: 0 0 1em;
+			width: 100%;
+			max-width: 100%;
+			border-radius: 4px;
+
+			&:focus, &:hover, &:active {
+				background: rgba(255, 255, 255, 0.6);
+			}
+		}
+
+		input {
+			display: block;
+			width: 100%;
+		}
+
+		button {
+			cursor: pointer;
+			flex-basis: 50%;
+			display: inline-block;
+			width: auto;
+			padding: 8px 12px;
+			border-radius: 0;
+
+			&:first-child {
+				border-top-left-radius: 4px;
+				border-bottom-left-radius: 4px;
+			}
+
+			&:last-child {
+				border-top-right-radius: 4px;
+				border-bottom-right-radius: 4px;
+			}
+		}
 	}
 
 	.title, .pagination-details {
@@ -156,9 +572,20 @@
 		margin-right: 20px;
 	}
 
-	.pagination-details {
-		color: #CECECE;
-		margin-left: 20px;
+	.pagination-wrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		button {
+			flex: 0 0 auto;
+		}
+
+		.pagination-details {
+			color: #CECECE;
+			margin-left: auto;
+		}
 	}
 
 	.themes {
@@ -173,6 +600,31 @@
 		height: 200px;
 		margin: auto 0 40%;
 		width: 200px;
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		width: 60%;
+		margin: 0 auto;
+
+		div {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+
+			&.buttons {
+				flex-direction: row;
+			}
+
+			label {
+				margin-bottom: 0.4em;
+			}
+		}
+	}
+
+	.app__content {
+		overflow-y: scroll;
 	}
 
 	.preview__ctas {

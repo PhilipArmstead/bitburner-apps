@@ -1,2 +1,5 @@
 export const id = 'theme-browser-app'
-export const themesEndpoint = 'https://bitburner.daft.host/api/themes'
+export const baseUri = 'https://bitburner.daft.host'
+// export const baseUri = 'http://127.0.0.1:8080'
+export const themesEndpoint = '/api/themes'
+export const userEndpoint = '/api/user'
