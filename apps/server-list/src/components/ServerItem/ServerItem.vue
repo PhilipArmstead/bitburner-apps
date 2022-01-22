@@ -19,11 +19,6 @@
 		<td class='cell cell--player-owned'>
 			<icon-tick v-if='server.purchasedByPlayer' class='icon icon--tick' />
 		</td>
-		<td class='cell cell--hostname'>
-			<button class='cta' :title='`Connect to ${server.hostname}`' @click='connect'>
-				{{ server.hostname }}
-			</button>
-		</td>
 		<td class='cell cell--contract'>
 			<button
 				v-for='contract in server.contracts'
@@ -33,6 +28,11 @@
 				@click='runContract(contract)'
 			>
 				<icon-contract class='icon icon--door' />
+			</button>
+		</td>
+		<td class='cell cell--hostname'>
+			<button class='cta' :title='`Connect to ${server.hostname}`' @click='connect'>
+				{{ server.hostname }}
 			</button>
 		</td>
 		<td class='cell cell--required-hacking-skill'>
