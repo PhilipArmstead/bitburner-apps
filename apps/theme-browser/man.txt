@@ -1,0 +1,41 @@
+===
+= BB Theme Browser
+===
+
+Browser themes submitted by other users, vote for your
+favourite and submit your own.
+
+===
+
+Registration
+
+We use an email / password auth system so that we know who
+is submitting the theme. We don't actually use the email,
+we just use it for identification purposes.
+
+Each login will create a PAT token stored in your local
+storage. You can copy/paste it to avoid logging in, if you
+want. You can also integrate using the same method, for your
+own app. Go ahead! https://bitburner.daft.host
+
+===
+
+BB Theme Browser Developers
+
+Phil and Jack have worked together on many projects over
+the years, this is the first non-work related project to
+have worked together on.
+
+Phil specializes in frontend development; VueJS, SCSS, 
+the maths aspect of things.
+
+Jack specializes in backend development and infrastructure,
+making the API that the frontend works with.
+
+Phil:
+    url: https://github.com/philiparmstead
+    discord: Phil
+
+Jack:
+    url: https://github.com/surdaft
+    discord: SurDaft

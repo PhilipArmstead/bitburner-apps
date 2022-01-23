@@ -1,0 +1,13 @@
+{
+	"uniqueName": "theme-browser",
+	"author": "Phil Armstead & Jack (SurDaft) Stupple",
+	"descriptiveName": "Theme Browser for BitBurner",
+	"shortDescription": "Browse user submitted themes",
+	"longDescription": "Browse user submitted themes within BitBurner; preview themes, see screenshots and user provided ratings",
+	"tags": ["utility", "ui"],
+	"aliases": {
+		"tb": "theme-browser.js",
+		"theme-browser": "theme-browser.js"
+	},
+	"welcome": "Run `tb` or `theme-browser` to see the theme browser."
+}
