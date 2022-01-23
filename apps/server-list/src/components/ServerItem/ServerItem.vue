@@ -19,7 +19,7 @@
 		<td class='cell cell--player-owned'>
 			<icon-tick v-if='server.purchasedByPlayer' class='icon icon--tick' />
 		</td>
-		<td class='cell cell--contract'>
+		<td class='cell cell--contracts'>
 			<button
 				v-for='contract in server.contracts'
 				:key='contract'
@@ -132,7 +132,7 @@
 			text-align: center;
 		}
 
-		&--contract {
+		&--contracts {
 			.icon {
 				color: yellow;
 			}

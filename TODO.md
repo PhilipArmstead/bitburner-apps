@@ -6,7 +6,6 @@
 **Server Browser**  
 List all servers with the following data
 - Threads to weaken
-- Threads to grow
 - Profit per second (assuming we hack for X%)
 
 Toggle theming, toggle filtering
