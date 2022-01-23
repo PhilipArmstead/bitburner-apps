@@ -42,7 +42,7 @@
 			{{ server.portDisplay }}
 		</td>
 		<td class='cell cell--ram'>
-			{{ server.ramUsed }}/{{ server.maxRam }}
+			{{ server.ramUsed.toFixed(2) }}/{{ server.maxRam }}
 		</td>
 		<td class='cell cell--security'>
 			{{ server.difficultyDisplay }}

@@ -99,7 +99,7 @@
 					"HTTPWorm.exe",
 					"FTPCrack.exe",
 					"relaySMTP.exe",
-				].filter(crack => ns.fileExists(crack))
+				].filter((crack) => ns.fileExists(crack))
 			}
 
 			const applySort = (key) => {
