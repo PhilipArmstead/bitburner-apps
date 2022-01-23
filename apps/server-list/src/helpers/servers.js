@@ -57,7 +57,7 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 			sortHasRoot: hasRoot.status,
 			contracts,
 			contractsLength: contracts.length,
-			growThreads: server.moneyAvailable ? Math.ceil(ns.growthAnalyze(hostname, server.moneyMax / (server.moneyAvailable + 1))) : '',
+			growThreads: server.moneyMax ? Math.ceil(ns.growthAnalyze(hostname, server.moneyMax / Math.max(server.moneyAvailable, 1))) : '',
 		}
 	}
 
