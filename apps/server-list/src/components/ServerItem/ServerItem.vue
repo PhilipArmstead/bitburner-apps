@@ -125,7 +125,7 @@
 			color: #900;
 		}
 
-		&--rooted, &--backdoored, &--player-owned {
+		&--rooted, &--backdoored, &--player-owned, &--contracts {
 			text-align: center;
 		}
 
