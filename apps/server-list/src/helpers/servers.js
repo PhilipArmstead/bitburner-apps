@@ -29,6 +29,7 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 		const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
 		const hackDifficulty = toFixedNumber(server.hackDifficulty, 2)
 		const contracts = ns.ls(hostname, ".cct")
+		const growThreads = server.moneyMax ? Math.ceil(ns.growthAnalyze(hostname, server.moneyMax / Math.max(server.moneyAvailable, 1))) : -1
 
 		return {
 			hostname: server.hostname,
@@ -57,7 +58,8 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 			sortHasRoot: hasRoot.status,
 			contracts,
 			contractsLength: contracts.length,
-			growThreads: server.moneyMax ? Math.ceil(ns.growthAnalyze(hostname, server.moneyMax / Math.max(server.moneyAvailable, 1))) : '',
+			growThreads,
+			growThreadsDisplay: growThreads > 0 ? formatter.format(growThreads): '',
 		}
 	}
 

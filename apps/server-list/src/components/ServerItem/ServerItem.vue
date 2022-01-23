@@ -54,7 +54,7 @@
 			{{ server.serverGrowthDisplay }}
 		</td>
 		<td class='cell cell--threads-to-grow'>
-			{{ server.growThreads }}
+			{{ server.growThreadsDisplay }}
 		</td>
 	</tr>
 </template>

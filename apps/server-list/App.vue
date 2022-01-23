@@ -123,7 +123,7 @@
 				{ className: 'security', sortKey: 'hackDifficulty', content: 'Security', title: 'Server security' },
 				{ className: 'money', sortKey: 'moneyMax', content: 'Money', title: 'Money available/max' },
 				{ className: 'growth', sortKey: 'serverGrowth', content: 'Growth', title: 'Growth' },
-				{ className: 'threads-to-grow', sortKey: 'growthThreads', content: 'Grow threads', title: 'Threads required to grow to max money' },
+				{ className: 'threads-to-grow', sortKey: 'growThreads', content: 'Grow threads', title: 'Threads required to grow to max money' },
 				// { className: 'time-to-hack', sortKey: 'serverGrowth', content: 'Time to hack', title: 'Time to hack' },
 			]
 
