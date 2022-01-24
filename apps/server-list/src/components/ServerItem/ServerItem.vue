@@ -31,7 +31,7 @@
 			</button>
 		</td>
 		<td class='cell cell--hostname'>
-			<button class='cta' :title='`Connect to ${server.hostname}`' @click='connect'>
+			<button class='cta' :title='`Connect to ${server.hostname}`' @click='join'>
 				{{ server.hostname }}
 			</button>
 		</td>
@@ -81,9 +81,9 @@
 			},
 		},
 		setup (props) {
-			const getConnectCommand = (servers) => ['home', ...servers.slice(1).map((node) => `connect ${node}`)]
+			const getJoinCommand = (servers) => ['home', ...servers.slice(1).map((node) => `connect ${node}`)]
 			const getRootCommand = (servers) => [
-				...getConnectCommand(servers),
+				...getJoinCommand(servers),
 				...props.cracksOwned.slice(0, props.server.numOpenPortsRequired).map((crack) => `run ${crack}`),
 				"run NUKE.exe"
 			]
@@ -91,14 +91,14 @@
 				...getRootCommand(props.server.ancestors),
 				"backdoor"
 			])
-			const connect = () => inputTerminalCommands(getConnectCommand(props.server.ancestors))
+			const join = () => inputTerminalCommands(getJoinCommand(props.server.ancestors))
 			const root = () => inputTerminalCommands(getRootCommand(props.server.ancestors))
 			const runContract = (contract) => inputTerminalCommands([
 				...getRootCommand(props.server.ancestors),
 				`run ${contract}`
 			])
 
-			return { backdoor, connect, root, runContract }
+			return { backdoor, join, root, runContract }
 		},
 	}
 </script>
