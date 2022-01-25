@@ -4,6 +4,6 @@ const { repositoryBranch, repositoryRaw } = project
 
 const packageName = 'theme-browser'
 export default {
-	appFilePath: `${repositoryRaw}/${repositoryBranch}/apps/${packageName}/dist/main.js`,
-	versionFilePath: `${repositoryRaw}/${repositoryBranch}/apps/${packageName}/dist/version.txt`,
+	appFilePath: `${repositoryRaw}/${repositoryBranch}/dist/${packageName}/main.js`,
+	versionFilePath: `${repositoryRaw}/${repositoryBranch}/dist/${packageName}/version.txt`,
 }
