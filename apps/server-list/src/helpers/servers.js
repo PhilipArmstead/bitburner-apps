@@ -1,3 +1,21 @@
+/**
+ * @type Item
+ * @param {String} hostname
+ * @param {Number} contractCount
+ * @param {String} hasBackdoorTitle
+ * @param {String} hasBackdoorClass
+ * @param {String} hasRootTitle
+ * @param {String} hasRootClass
+ * @param {String[]} ancestors
+ * @param {Object[]} connections
+ * @param {Boolean} purchasedByPlayer
+ */
+
+
+/**
+ * @param ns
+ * @returns {Object}
+ */
 export const getServers = (ns) => {
 	return runScan(ns).connections
 }
@@ -16,7 +34,7 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 
 	/**
 	 * @param {String} hostname
-	 * @return {{hostname: String, contractCount: Number, hasBackdoorTitle: String, hasBackdoorClass: String, hasRootTitle: String, hasRootClass: String, ancestors: {String}[], connections: {Object}[], purchasedByPlayer: {Boolean}}}
+	 * @return {Item}
 	 */
 	const getItem = (hostname) => {
 		const server = ns.getServer(hostname)
