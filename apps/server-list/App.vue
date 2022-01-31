@@ -9,7 +9,10 @@
 							:key='index'
 							:title='header.title'
 							class='cell'
-							:class='[`cell--${header.className}`, {"cell--sorting": sortKey === header.sortKey, "cell--sorting-reverse": !sortAscending }]'
+							:class='[
+								`cell--${header.className}`,
+								{"cell--sorting": sortKey === header.sortKey, "cell--sorting-reverse": !sortAscending }
+							]'
 							@click='applySort(header.sortKey)'
 						>
 							<component :is='header.component' />
@@ -18,7 +21,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					<server-item v-for='server in servers' :key='server.hostname' :server='server' :cracks-owned='playerOwnedCracks' />
+					<server-item
+						v-for='server in servers'
+						:key='server.hostname'
+						:server='server'
+						:cracks-owned='playerOwnedCracks'
+					/>
 				</tbody>
 			</table>
 		</div>
@@ -65,19 +73,19 @@
 			// In this, get icons, titles, statuses etc pre-generated
 			const servers = computed(() =>
 				getItems(ns, serverList.value, player.value?.hacking, playerOwnedCracks.value.length)
-				.sort((a, b) => {
-					const valA = a[sortKey.value]
-					const valB = b[sortKey.value]
-					if (typeof valA === 'undefined' && typeof valB === 'undefined') {
-						return 0
-					} else {
-						if (typeof valA === 'string') {
-							return sortAscending.value ? valA.localeCompare(valB) : valB.localeCompare(valA)
+					.sort((a, b) => {
+						const valA = a[sortKey.value]
+						const valB = b[sortKey.value]
+						if (typeof valA === 'undefined' && typeof valB === 'undefined') {
+							return 0
 						} else {
-							return sortAscending.value ? valA - valB : valB - valA
+							if (typeof valA === 'string') {
+								return sortAscending.value ? valA.localeCompare(valB) : valB.localeCompare(valA)
+							} else {
+								return sortAscending.value ? valA - valB : valB - valA
+							}
 						}
-					}
-				})
+					})
 			)
 
 			const refreshPlayer = () => {
@@ -95,12 +103,12 @@
 			 */
 			function getCracksOwned (ns) {
 				return [
-					"BruteSSH.exe",
-					"SQLInject.exe",
-					"HTTPWorm.exe",
-					"FTPCrack.exe",
-					"relaySMTP.exe",
-				].filter((crack) => ns.fileExists(crack))
+					'BruteSSH.exe',
+					'SQLInject.exe',
+					'HTTPWorm.exe',
+					'FTPCrack.exe',
+					'relaySMTP.exe',
+				].filter(crack => ns.fileExists(crack))
 			}
 
 			const applySort = (key) => {

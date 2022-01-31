@@ -1,16 +1,16 @@
 <template>
-    <header class='theme-browser__header'>
-        <h1 class='title'>
-            {{ title }}
-        </h1>
-        <button 
+	<header class='theme-browser__header'>
+		<h1 class='title'>
+			{{ title }}
+		</h1>
+		<button 
 			v-if='!user || !user.id' 
 			@click="$emit('login:click')"
 		>
 			<span>Login</span> / <span>Register</span>
 		</button>
-        <span v-if='user && user.id'>Hello {{ user.name || '' }}</span>
-    </header>
+		<span v-if='user && user.id'>Hello {{ user.name || '' }}</span>
+	</header>
 </template>
 
 <script>

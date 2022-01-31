@@ -6,13 +6,13 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 	const formatter = new Intl.NumberFormat()
 	const currencyFormatter = new Intl.NumberFormat({ currency: 'USD' })
 	const getAllItems =(servers, ancestors = ['home']) => {
-			return Object.entries(servers).map(([hostname, obj]) => {
-				return [
-					{ ...getItem(hostname), ancestors: ancestors.concat(hostname) },
-					(obj.connections ? [ ...getAllItems(obj.connections, ancestors.concat(hostname)) ] : []).flat()
-				].flat()
-			})
-		}
+		return Object.entries(servers).map(([hostname, obj]) => {
+			return [
+				{ ...getItem(hostname), ancestors: ancestors.concat(hostname) },
+				(obj.connections ? [ ...getAllItems(obj.connections, ancestors.concat(hostname)) ] : []).flat(),
+			].flat()
+		})
+	}
 
 
 	/**
@@ -28,7 +28,7 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 		const moneyAvailable = Math.round(server.moneyAvailable)
 		const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
 		const hackDifficulty = toFixedNumber(server.hackDifficulty, 2)
-		const contracts = ns.ls(hostname, ".cct")
+		const contracts = ns.ls(hostname, '.cct')
 		const growThreads = server.moneyMax ? Math.ceil(ns.growthAnalyze(hostname, server.moneyMax / Math.max(server.moneyAvailable, 1))) : -1
 
 		return {
@@ -148,10 +148,10 @@ const runScan = (ns) => {
  * @param {Set} found
  * @param {String?} host
  **/
-const scan = (ns, tree, found, host = "home") => {
+const scan = (ns, tree, found, host = 'home') => {
 	found.add(host)
 
-	const targets = ns.scan(host).filter((server, i) => i || host === "home")
+	const targets = ns.scan(host).filter((server, i) => i || host === 'home')
 
 	if (targets.length) {
 		tree.connections = {}

@@ -85,17 +85,17 @@
 			const getRootCommand = (servers) => [
 				...getJoinCommand(servers),
 				...props.cracksOwned.slice(0, props.server.numOpenPortsRequired).map((crack) => `run ${crack}`),
-				"run NUKE.exe"
+				'run NUKE.exe',
 			]
 			const backdoor = () => inputTerminalCommands([
 				...getRootCommand(props.server.ancestors),
-				"backdoor"
+				'backdoor',
 			])
 			const join = () => inputTerminalCommands(getJoinCommand(props.server.ancestors))
 			const root = () => inputTerminalCommands(getRootCommand(props.server.ancestors))
 			const runContract = (contract) => inputTerminalCommands([
 				...getRootCommand(props.server.ancestors),
-				`run ${contract}`
+				`run ${contract}`,
 			])
 
 			return { backdoor, join, root, runContract }
