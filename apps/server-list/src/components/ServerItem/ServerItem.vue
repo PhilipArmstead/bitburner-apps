@@ -1,6 +1,6 @@
 <template>
 	<tr class='server'>
-		<td class='cell cell--rooted'>
+		<td class='cell cell--rooted cell--align-center'>
 			<button class='icon-cta' :title='server.hasRoot.title' @click='root'>
 				<icon-skull
 					class='icon icon--skull'
@@ -8,7 +8,7 @@
 				/>
 			</button>
 		</td>
-		<td class='cell cell--backdoored'>
+		<td class='cell cell--backdoored cell--align-center'>
 			<button class='icon-cta' :title='server.hasBackdoor.title' @click='backdoor'>
 				<icon-door
 					class='icon icon--door'
@@ -16,7 +16,7 @@
 				/>
 			</button>
 		</td>
-		<td class='cell cell--player-owned'>
+		<td class='cell cell--player-owned cell--align-center'>
 			<icon-tick v-if='server.purchasedByPlayer' class='icon icon--tick' />
 		</td>
 		<td class='cell cell--contracts'>
@@ -48,7 +48,10 @@
 			{{ server.difficultyDisplay }}
 		</td>
 		<td class='cell cell--money'>
-			{{ server.moneyAvailableFormatted }} {{ server.moneyAvailablePercentageFormatted }}
+			{{ server.moneyAvailableFormatted }}
+		</td>
+		<td class='cell cell--money-percent cell--align-right'>
+			{{ server.moneyAvailablePercentageFormatted }}
 		</td>
 		<td class='cell cell--growth'>
 			{{ server.serverGrowthDisplay }}
@@ -128,8 +131,12 @@
 			color: #900;
 		}
 
-		&--rooted, &--backdoored, &--player-owned, &--contracts {
+		&--align-center {
 			text-align: center;
+		}
+
+		&--align-right {
+			text-align: right;
 		}
 
 		&--contracts {

@@ -132,6 +132,7 @@
 				{ className: 'ram', sortKey: 'maxRam', content: 'RAM', title: 'RAM in-use/total' },
 				{ className: 'security', sortKey: 'hackDifficulty', content: 'Security', title: 'Server security' },
 				{ className: 'money', sortKey: 'moneyMax', content: 'Money', title: 'Money available/max' },
+				{ className: 'money_percent', sortKey: 'moneyAvailablePercentage', content: '%' },
 				{ className: 'growth', sortKey: 'serverGrowth', content: 'Growth', title: 'Growth' },
 				{ className: 'threads-to-grow', sortKey: 'growThreads', content: 'Grow threads', title: 'Threads required to grow to max money' },
 				// { className: 'time-to-hack', sortKey: 'serverGrowth', content: 'Time to hack', title: 'Time to hack' },
@@ -196,6 +197,10 @@
 
 				&--rooted, &--backdoored, &--player-owned, &--contracts {
 					text-align: center;
+				}
+
+				&--money_percent {
+					text-align: right;
 				}
 
 				&--sorting {
