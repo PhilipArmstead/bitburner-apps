@@ -45,6 +45,9 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 		const portClass = getServerPortStatus(server, playerPortsOwned)
 		const moneyAvailable = Math.round(server.moneyAvailable)
 		const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
+		const moneyAvailableFormattedFull = moneyAvailable ?
+			`$${currencyFormatter.format(moneyAvailable)} of $${currencyFormatter.format(server.moneyMax)}` :
+			null
 		const ramUsedPercentage = server.ramUsed / server.maxRam * 100
 		const hackDifficulty = toFixedNumber(server.hackDifficulty, 2)
 		const contracts = ns.ls(hostname, '.cct')
@@ -73,7 +76,7 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 			difficultyDisplay: moneyAvailable ? `${hackDifficulty} (${server.minDifficulty})` : '',
 			moneyAvailable,
 			moneyAvailableFormatted: moneyAvailable ? `${ns.nFormat(moneyAvailable, '$0.000a')}` : '',
-			moneyAvailableFormattedFull: moneyAvailable ? `$${currencyFormatter.format(moneyAvailable)}` : null,
+			moneyAvailableFormattedFull,
 			moneyAvailablePercentage,
 			moneyAvailablePercentageFormatted: moneyAvailable ? `${moneyAvailablePercentage}%` : '',
 			moneyMax: server.moneyMax,
