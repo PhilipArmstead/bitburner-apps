@@ -50,7 +50,7 @@
 		<td class='cell cell--security'>
 			{{ server.difficultyDisplay }}
 		</td>
-		<td class='cell cell--money'>
+		<td class='cell cell--money' :title="server.moneyAvailableFormattedFull">
 			{{ server.moneyAvailableFormatted }}
 		</td>
 		<td class='cell cell--money-percent cell--align-right'>

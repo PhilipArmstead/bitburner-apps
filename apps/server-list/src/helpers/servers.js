@@ -22,6 +22,7 @@ export const getServers = (ns) => {
 
 export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 	const formatter = new Intl.NumberFormat()
+	const currencyFormatter = new Intl.NumberFormat({ currency: 'USD' })
 	const getAllItems =(servers, ancestors = ['home']) => {
 		return Object.entries(servers).map(([hostname, obj]) => {
 			return [
@@ -72,6 +73,7 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 			difficultyDisplay: moneyAvailable ? `${hackDifficulty} (${server.minDifficulty})` : '',
 			moneyAvailable,
 			moneyAvailableFormatted: moneyAvailable ? `${ns.nFormat(moneyAvailable, '$0.000a')}` : '',
+			moneyAvailableFormattedFull: moneyAvailable ? `$${currencyFormatter.format(moneyAvailable)}` : null,
 			moneyAvailablePercentage,
 			moneyAvailablePercentageFormatted: moneyAvailable ? `${moneyAvailablePercentage}%` : '',
 			moneyMax: server.moneyMax,
