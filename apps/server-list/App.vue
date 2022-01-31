@@ -1,5 +1,5 @@
 <template>
-	<app-wrapper v-bind="{ ...$props, title: 'Server list' }">
+	<app-wrapper ref='wrapper' v-bind="{ ...$props, title: 'Server list' }">
 		<div class='list'>
 			<table class='list-table'>
 				<thead>
@@ -55,6 +55,7 @@
 		setup ({ id }) {
 			const ns = window[`${id}-ns`]
 
+			const wrapper = ref(null)
 			const sortKey = ref(null)
 			const sortAscending = ref(true)
 			const serverList = ref(getServers(ns))
@@ -108,6 +109,7 @@
 				} else {
 					sortKey.value = key
 					sortAscending.value = false
+					wrapper.value.$el.querySelector('.app__content').scrollTop = 0
 				}
 			}
 
@@ -127,7 +129,7 @@
 				// { className: 'time-to-hack', sortKey: 'serverGrowth', content: 'Time to hack', title: 'Time to hack' },
 			]
 
-			return { headers, playerOwnedCracks, servers, sortAscending, sortKey, applySort }
+			return { headers, playerOwnedCracks, servers, sortAscending, sortKey, wrapper, applySort }
 		},
 	}
 </script>
