@@ -47,7 +47,9 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 		const ramUsedPercentage = server.ramUsed / server.maxRam * 100
 		const hackDifficulty = toFixedNumber(server.hackDifficulty, 2)
 		const contracts = ns.ls(hostname, '.cct')
-		const growThreads = server.moneyMax ? Math.ceil(ns.growthAnalyze(hostname, server.moneyMax / Math.max(server.moneyAvailable, 1))) : -1
+		const growThreads = server.moneyMax ?
+			Math.ceil(ns.growthAnalyze(hostname, server.moneyMax / Math.max(server.moneyAvailable, 1))) :
+			-1
 
 		return {
 			hostname: server.hostname,
