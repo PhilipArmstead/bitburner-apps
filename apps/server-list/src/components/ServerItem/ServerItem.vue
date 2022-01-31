@@ -44,6 +44,9 @@
 		<td class='cell cell--ram'>
 			{{ server.ramUsed.toFixed(2) }}/{{ server.maxRam }}
 		</td>
+		<td class='cell cell--ram cell--align-right'>
+			{{ server.ramUsedPercentageFormatted }}
+		</td>
 		<td class='cell cell--security'>
 			{{ server.difficultyDisplay }}
 		</td>

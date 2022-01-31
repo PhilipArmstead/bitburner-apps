@@ -61,7 +61,14 @@
 			},
 		},
 		setup ({ id }) {
-			const ns = window[`${id}-ns`]
+			const ns = window[`${id}-ns`] || {
+				getPlayer: () => ({}),
+				scan: () => ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 14]),
+				getServer: () => ({ hostname: 'blah', hackDifficulty: 5, ramUsed: 4, moneyAvailable: 999_999_998, moneyMax: 999_999_999, ramUsed: 4, maxRam: 12 }),
+				ls: () => [],
+				fileExists: () => true,
+				nFormat: (value) => `\$${value}`,
+			}
 
 			const wrapper = ref(null)
 			const sortKey = ref(null)
@@ -130,9 +137,10 @@
 				{ className: 'required-hacking-skill', sortKey: 'requiredHackingSkill', content: 'Req. hack', title: 'Required hacking skill' },
 				{ className: 'open-ports-required', sortKey: 'numOpenPortsRequired', content: 'Ports', title: 'Open ports required' },
 				{ className: 'ram', sortKey: 'maxRam', content: 'RAM', title: 'RAM in-use/total' },
+				{ className: 'ram-percent', sortKey: 'ramUsedPercentage', content: '%' },
 				{ className: 'security', sortKey: 'hackDifficulty', content: 'Security', title: 'Server security' },
 				{ className: 'money', sortKey: 'moneyMax', content: 'Money', title: 'Money available/max' },
-				{ className: 'money_percent', sortKey: 'moneyAvailablePercentage', content: '%' },
+				{ className: 'money-percent', sortKey: 'moneyAvailablePercentage', content: '%' },
 				{ className: 'growth', sortKey: 'serverGrowth', content: 'Growth', title: 'Growth' },
 				{ className: 'threads-to-grow', sortKey: 'growThreads', content: 'Grow threads', title: 'Threads required to grow to max money' },
 				// { className: 'time-to-hack', sortKey: 'serverGrowth', content: 'Time to hack', title: 'Time to hack' },
@@ -199,7 +207,7 @@
 					text-align: center;
 				}
 
-				&--money_percent {
+				&--ram-percent, &--money-percent {
 					text-align: right;
 				}
 
