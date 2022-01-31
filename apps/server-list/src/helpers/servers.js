@@ -64,6 +64,7 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 			portClass,
 			ramUsed: toFixedNumber(server.ramUsed, 2),
 			maxRam: server.maxRam,
+			ramFormatted: server.maxRam ? `${server.ramUsed.toFixed(2)}/${server.maxRam}` : '',
 			ramUsedPercentage,
 			ramUsedPercentageFormatted: server.maxRam ? `${Math.round(ramUsedPercentage)}%` : '',
 			hackDifficulty,
