@@ -4,7 +4,7 @@ export async function main(ns) {
 	// Boilerplate
 	const doc = globalThis['document']
 	const id = 'macros-app'
-	globalThis[`${id}-version`] = '0.0.14'
+	globalThis[`${id}-version`] = '0.0.15'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
