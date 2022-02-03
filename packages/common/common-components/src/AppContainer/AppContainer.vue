@@ -359,7 +359,7 @@
 			}
 
 			&__content {
-				background: var(--backgroundprimary, $background-colour);
+				background: var(--backgroundsecondary, $background-colour);
 				flex: 0 1 100%;
 				overflow: auto;
 				scrollbar-color: var(--primary, #272727) var(--primarydark, #B7B7B7);
