@@ -62,6 +62,14 @@
 		},
 		setup ({ id }) {
 			const ns = window[`${id}-ns`]
+			// const ns = window[`${id}-ns`] || {
+			// 	getPlayer: () => ({}),
+			// 	scan: () => ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 14]),
+			// 	getServer: () => ({ hostname: 'blah', hackDifficulty: 5, ramUsed: 4, moneyAvailable: 999_999_998, moneyMax: 999_999_999, ramUsed: 4, maxRam: 12 }),
+			// 	ls: () => [],
+			// 	fileExists: () => true,
+			// 	nFormat: (value) => `\$${value}`,
+			// }
 
 			const wrapper = ref(null)
 			const sortKey = ref(null)
@@ -145,15 +153,12 @@
 </script>
 
 <style scoped lang="scss">
-	@import '@bitburner-theme-browser/common-styles';
-
 	:deep(.app-container .app) {
 		height: 40vh;
 		width: 60vw;
 	}
 
 	:deep(.app-container .app__content) {
-		background: var(--backgroundprimary, $background-colour);
 		scrollbar-width: auto;
 	}
 
@@ -205,7 +210,7 @@
 				}
 
 				&--sorting {
-					padding-right: 8px;
+					padding-right: 20px;
 					position: relative;
 
 					&::before {

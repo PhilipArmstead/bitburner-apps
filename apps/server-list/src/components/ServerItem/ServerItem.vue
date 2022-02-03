@@ -50,7 +50,7 @@
 		<td class='cell cell--security'>
 			{{ server.difficultyDisplay }}
 		</td>
-		<td class='cell cell--money' :title="server.moneyAvailableFormattedFull">
+		<td class='cell cell--money' :title='server.moneyAvailableFormattedFull'>
 			{{ server.moneyAvailableFormatted }}
 		</td>
 		<td class='cell cell--money-percent cell--align-right'>
@@ -123,15 +123,15 @@
 		padding: 3px;
 
 		&--true {
-			color: #090;
+			color: var(--successdark, #090);
 		}
 
 		&--maybe {
-			color: yellow;
+			color: var(--warning, #FF0);
 		}
 
 		&--false {
-			color: #900;
+			color: var(--errordark, #900);
 		}
 
 		&--align-center {
@@ -144,7 +144,7 @@
 
 		&--contracts {
 			.icon {
-				color: yellow;
+				color: var(--warning, #FF0);
 			}
 		}
 	}
@@ -153,15 +153,15 @@
 		width: 20px;
 
 		&--true {
-			color: #0C0;
+			color: var(--success, #0C0);
 		}
 
 		&--maybe {
-			color: yellow;
+			color: var(--warning, #FF0);
 		}
 
 		&--false {
-			color: #C00;
+			color: var(--error, #C00);
 		}
 
 		&--hidden {

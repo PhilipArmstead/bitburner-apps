@@ -78,7 +78,6 @@
 
 	.macro-list {
 		align-content: flex-start;
-		background: var(--backgroundprimary, $background-colour);
 		box-sizing: border-box;
 		display: flex;
 		flex-wrap: wrap;

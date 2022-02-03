@@ -229,6 +229,8 @@
 </script>
 
 <style scoped lang="scss">
+	@import "@bitburner-theme-browser/common-styles";
+
 	.app-container {
 		bottom: 0;
 		left: 0;
@@ -357,6 +359,7 @@
 			}
 
 			&__content {
+				background: var(--backgroundprimary, $background-colour);
 				flex: 0 1 100%;
 				overflow: auto;
 				scrollbar-color: var(--primary, #272727) var(--primarydark, #B7B7B7);
