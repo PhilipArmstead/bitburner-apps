@@ -44,11 +44,11 @@ export const getItems =(ns, servers, hackingSkill, playerPortsOwned) => {
 		const hasBackdoor = getServerBackdoorStatus(server, hasRoot, hackingSkill)
 		const portClass = getServerPortStatus(server, playerPortsOwned)
 		const moneyAvailable = Math.round(server.moneyAvailable)
-		const moneyAvailablePercentage = Math.round(moneyAvailable / server.moneyMax * 100)
+		const moneyAvailablePercentage = server.moneyMax ? Math.round(moneyAvailable / server.moneyMax * 100) : -1
 		const moneyAvailableFormattedFull = moneyAvailable ?
 			`$${currencyFormatter.format(moneyAvailable)} of $${currencyFormatter.format(server.moneyMax)}` :
 			null
-		const ramUsedPercentage = server.ramUsed / server.maxRam * 100
+		const ramUsedPercentage = server.maxRam ? server.ramUsed / server.maxRam * 100 : -1
 		const hackDifficulty = toFixedNumber(server.hackDifficulty, 2)
 		const contracts = ns.ls(hostname, '.cct')
 		const growThreads = server.moneyMax ?
