@@ -1,6 +1,6 @@
 {
 	"name": "@bitburner-theme-browser/macros",
-	"version": "0.0.13",
+	"version": "0.0.14",
 	"scripts": {
 		"start": "vite",
 		"build": "vite build --emptyOutDir",
