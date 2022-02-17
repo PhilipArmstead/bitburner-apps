@@ -4,7 +4,7 @@ export async function main(ns) {
 	// Boilerplate
 	const doc = globalThis['document']
 	const id = 'process-list'
-	globalThis[`${id}-version`] = '0.0.1'
+	globalThis[`${id}-version`] = '0.0.2'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
@@ -76,6 +76,7 @@ ${Object.entries(ns.ui.getTheme()).map(([key, value]) => `--${key}: ${value};`).
 	}
 
 	globalThis[`${id}-process-list`] = config
+	globalThis[`${id}-ns`] = ns
 
 
 	// Let's go
