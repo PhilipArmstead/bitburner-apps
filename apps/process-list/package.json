@@ -1,6 +1,6 @@
 {
 	"name": "@bitburner-theme-browser/process-list",
-	"version": "0.0.68",
+	"version": "0.0.2",
 	"scripts": {
 		"start": "vite",
 		"build": "vite build --emptyOutDir",

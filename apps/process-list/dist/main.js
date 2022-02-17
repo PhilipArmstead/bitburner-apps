@@ -4,7 +4,7 @@ export async function main(ns) {
 	// Boilerplate
 	const doc = globalThis['document']
 	const id = 'process-list'
-	globalThis[`${id}-version`] = '0.0.67'
+	globalThis[`${id}-version`] = '0.0.1'
 
 	let vueLoaded
 	const vueLoad = new Promise((resolve) => (vueLoaded = resolve))
