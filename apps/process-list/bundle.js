@@ -16,6 +16,7 @@ export default {
 	}
 
 	globalThis[\`\${id}-process-list\`] = config
+	globalThis[\`\${id}-ns\`] = ns
 `,
 	extractThemes: true,
 }
