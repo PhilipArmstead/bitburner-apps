@@ -1,6 +1,6 @@
 {
 	"name": "@bitburner-theme-browser/process-list",
-	"version": "0.0.67",
+	"version": "0.0.68",
 	"scripts": {
 		"start": "vite",
 		"build": "vite build --emptyOutDir",
@@ -10,7 +10,6 @@
 	"devDependencies": {
 		"@bitburner-theme-browser/app-builder": "^0.0.1",
 		"@bitburner-theme-browser/common-components": "^0.0.1",
-		"@bitburner-theme-browser/common-config": "^0.0.1",
-		"@bitburner-theme-browser/common-styles": "^0.0.1"
+		"@bitburner-theme-browser/common-config": "^0.0.1"
 	}
 }
